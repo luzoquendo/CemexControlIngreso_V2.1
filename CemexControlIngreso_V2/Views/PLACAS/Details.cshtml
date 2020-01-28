@@ -1,0 +1,34 @@
+﻿@model CemexControlIngreso_V2.Models.PLACAS
+
+@{
+    ViewBag.Title = "Consultar";
+}
+
+<h2>Consultar</h2>
+
+<div>
+    <h4>PLACAS</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Placa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Placa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Estado)
+        </dt>
+
+        <dd>
+            @Html.DropDownListFor(m => m.Estado, new SelectList(new[] { new { Value = "true", Text = "Activo" }, new { Value = "false", Text = "Inactivo" }, }, "Value", "Text"))
+            @*@Html.DisplayFor(model => model.Estado)*@
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.IdPlaca }) |
+    @Html.ActionLink("Regresar", "Index")
+</p>

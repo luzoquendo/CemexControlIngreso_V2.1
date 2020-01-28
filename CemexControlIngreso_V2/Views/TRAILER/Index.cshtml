@@ -1,0 +1,33 @@
+﻿@model IEnumerable<CemexControlIngreso_V2.Models.TRAILER>
+
+@{
+    ViewBag.Title = "Trailer";
+}
+
+<h2>Trailer</h2>
+
+<p>
+    @Html.ActionLink("Crear", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PlacaTrailer)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.PlacaTrailer)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.IdTrailer }) |
+            @Html.ActionLink("Consultar", "Details", new { id=item.IdTrailer }) |
+            @Html.ActionLink("Borrar", "Delete", new { id=item.IdTrailer })
+        </td>
+    </tr>
+}
+
+</table>

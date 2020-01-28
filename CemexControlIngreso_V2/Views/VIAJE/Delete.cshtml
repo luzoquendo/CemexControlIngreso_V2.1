@@ -1,0 +1,49 @@
+﻿@model CemexControlIngreso_V2.Models.VIAJE
+
+@{
+    ViewBag.Title = "Borrar";
+}
+
+<h2>Borrar</h2>
+
+<h3>>Está usted seguro de borrar este registro?</h3>
+<div>
+    <h4>VIAJE</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CORREDOR.Corredor1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CORREDOR.Corredor1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PRODUCTO.Producto1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PRODUCTO.Producto1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Estado)
+        </dt>
+
+        <dd>
+            @Html.DropDownListFor(m => m.Estado, new SelectList(new[] { new { Value = "true", Text = "Activo" }, new { Value = "false", Text = "Inactivo" }, }, "Value", "Text"))
+            @*@Html.DisplayFor(model => model.Estado)*@
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Borrar" class="btn btn-default" /> |
+            @Html.ActionLink("Regresar", "Index")
+        </div>
+    }
+</div>

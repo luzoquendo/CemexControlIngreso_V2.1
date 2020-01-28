@@ -1,0 +1,657 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CONTROLINGRESOModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'CONTROLINGRESO.dbo.Checklist' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="Checklist">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Checklist" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Checklist" Type="image" Nullable="false" />
+          <Property Name="idViaje" Type="int" />
+        </EntityType>
+        <EntityType Name="CONDUCTOR">
+          <Key>
+            <PropertyRef Name="IdConductor" />
+          </Key>
+          <Property Name="IdConductor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="IdInstructor" Type="int" Nullable="false" />
+          <Property Name="Celular1" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Celular2" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
+          <Property Name="Cedula" Type="nchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="CORREDOR">
+          <Key>
+            <PropertyRef Name="IdCorredor" />
+          </Key>
+          <Property Name="IdCorredor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Corredor" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Estado" Type="bit" />
+        </EntityType>
+        <EntityType Name="INSTRUCTOR">
+          <Key>
+            <PropertyRef Name="IdInstructor" />
+          </Key>
+          <Property Name="IdInstructor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Celular1" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Celular2" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PLACAS">
+          <Key>
+            <PropertyRef Name="IdPlaca" />
+          </Key>
+          <Property Name="IdPlaca" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Placa" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Estado" Type="bit" />
+        </EntityType>
+        <EntityType Name="PRODUCTO">
+          <Key>
+            <PropertyRef Name="IdProducto" />
+          </Key>
+          <Property Name="IdProducto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Producto" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Estado" Type="bit" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TRAILER">
+          <Key>
+            <PropertyRef Name="IdTrailer" />
+          </Key>
+          <Property Name="IdTrailer" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PlacaTrailer" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Estado" Type="bit" />
+        </EntityType>
+        <EntityType Name="VIAJE">
+          <Key>
+            <PropertyRef Name="IdViaje" />
+          </Key>
+          <Property Name="IdViaje" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdCorredor" Type="int" Nullable="false" />
+          <Property Name="IdProducto" Type="int" />
+          <Property Name="Estado" Type="bit" />
+          <Property Name="IdConductor" Type="int" />
+          <Property Name="idPlaca" Type="int" />
+          <Property Name="idTrailer" Type="int" />
+          <Property Name="Fecha" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_CONDUCTOR_INSTRUCTOR">
+          <End Role="INSTRUCTOR" Type="Self.INSTRUCTOR" Multiplicity="1" />
+          <End Role="CONDUCTOR" Type="Self.CONDUCTOR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INSTRUCTOR">
+              <PropertyRef Name="IdInstructor" />
+            </Principal>
+            <Dependent Role="CONDUCTOR">
+              <PropertyRef Name="IdInstructor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VIAJE_CONDUCTOR">
+          <End Role="CONDUCTOR" Type="Self.CONDUCTOR" Multiplicity="0..1" />
+          <End Role="VIAJE" Type="Self.VIAJE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CONDUCTOR">
+              <PropertyRef Name="IdConductor" />
+            </Principal>
+            <Dependent Role="VIAJE">
+              <PropertyRef Name="IdConductor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VIAJE_CORREDOR">
+          <End Role="CORREDOR" Type="Self.CORREDOR" Multiplicity="1" />
+          <End Role="VIAJE" Type="Self.VIAJE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CORREDOR">
+              <PropertyRef Name="IdCorredor" />
+            </Principal>
+            <Dependent Role="VIAJE">
+              <PropertyRef Name="IdCorredor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VIAJE_PLACAS">
+          <End Role="PLACAS" Type="Self.PLACAS" Multiplicity="0..1" />
+          <End Role="VIAJE" Type="Self.VIAJE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PLACAS">
+              <PropertyRef Name="IdPlaca" />
+            </Principal>
+            <Dependent Role="VIAJE">
+              <PropertyRef Name="idPlaca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VIAJE_PRODUCTO">
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="0..1" />
+          <End Role="VIAJE" Type="Self.VIAJE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTO">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="VIAJE">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VIAJE_TRAILER">
+          <End Role="TRAILER" Type="Self.TRAILER" Multiplicity="0..1" />
+          <End Role="VIAJE" Type="Self.VIAJE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRAILER">
+              <PropertyRef Name="IdTrailer" />
+            </Principal>
+            <Dependent Role="VIAJE">
+              <PropertyRef Name="idTrailer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="TraerConductor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Cedula" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="CONTROLINGRESOModelStoreContainer">
+          <EntitySet Name="CONDUCTOR" EntityType="Self.CONDUCTOR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CORREDOR" EntityType="Self.CORREDOR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="INSTRUCTOR" EntityType="Self.INSTRUCTOR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PLACAS" EntityType="Self.PLACAS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PRODUCTO" EntityType="Self.PRODUCTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TRAILER" EntityType="Self.TRAILER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VIAJE" EntityType="Self.VIAJE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Checklist" EntityType="Self.Checklist" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Checklist].[Id] AS [Id], 
+    [Checklist].[Checklist] AS [Checklist], 
+    [Checklist].[idViaje] AS [idViaje]
+    FROM [dbo].[Checklist] AS [Checklist]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_CONDUCTOR_INSTRUCTOR" Association="Self.FK_CONDUCTOR_INSTRUCTOR">
+            <End Role="INSTRUCTOR" EntitySet="INSTRUCTOR" />
+            <End Role="CONDUCTOR" EntitySet="CONDUCTOR" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VIAJE_CONDUCTOR" Association="Self.FK_VIAJE_CONDUCTOR">
+            <End Role="CONDUCTOR" EntitySet="CONDUCTOR" />
+            <End Role="VIAJE" EntitySet="VIAJE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VIAJE_CORREDOR" Association="Self.FK_VIAJE_CORREDOR">
+            <End Role="CORREDOR" EntitySet="CORREDOR" />
+            <End Role="VIAJE" EntitySet="VIAJE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VIAJE_PLACAS" Association="Self.FK_VIAJE_PLACAS">
+            <End Role="PLACAS" EntitySet="PLACAS" />
+            <End Role="VIAJE" EntitySet="VIAJE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VIAJE_PRODUCTO" Association="Self.FK_VIAJE_PRODUCTO">
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+            <End Role="VIAJE" EntitySet="VIAJE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VIAJE_TRAILER" Association="Self.FK_VIAJE_TRAILER">
+            <End Role="TRAILER" EntitySet="TRAILER" />
+            <End Role="VIAJE" EntitySet="VIAJE" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CONTROLINGRESOModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CONDUCTOR">
+          <Key>
+            <PropertyRef Name="IdConductor" />
+          </Key>
+          <Property Name="IdConductor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdInstructor" Type="Int32" Nullable="false" />
+          <Property Name="Celular1" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Celular2" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="INSTRUCTOR" Relationship="Self.FK_CONDUCTOR_INSTRUCTOR" FromRole="CONDUCTOR" ToRole="INSTRUCTOR" />
+          <Property Name="Cedula" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="VIAJE" Relationship="CONTROLINGRESOModel.FK_VIAJE_CONDUCTOR" FromRole="CONDUCTOR" ToRole="VIAJE" />
+        </EntityType>
+        <EntityType Name="CORREDOR">
+          <Key>
+            <PropertyRef Name="IdCorredor" />
+          </Key>
+          <Property Name="IdCorredor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Corredor1" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Estado" Type="Boolean" />
+          <NavigationProperty Name="VIAJE" Relationship="Self.FK_VIAJE_CORREDOR" FromRole="CORREDOR" ToRole="VIAJE" />
+        </EntityType>
+        <EntityType Name="INSTRUCTOR">
+          <Key>
+            <PropertyRef Name="IdInstructor" />
+          </Key>
+          <Property Name="IdInstructor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Celular1" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Celular2" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="CONDUCTOR" Relationship="Self.FK_CONDUCTOR_INSTRUCTOR" FromRole="INSTRUCTOR" ToRole="CONDUCTOR" />
+        </EntityType>
+        <EntityType Name="PLACAS">
+          <Key>
+            <PropertyRef Name="IdPlaca" />
+          </Key>
+          <Property Name="IdPlaca" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Placa" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Estado" Type="Boolean" />
+          <NavigationProperty Name="VIAJE" Relationship="CONTROLINGRESOModel.FK_VIAJE_PLACAS" FromRole="PLACAS" ToRole="VIAJE" />
+        </EntityType>
+        <EntityType Name="PRODUCTO">
+          <Key>
+            <PropertyRef Name="IdProducto" />
+          </Key>
+          <Property Name="IdProducto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Producto1" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Estado" Type="Boolean" />
+          <NavigationProperty Name="VIAJE" Relationship="Self.FK_VIAJE_PRODUCTO" FromRole="PRODUCTO" ToRole="VIAJE" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TRAILER">
+          <Key>
+            <PropertyRef Name="IdTrailer" />
+          </Key>
+          <Property Name="IdTrailer" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PlacaTrailer" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Estado" Type="Boolean" />
+          <NavigationProperty Name="VIAJE" Relationship="CONTROLINGRESOModel.FK_VIAJE_TRAILER" FromRole="TRAILER" ToRole="VIAJE" />
+        </EntityType>
+        <EntityType Name="VIAJE">
+          <Key>
+            <PropertyRef Name="IdViaje" />
+          </Key>
+          <Property Name="IdViaje" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdCorredor" Type="Int32" Nullable="false" />
+          <Property Name="IdProducto" Type="Int32" />
+          <Property Name="Estado" Type="Boolean" />
+          <Property Name="IdConductor" Type="Int32" />
+          <Property Name="idPlaca" Type="Int32" />
+          <Property Name="idTrailer" Type="Int32" />
+          <NavigationProperty Name="CORREDOR" Relationship="Self.FK_VIAJE_CORREDOR" FromRole="VIAJE" ToRole="CORREDOR" />
+          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_VIAJE_PRODUCTO" FromRole="VIAJE" ToRole="PRODUCTO" />
+          <Property Name="Fecha" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CONDUCTOR" Relationship="CONTROLINGRESOModel.FK_VIAJE_CONDUCTOR" FromRole="VIAJE" ToRole="CONDUCTOR" />
+          <NavigationProperty Name="PLACAS" Relationship="CONTROLINGRESOModel.FK_VIAJE_PLACAS" FromRole="VIAJE" ToRole="PLACAS" />
+          <NavigationProperty Name="TRAILER" Relationship="CONTROLINGRESOModel.FK_VIAJE_TRAILER" FromRole="VIAJE" ToRole="TRAILER" />
+        </EntityType>
+        <EntityType Name="Checklist">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Checklist1" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Checklist1" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="idViaje" Type="Int32" />
+        </EntityType>
+        <Association Name="FK_CONDUCTOR_INSTRUCTOR">
+          <End Role="INSTRUCTOR" Type="Self.INSTRUCTOR" Multiplicity="1" />
+          <End Role="CONDUCTOR" Type="Self.CONDUCTOR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INSTRUCTOR">
+              <PropertyRef Name="IdInstructor" />
+            </Principal>
+            <Dependent Role="CONDUCTOR">
+              <PropertyRef Name="IdInstructor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VIAJE_CORREDOR">
+          <End Role="CORREDOR" Type="Self.CORREDOR" Multiplicity="1" />
+          <End Role="VIAJE" Type="Self.VIAJE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CORREDOR">
+              <PropertyRef Name="IdCorredor" />
+            </Principal>
+            <Dependent Role="VIAJE">
+              <PropertyRef Name="IdCorredor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VIAJE_PRODUCTO">
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="0..1" />
+          <End Role="VIAJE" Type="Self.VIAJE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTO">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="VIAJE">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CONTROLINGRESOEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CONDUCTOR" EntityType="Self.CONDUCTOR" />
+          <EntitySet Name="CORREDOR" EntityType="Self.CORREDOR" />
+          <EntitySet Name="INSTRUCTOR" EntityType="Self.INSTRUCTOR" />
+          <EntitySet Name="PLACAS" EntityType="Self.PLACAS" />
+          <EntitySet Name="PRODUCTO" EntityType="Self.PRODUCTO" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="TRAILER" EntityType="Self.TRAILER" />
+          <EntitySet Name="VIAJE" EntityType="Self.VIAJE" />
+          <EntitySet Name="Checklist" EntityType="Self.Checklist" />
+          <AssociationSet Name="FK_CONDUCTOR_INSTRUCTOR" Association="Self.FK_CONDUCTOR_INSTRUCTOR">
+            <End Role="INSTRUCTOR" EntitySet="INSTRUCTOR" />
+            <End Role="CONDUCTOR" EntitySet="CONDUCTOR" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VIAJE_CORREDOR" Association="Self.FK_VIAJE_CORREDOR">
+            <End Role="CORREDOR" EntitySet="CORREDOR" />
+            <End Role="VIAJE" EntitySet="VIAJE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VIAJE_PRODUCTO" Association="Self.FK_VIAJE_PRODUCTO">
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+            <End Role="VIAJE" EntitySet="VIAJE" />
+          </AssociationSet>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(CONTROLINGRESOModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(CONTROLINGRESOModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+          <FunctionImport Name="TraerConductor" ReturnType="Collection(CONTROLINGRESOModel.TraerConductor_Result)">
+          <Parameter Name="Cedula" Mode="In" Type="String" />
+          </FunctionImport>
+          <AssociationSet Name="FK_VIAJE_CONDUCTOR" Association="CONTROLINGRESOModel.FK_VIAJE_CONDUCTOR">
+            <End Role="CONDUCTOR" EntitySet="CONDUCTOR" />
+            <End Role="VIAJE" EntitySet="VIAJE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VIAJE_PLACAS" Association="CONTROLINGRESOModel.FK_VIAJE_PLACAS">
+            <End Role="PLACAS" EntitySet="PLACAS" />
+            <End Role="VIAJE" EntitySet="VIAJE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VIAJE_TRAILER" Association="CONTROLINGRESOModel.FK_VIAJE_TRAILER">
+            <End Role="TRAILER" EntitySet="TRAILER" />
+            <End Role="VIAJE" EntitySet="VIAJE" />
+          </AssociationSet>
+        </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="TraerConductor_Result">
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="Celular1" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Celular2" Nullable="false" MaxLength="20" />
+        </ComplexType>
+        <Association Name="FK_VIAJE_CONDUCTOR">
+          <End Type="CONTROLINGRESOModel.CONDUCTOR" Role="CONDUCTOR" Multiplicity="0..1" />
+          <End Type="CONTROLINGRESOModel.VIAJE" Role="VIAJE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CONDUCTOR">
+              <PropertyRef Name="IdConductor" />
+            </Principal>
+            <Dependent Role="VIAJE">
+              <PropertyRef Name="IdConductor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VIAJE_PLACAS">
+          <End Type="CONTROLINGRESOModel.PLACAS" Role="PLACAS" Multiplicity="0..1" />
+          <End Type="CONTROLINGRESOModel.VIAJE" Role="VIAJE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PLACAS">
+              <PropertyRef Name="IdPlaca" />
+            </Principal>
+            <Dependent Role="VIAJE">
+              <PropertyRef Name="idPlaca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VIAJE_TRAILER">
+          <End Type="CONTROLINGRESOModel.TRAILER" Role="TRAILER" Multiplicity="0..1" />
+          <End Type="CONTROLINGRESOModel.VIAJE" Role="VIAJE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRAILER">
+              <PropertyRef Name="IdTrailer" />
+            </Principal>
+            <Dependent Role="VIAJE">
+              <PropertyRef Name="idTrailer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CONTROLINGRESOModelStoreContainer" CdmEntityContainer="CONTROLINGRESOEntities">
+          <EntitySetMapping Name="CONDUCTOR">
+            <EntityTypeMapping TypeName="CONTROLINGRESOModel.CONDUCTOR">
+              <MappingFragment StoreEntitySet="CONDUCTOR">
+                <ScalarProperty Name="Cedula" ColumnName="Cedula" />
+                <ScalarProperty Name="IdConductor" ColumnName="IdConductor" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdInstructor" ColumnName="IdInstructor" />
+                <ScalarProperty Name="Celular1" ColumnName="Celular1" />
+                <ScalarProperty Name="Celular2" ColumnName="Celular2" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CORREDOR">
+            <EntityTypeMapping TypeName="CONTROLINGRESOModel.CORREDOR">
+              <MappingFragment StoreEntitySet="CORREDOR">
+                <ScalarProperty Name="IdCorredor" ColumnName="IdCorredor" />
+                <ScalarProperty Name="Corredor1" ColumnName="Corredor" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="INSTRUCTOR">
+            <EntityTypeMapping TypeName="CONTROLINGRESOModel.INSTRUCTOR">
+              <MappingFragment StoreEntitySet="INSTRUCTOR">
+                <ScalarProperty Name="IdInstructor" ColumnName="IdInstructor" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Celular1" ColumnName="Celular1" />
+                <ScalarProperty Name="Celular2" ColumnName="Celular2" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PLACAS">
+            <EntityTypeMapping TypeName="CONTROLINGRESOModel.PLACAS">
+              <MappingFragment StoreEntitySet="PLACAS">
+                <ScalarProperty Name="IdPlaca" ColumnName="IdPlaca" />
+                <ScalarProperty Name="Placa" ColumnName="Placa" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUCTO">
+            <EntityTypeMapping TypeName="CONTROLINGRESOModel.PRODUCTO">
+              <MappingFragment StoreEntitySet="PRODUCTO">
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="Producto1" ColumnName="Producto" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="CONTROLINGRESOModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TRAILER">
+            <EntityTypeMapping TypeName="CONTROLINGRESOModel.TRAILER">
+              <MappingFragment StoreEntitySet="TRAILER">
+                <ScalarProperty Name="IdTrailer" ColumnName="IdTrailer" />
+                <ScalarProperty Name="PlacaTrailer" ColumnName="PlacaTrailer" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VIAJE">
+            <EntityTypeMapping TypeName="CONTROLINGRESOModel.VIAJE">
+              <MappingFragment StoreEntitySet="VIAJE">
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="IdViaje" ColumnName="IdViaje" />
+                <ScalarProperty Name="IdCorredor" ColumnName="IdCorredor" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="IdConductor" ColumnName="IdConductor" />
+                <ScalarProperty Name="idPlaca" ColumnName="idPlaca" />
+                <ScalarProperty Name="idTrailer" ColumnName="idTrailer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Checklist">
+            <EntityTypeMapping TypeName="CONTROLINGRESOModel.Checklist">
+              <MappingFragment StoreEntitySet="Checklist">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Checklist1" ColumnName="Checklist" />
+                <ScalarProperty Name="idViaje" ColumnName="idViaje" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="CONTROLINGRESOModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="CONTROLINGRESOModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="CONTROLINGRESOModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="CONTROLINGRESOModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CONTROLINGRESOModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="CONTROLINGRESOModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CONTROLINGRESOModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="CONTROLINGRESOModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="CONTROLINGRESOModel.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="TraerConductor" FunctionName="CONTROLINGRESOModel.Store.TraerConductor">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CONTROLINGRESOModel.TraerConductor_Result">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Celular1" ColumnName="Celular1" />
+                <ScalarProperty Name="Celular2" ColumnName="Celular2" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

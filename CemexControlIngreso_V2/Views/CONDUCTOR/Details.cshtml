@@ -1,0 +1,58 @@
+﻿@model CemexControlIngreso_V2.Models.CONDUCTOR
+
+@{
+    ViewBag.Title = "Consultar";
+}
+
+<h2>Consultar</h2>
+
+<div>
+    <h4>CONDUCTOR</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Celular1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Celular1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Celular2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Celular2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.INSTRUCTOR.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.INSTRUCTOR.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Estado)
+        </dt>
+
+        <dd>
+            @Html.DropDownListFor(m => m.Estado, new SelectList(new[] { new { Value = "true", Text = "Activo" }, new { Value = "false", Text = "Inactivo" }, }, "Value", "Text"))
+            @*@Html.DisplayFor(model => model.Estado)*@
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.IdConductor }) |
+    @Html.ActionLink("Regresar", "Index")
+</p>

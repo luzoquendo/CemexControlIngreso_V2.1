@@ -1,0 +1,33 @@
+﻿@model IEnumerable<CemexControlIngreso_V2.Models.PRODUCTO>
+
+@{
+    ViewBag.Title = "Producto";
+}
+
+<h2>Producto</h2>
+
+<p>
+    @Html.ActionLink("Crear", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Producto1)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Producto1)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.IdProducto }) |
+            @Html.ActionLink("Consultar", "Details", new { id=item.IdProducto }) |
+            @Html.ActionLink("Borrar", "Delete", new { id=item.IdProducto })
+        </td>
+    </tr>
+}
+
+</table>

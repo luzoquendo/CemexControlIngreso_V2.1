@@ -1,0 +1,53 @@
+﻿@model IEnumerable<CemexControlIngreso_V2.Models.CONDUCTOR>
+
+@{
+    ViewBag.Title = "Conductor";
+}
+
+<h2>Conductor</h2>
+
+<p>
+    @Html.ActionLink("Crear", "Create")
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Celular1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Celular2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.INSTRUCTOR.Nombre)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Celular1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Celular2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.INSTRUCTOR.Nombre)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.IdConductor }) |
+            @Html.ActionLink("Consultar", "Details", new { id=item.IdConductor }) |
+            @Html.ActionLink("Borrar", "Delete", new { id=item.IdConductor })
+        </td>
+    </tr>
+}
+
+</table>
+

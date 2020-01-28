@@ -1,0 +1,138 @@
+﻿@{
+    ViewBag.Title = "Control de Ingreso Sedes Cemex";
+}
+
+
+<div class="jumbotron">
+    <h2>CIC Nodos Fusa y Tocancipá</h2>
+    <p class="lead">Control de Ingreso Conductores Nodos de Control Log Fusa y Tocancipá.</p>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+</div>
+
+<div class="container">
+    <!-- Top Navigation -->
+
+    <section class="header">
+        <header>
+            @*<h1 class="heading">Control de Ingreso Conductores Nodos Fusa y Tocancipá.</h1>*@
+            <link href="~/Content/Styles.css" rel="stylesheet" type="text/css" />
+        </header>
+
+    </section>
+    <div class="wrapper">
+        <div class="wrap">
+            <h1 class="Start">Inicio</h1>
+
+            <div class="btn-small red">
+                <i class="fa fa-user fa-2x"></i>
+                <span class="label bottom">@Html.ActionLink("Conductor", "Index", "Conductor")</span>
+            </div>
+            <div class="btn-big blue">
+                <i class="fa fa-road fa-2x"></i>
+                <span class="label bottom">@Html.ActionLink("Corredor", "Index", "Corredor")</span>
+            </div>
+            <div class="btn-big orange">
+                <i class="fa fa-book fa-2x"></i>
+                <span class="label bottom">@Html.ActionLink("Instructor", "Index", "Instructor")</span>
+            </div>
+            <div class="btn-big blue">
+                <i class="fa fa-users fa-2x"></i>
+                <span class="label bottom">@Html.ActionLink("Usuarios","Index", "Account/Register" )</span>
+            </div>
+            <div class="btn-small green last">
+                <i class="fa fa-minus-square fa-2x"></i>
+                <span class="label bottom">@Html.ActionLink("Placas", "Index", "Placas")</span>
+            </div>
+            <div class="btn-big red-light">
+                <i class="fa fa-dropbox fa-2x"></i>
+                <span class="label bottom">@Html.ActionLink("Producto", "Index", "Producto")</span>
+            </div>
+            <div class="btn-big blue-nav">
+                <i class="fa fa-dropbox fa-2x"></i>
+                <span class="label bottom">@Html.ActionLink("Trailer", "Index", "Trailer")</span>
+            </div>
+            <div class="btn-small purple">
+                <i class="fa fa-check-square fa-2x"></i>
+                <span class="label bottom">Check List</span>
+            </div>
+            <div class="btn-big gray">
+                <i class="fa fa-home fa-2x"></i>
+                <span class="label bottom">@Html.ActionLink("Viaje", "Index", "Viaje")</span>
+            </div>
+            <div class="btn-small green-bright last">
+                <i class="fa fa-share-square fa-2x"></i>
+                <span class="label bottom">Llegada</span>
+            </div>
+            <div class="btn-big gray">
+                <i class="fa fa-print fa-2x"></i>
+                <span class="label bottom">Reportes</span>
+            </div>
+            @*<div class="live-tile" data-mode="carousel" data-direction="horizontal" data-delay="2500">
+            <div>
+                <span class="tile-title">"Tiempos entre Nodos"</span>
+            </div>
+            <div>
+                <span class="tile-title accent">"Tiempos de descanso"</span>
+            </div>
+            <div>
+                <span class="tile-title">"Viajes por conductor"</span>
+            </div>
+            <div>
+                <span class="tile-title accent">"Consulta Checklist"</span>
+            </div>
+        </div>*@
+        </div>
+    </div>
+</div>
+@* <div class="row">
+    <div class="col-md-4">
+        <h2>@Html.ActionLink("Conductor", "Index", "Conductor")</h2>
+       <img src="~/Images/Conductor.jpg" class="btn-small red"  width="100" height="75">
+<p>
+    Administración de conductores.
+</p>
+    </div>
+<div class="col-md-4">
+    <h2>@Html.ActionLink("Corredor", "Index", "Corredor")</h2>
+    <p>
+        Administración de corredores.
+    </p>
+</div>
+<div class="col-md-4">
+    <h2>@Html.ActionLink("Instructor", "Index", "Instructor")</h2>
+    <p>
+        Administración de instructores.
+    </p>
+</div>
+<div class="col-md-4">
+    <h2>@Html.ActionLink("Placas", "Index", "Placas")</h2>
+    <p>
+        Administración de placas.
+    </p>
+</div>
+<div class="col-md-4">
+    <h2>@Html.ActionLink("Producto", "Index", "Producto")</h2>
+    <p>
+        Administración de productos.
+    </p>
+</div>
+<div class="col-md-4">
+    <h2>@Html.ActionLink("Trailer", "Index", "Trailer")</h2>
+    <p>
+        Administración de trailers.
+    </p>
+</div>
+<div class="col-md-4">
+    <h2>@Html.ActionLink("Viaje", "Index", "Viaje")</h2>
+    <p>
+        Administración de viajes.
+    </p>
+</div>
+
+<div class="col-md-4">
+    <h2>@Html.ActionLink("CheckList", "Index", "CheckList")</h2>
+    <p>
+        Capturar Checklist.
+    </p>
+</div>
+</div>*@

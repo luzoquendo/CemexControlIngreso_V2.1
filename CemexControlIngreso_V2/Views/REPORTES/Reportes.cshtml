@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "REPORTES";
+}
+
+<h2>REPORTES</h2>
+
+<div class="jumbotron">
+    <h2>CIC Nodos Fusa y Tocancipá</h2>
+    <p class="lead">Control de Ingreso Conductores Nodos de Control Log Fusa y Tocancipá.</p>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+</div>
+
+<div class="container">
+    <!-- Top Navigation -->
+
+    <section class="header">
+        <header>
+            @*<h1 class="heading">Control de Ingreso Conductores Nodos Fusa y Tocancipá.</h1>*@
+            <link href="~/Content/Styles.css" rel="stylesheet" type="text/css" />
+        </header>
+
+    </section>
+    <div class="wrapper">
+        <div class="wrap">
+            <h1 class="Start">Inicio</h1>
+
+            <div class="btn-small red">
+                <i class="fa fa-user fa-2x"></i>
+                <span class="label bottom">@Html.ActionLink("Tiempos entre Nodos", "Index", "Conductor")
+                </span>
+            </div>
+            <div class="btn-big blue">
+                <i class="fa fa-road fa-2x"></i>
+                <span class="label bottom">@Html.ActionLink("Tiempos de descanso", "Index", "Corredor")</span>
+            </div>
+            <div class="btn-big orange">
+                <i class="fa fa-book fa-2x"></i>
+                <span class="label bottom">@Html.ActionLink("Viajes por conductor", "Index", "Instructor" )</span>
+            </div>
+            <div class="btn-small green last">
+                <i class="fa fa-minus-square fa-2x"></i>
+                <span class="label bottom">@Html.ActionLink("Consulta Checklist", "Index", "Placas")</span>
+            </div>
+        </div>
+    </div>
+</div>
+

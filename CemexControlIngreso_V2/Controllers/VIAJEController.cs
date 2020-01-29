@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
@@ -77,6 +78,14 @@ namespace CemexControlIngreso_V2.Controllers
             ViewBag.IdTrailer = new SelectList(db.TRAILER, "IdTrailer", "PlacaTrailer", vIAJE.idTrailer);
             ViewBag.IdPlaca = new SelectList(db.PLACAS, "IdPlaca", "Placa", vIAJE.idPlaca);
             return View(vIAJE);
+        }
+
+        public ActionResult Consulta(int? id)
+        {
+
+            var conductorarr = db.TraerConductor(id.ToString());
+
+            return ViewBag.Nombre;
         }
 
         // GET: VIAJE/Edit/5

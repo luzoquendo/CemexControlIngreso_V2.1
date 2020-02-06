@@ -37,7 +37,7 @@
             </div>
             <div class="btn-big blue">
                 <i class="fa fa-users fa-2x"></i>
-                <span class="label bottom">@Html.ActionLink("Usuarios","Index", "Account/Register" )</span>
+                <span class="label bottom">@Html.ActionLink("Usuarios", "Index", "Account/Register")</span>
             </div>
             <div class="btn-small green last">
                 <i class="fa fa-minus-square fa-2x"></i>
@@ -51,18 +51,19 @@
                 <i class="fa fa-dropbox fa-2x"></i>
                 <span class="label bottom">@Html.ActionLink("Trailer", "Index", "Trailer")</span>
             </div>
-            <div class="btn-small purple">
-                <i class="fa fa-check-square fa-2x"></i>
-                <span class="label bottom">Check List</span>
-            </div>
-            <div class="btn-big gray">
-                <i class="fa fa-home fa-2x"></i>
-                <span class="label bottom">@Html.ActionLink("Viaje", "Index", "Viaje")</span>
-            </div>
             <div class="btn-small green-bright last">
                 <i class="fa fa-share-square fa-2x"></i>
-                <span class="label bottom">Llegada</span>
+                <span class="label bottom">@Html.ActionLink("Llegada", "Index", "Viaje")</span>
             </div>
+            <div class="btn-small blue-nav last">
+                <i class="fa fa-share-square fa-2x"></i>
+                <span class="label bottom">Descanso</span>
+            </div>
+            <div class="btn-big red">
+                <i class="fa fa-share-square fa-2x"></i>
+                <span class="label bottom">@Html.ActionLink("Salida", "Index", "Viaje")</span>
+            </div>
+
             <div class="btn-big gray">
                 <i class="fa fa-print fa-2x"></i>
                 <span class="label bottom">Reportes</span>

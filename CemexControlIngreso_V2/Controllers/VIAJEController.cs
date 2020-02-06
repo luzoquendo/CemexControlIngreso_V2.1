@@ -9,14 +9,16 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using CemexControlIngreso_V2.Models;
+using Newtonsoft.Json;
 
 namespace CemexControlIngreso_V2.Controllers
 {
     public class VIAJEController : Controller
     {
         private CONTROLINGRESOEntities db = new CONTROLINGRESOEntities();
-
+        [Authorize]
         // GET: VIAJE
         public ActionResult Index()
         {
@@ -44,13 +46,10 @@ namespace CemexControlIngreso_V2.Controllers
         {
             ViewBag.IdConductor = new SelectList(db.CONDUCTOR.
                 Where(o => o.Estado == true),"IdConductor", "Cedula");
-
-            ViewBag.IdInstructor = new SelectList(db.INSTRUCTOR.
-                   Where(o => o.Estado == true), "IdInstructor", "Nombre");
             ViewBag.IdCorredor = new SelectList(db.CORREDOR.
-                Where(o => o.Estado == true),"IdCorredor", "IdCorredor");
+                Where(o => o.Estado == true),"IdCorredor", "Corredor1");
             ViewBag.IdProducto = new SelectList(db.PRODUCTO.
-                Where(o => o.Estado == true),"IdProducto", "Nombre");
+                Where(o => o.Estado == true),"idProducto", "Producto1");
             ViewBag.IdTrailer = new SelectList(db.TRAILER.
                 Where(o => o.Estado == true), "IdTrailer", "PlacaTrailer");
             ViewBag.IdPlaca = new SelectList(db.PLACAS.
@@ -63,7 +62,7 @@ namespace CemexControlIngreso_V2.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdViaje,IdConductor,IdCorredor,IdProducto,Estado")] VIAJE vIAJE)
+        public ActionResult Create([Bind(Include = "IdViaje,IdConductor,IdCorredor,IdProducto,Estado,IdPlaca,IdTrailer,alcohotest")] VIAJE vIAJE)
         {
             if (ModelState.IsValid)
             {
@@ -74,18 +73,27 @@ namespace CemexControlIngreso_V2.Controllers
 
             ViewBag.IdConductor = new SelectList(db.CONDUCTOR, "IdConductor", "Conductor1",vIAJE.IdConductor);
             ViewBag.IdCorredor = new SelectList(db.CORREDOR, "IdCorredor", "Corredor1", vIAJE.IdCorredor);
-            ViewBag.IdProducto = new SelectList(db.PRODUCTO, "IdProducto", "Producto", vIAJE.IdProducto);
+            ViewBag.IdProducto = new SelectList(db.PRODUCTO, "idProducto", "Producto1", vIAJE.IdProducto);
             ViewBag.IdTrailer = new SelectList(db.TRAILER, "IdTrailer", "PlacaTrailer", vIAJE.idTrailer);
             ViewBag.IdPlaca = new SelectList(db.PLACAS, "IdPlaca", "Placa", vIAJE.idPlaca);
+            ViewBag.IdViaje = new SelectList(db.VIAJE, "IdViaje", "Viaje", vIAJE.IdViaje);
+            ViewBag.alcohotest = new SelectList(db.VIAJE, "Alcohotest", "Alcohotest", vIAJE.Alcohotest);
             return View(vIAJE);
         }
 
-        public ActionResult Consulta(int? id)
+        public String Consulta(int? id)
         {
 
-            var conductorarr = db.TraerConductor(id.ToString());
+           // var conductorarr = db.TraerConductor(id.ToString());
 
-            return ViewBag.Nombre;
+            return JsonConvert.SerializeObject(db.TraerConductor(id.ToString()));
+        }
+
+        public class Inform
+        {
+            public string Nombre{ get; set; }
+            public string Celular1 { get; set; }
+            public string Celular2 { get; set; }
         }
 
         // GET: VIAJE/Edit/5
@@ -95,16 +103,24 @@ namespace CemexControlIngreso_V2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            JavaScriptSerializer js = new JavaScriptSerializer();
             VIAJE vIAJE = db.VIAJE.Find(id);
+            var inform = JsonConvert.SerializeObject(db.TraerConductorId(vIAJE.IdConductor));
+            Inform[] inform1 = js.Deserialize<Inform[]>(inform);
+
             if (vIAJE == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.IdConductor = new SelectList(db.CONDUCTOR,"IdConductor", "Nombre", vIAJE.IdConductor);
+            ViewBag.NombreCond = inform1[0].Nombre;
+            ViewBag.Celular = inform1[0].Celular1;
+            ViewBag.IdConductor = new SelectList(db.CONDUCTOR,"idConductor", "Nombre", vIAJE.IdConductor);
             ViewBag.IdCorredor = new SelectList(db.CORREDOR, "IdCorredor", "Corredor1", vIAJE.IdCorredor);
             ViewBag.IdProducto = new SelectList(db.PRODUCTO, "IdProducto", "Producto1", vIAJE.IdProducto);
             ViewBag.IdTrailer = new SelectList(db.TRAILER, "IdTrailer", "PlacaTrailer", vIAJE.idTrailer);
             ViewBag.IdPlaca = new SelectList(db.PLACAS, "IdPlaca", "Placa", vIAJE.idPlaca);
+            ViewBag.IdViaje = new SelectList(db.VIAJE, "IdViaje", "Viaje", vIAJE.IdViaje);
+            ViewBag.alcohotest = new SelectList(db.VIAJE, "alcohotest", "Alcohotest", vIAJE.Alcohotest);
             return View(vIAJE);
         }
 
@@ -113,7 +129,7 @@ namespace CemexControlIngreso_V2.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdViaje,IdConductor,IdCorredor,IdProducto,Estado")] VIAJE vIAJE)
+        public ActionResult Edit([Bind(Include = "IdViaje,IdConductor,IdCorredor,idProducto,Estado,IdPlaca,IdTrailer,alcohotest")] VIAJE vIAJE)
         {
             if (ModelState.IsValid)
             {
@@ -123,9 +139,11 @@ namespace CemexControlIngreso_V2.Controllers
             }
             ViewBag.IdConductor = new SelectList(db.CONDUCTOR, "IdConductor", "Nombre", vIAJE.IdConductor);
             ViewBag.IdCorredor = new SelectList(db.CORREDOR, "IdCorredor", "Corredor1", vIAJE.IdCorredor);
-            ViewBag.IdProducto = new SelectList(db.PRODUCTO, "IdProducto", "Producto1", vIAJE.IdProducto);
+            ViewBag.IdProducto = new SelectList(db.PRODUCTO, "idProducto", "Producto1", vIAJE.IdProducto);
             ViewBag.IdTrailer = new SelectList(db.TRAILER, "IdTrailer", "PlacaTrailer", vIAJE.idTrailer);
             ViewBag.IdPlaca = new SelectList(db.PLACAS, "IdPlaca", "Placa", vIAJE.idPlaca);
+            ViewBag.IdViaje = new SelectList(db.VIAJE, "IdViaje", "Viaje", vIAJE.IdViaje);
+            ViewBag.alcohotest = new SelectList(db.VIAJE, "alcohotest", "Alcohotest", vIAJE.Alcohotest);
             return View(vIAJE);
         }
 

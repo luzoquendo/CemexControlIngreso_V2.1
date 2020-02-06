@@ -5,21 +5,27 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="6fd0c065676a43d6ab2dcf16f3248076" Name="Diagram1">
-        <EntityTypeShape EntityType="CONTROLINGRESOModel.CONDUCTOR" Width="1.5" PointX="5" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CONTROLINGRESOModel.CORREDOR" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CONTROLINGRESOModel.INSTRUCTOR" Width="1.5" PointX="2.75" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CONTROLINGRESOModel.PLACAS" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CONTROLINGRESOModel.PRODUCTO" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CONTROLINGRESOModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CONTROLINGRESOModel.TRAILER" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CONTROLINGRESOModel.VIAJE" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="CONTROLINGRESOModel.Checklist" Width="1.5" PointX="7.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CONTROLINGRESOModel.CONDUCTOR" Width="1.5" PointX="4.875" PointY="2.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="CONTROLINGRESOModel.CORREDOR" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="false" />
+        <EntityTypeShape EntityType="CONTROLINGRESOModel.INSTRUCTOR" Width="1.5" PointX="2.75" PointY="2.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="CONTROLINGRESOModel.PLACAS" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="CONTROLINGRESOModel.PRODUCTO" Width="1.5" PointX="0.625" PointY="3.25" IsExpanded="false" />
+        <EntityTypeShape EntityType="CONTROLINGRESOModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="CONTROLINGRESOModel.TRAILER" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="CONTROLINGRESOModel.VIAJE" Width="1.5" PointX="3" PointY="0.5" IsExpanded="false" />
         <AssociationConnector Association="CONTROLINGRESOModel.FK_CONDUCTOR_INSTRUCTOR" ManuallyRouted="false" />
         <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJE_CORREDOR" ManuallyRouted="false" />
         <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJE_PRODUCTO" ManuallyRouted="false" />
         <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJE_CONDUCTOR" />
         <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJE_PLACAS" />
         <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJE_TRAILER" />
+        <EntityTypeShape EntityType="CONTROLINGRESOModel.VIAJECTRL" Width="1.5" PointX="2.5" PointY="4.125" IsExpanded="false" />
+        <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJECTRL_CONDUCTOR1" />
+        <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJECTRL_CORREDOR1" />
+        <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJECTRL_PLACAS1" />
+        <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJECTRL_PRODUCTO1" />
+        <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJECTRL_TRAILER1" />
+        <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJE_INSTRUCTOR" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -35,7 +35,7 @@ namespace CemexControlIngreso_V2.Models
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<TRAILER> TRAILER { get; set; }
         public virtual DbSet<VIAJE> VIAJE { get; set; }
-        public virtual DbSet<Checklist> Checklist { get; set; }
+        public virtual DbSet<VIAJECTRL> VIAJECTRL { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
@@ -147,6 +147,15 @@ namespace CemexControlIngreso_V2.Models
                 new ObjectParameter("Cedula", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TraerConductor_Result>("TraerConductor", cedulaParameter);
+        }
+    
+        public virtual ObjectResult<TraerConductorId_Result> TraerConductorId(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TraerConductorId_Result>("TraerConductorId", idParameter);
         }
     }
 }

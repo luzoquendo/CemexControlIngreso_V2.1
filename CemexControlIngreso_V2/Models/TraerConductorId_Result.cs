@@ -10,12 +10,11 @@
 namespace CemexControlIngreso_V2.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Checklist
+    public partial class TraerConductorId_Result
     {
-        public int Id { get; set; }
-        public byte[] Checklist1 { get; set; }
-        public Nullable<int> idViaje { get; set; }
+        public string Nombre { get; set; }
+        public string Celular1 { get; set; }
+        public string Celular2 { get; set; }
     }
 }

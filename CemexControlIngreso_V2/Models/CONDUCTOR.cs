@@ -18,6 +18,7 @@ namespace CemexControlIngreso_V2.Models
         public CONDUCTOR()
         {
             this.VIAJE = new HashSet<VIAJE>();
+            this.VIAJECTRL = new HashSet<VIAJECTRL>();
         }
     
         public int IdConductor { get; set; }
@@ -31,5 +32,7 @@ namespace CemexControlIngreso_V2.Models
         public virtual INSTRUCTOR INSTRUCTOR { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VIAJE> VIAJE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VIAJECTRL> VIAJECTRL { get; set; }
     }
 }

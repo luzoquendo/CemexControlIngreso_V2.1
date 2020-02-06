@@ -12,24 +12,23 @@ namespace CemexControlIngreso_V2.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class VIAJE
+    public partial class VIAJECTRL
     {
         public int IdViaje { get; set; }
         public int IdCorredor { get; set; }
-        public Nullable<int> IdProducto { get; set; }
-        public Nullable<bool> Estado { get; set; }
-        public Nullable<int> IdConductor { get; set; }
-        public Nullable<int> idPlaca { get; set; }
-        public Nullable<int> idTrailer { get; set; }
-        public Nullable<System.DateTime> Fecha { get; set; }
+        public int IdProducto { get; set; }
+        public bool Estado { get; set; }
+        public int IdConductor { get; set; }
+        public int idPlaca { get; set; }
+        public int idTrailer { get; set; }
+        public System.DateTime Fecha { get; set; }
         public string Alcohotest { get; set; }
-        public Nullable<int> IdInstructor { get; set; }
+        public System.DateTime FechaCtrl { get; set; }
     
-        public virtual CORREDOR CORREDOR { get; set; }
-        public virtual PRODUCTO PRODUCTO { get; set; }
         public virtual CONDUCTOR CONDUCTOR { get; set; }
+        public virtual CORREDOR CORREDOR { get; set; }
         public virtual PLACAS PLACAS { get; set; }
+        public virtual PRODUCTO PRODUCTO { get; set; }
         public virtual TRAILER TRAILER { get; set; }
-        public virtual INSTRUCTOR INSTRUCTOR { get; set; }
     }
 }

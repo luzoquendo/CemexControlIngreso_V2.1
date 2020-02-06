@@ -12,10 +12,22 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.CORREDOR.Corredor1)
+            @Html.DisplayNameFor(model => model.CONDUCTOR.Nombre)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.PRODUCTO.Producto1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CORREDOR.Corredor1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PLACAS.Placa)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TRAILER.PlacaTrailer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Alcohotest)
         </th>
         <th></th>
     </tr>
@@ -23,15 +35,27 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.CORREDOR.Corredor1)
+            @Html.DisplayFor(modelItem => item.CONDUCTOR.Nombre)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.PRODUCTO.Producto1)
         </td>
         <td>
-            @Html.ActionLink("Editar", "Edit", new { id=item.IdViaje }) |
-            @Html.ActionLink("Consultar", "Details", new { id=item.IdViaje }) |
-            @Html.ActionLink("Borrar", "Delete", new { id=item.IdViaje })
+            @Html.DisplayFor(modelItem => item.CORREDOR.Corredor1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PLACAS.Placa)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TRAILER.PlacaTrailer)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Alcohotest)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id = item.IdViaje }) |
+            @Html.ActionLink("Consultar", "Details", new { id = item.IdViaje }) |
+            @Html.ActionLink("Borrar", "Delete", new { id = item.IdViaje })
         </td>
     </tr>
 }

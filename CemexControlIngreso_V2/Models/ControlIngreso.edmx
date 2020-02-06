@@ -5,17 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="CONTROLINGRESOModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'CONTROLINGRESO.dbo.Checklist' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
-        <EntityType Name="Checklist">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="Checklist" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Checklist" Type="image" Nullable="false" />
-          <Property Name="idViaje" Type="int" />
-        </EntityType>
         <EntityType Name="CONDUCTOR">
           <Key>
             <PropertyRef Name="IdConductor" />
@@ -92,6 +81,23 @@ advertencia 6002: La tabla o vista 'CONTROLINGRESO.dbo.Checklist' no tiene defin
           <Property Name="idPlaca" Type="int" />
           <Property Name="idTrailer" Type="int" />
           <Property Name="Fecha" Type="datetime" />
+          <Property Name="Alcohotest" Type="nvarchar" MaxLength="6" />
+          <Property Name="IdInstructor" Type="int" />
+        </EntityType>
+        <EntityType Name="VIAJECTRL">
+          <Key>
+            <PropertyRef Name="IdViaje" />
+          </Key>
+          <Property Name="IdViaje" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdCorredor" Type="int" Nullable="false" />
+          <Property Name="IdProducto" Type="int" Nullable="false" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
+          <Property Name="IdConductor" Type="int" Nullable="false" />
+          <Property Name="idPlaca" Type="int" Nullable="false" />
+          <Property Name="idTrailer" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" Nullable="false" />
+          <Property Name="Alcohotest" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="FechaCtrl" Type="datetime" Nullable="false" />
         </EntityType>
         <Association Name="FK_CONDUCTOR_INSTRUCTOR">
           <End Role="INSTRUCTOR" Type="Self.INSTRUCTOR" Multiplicity="1" />
@@ -126,6 +132,18 @@ advertencia 6002: La tabla o vista 'CONTROLINGRESO.dbo.Checklist' no tiene defin
             </Principal>
             <Dependent Role="VIAJE">
               <PropertyRef Name="IdCorredor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VIAJE_INSTRUCTOR">
+          <End Role="INSTRUCTOR" Type="Self.INSTRUCTOR" Multiplicity="0..1" />
+          <End Role="VIAJE" Type="Self.VIAJE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INSTRUCTOR">
+              <PropertyRef Name="IdInstructor" />
+            </Principal>
+            <Dependent Role="VIAJE">
+              <PropertyRef Name="IdInstructor" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -165,6 +183,126 @@ advertencia 6002: La tabla o vista 'CONTROLINGRESO.dbo.Checklist' no tiene defin
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_VIAJECTRL_CONDUCTOR">
+          <End Role="CONDUCTOR" Type="Self.CONDUCTOR" Multiplicity="0..1" />
+          <End Role="VIAJE" Type="Self.VIAJE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CONDUCTOR">
+              <PropertyRef Name="IdConductor" />
+            </Principal>
+            <Dependent Role="VIAJE">
+              <PropertyRef Name="IdConductor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VIAJECTRL_CONDUCTOR1">
+          <End Role="CONDUCTOR" Type="Self.CONDUCTOR" Multiplicity="1" />
+          <End Role="VIAJECTRL" Type="Self.VIAJECTRL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CONDUCTOR">
+              <PropertyRef Name="IdConductor" />
+            </Principal>
+            <Dependent Role="VIAJECTRL">
+              <PropertyRef Name="IdConductor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VIAJECTRL_CORREDOR">
+          <End Role="CORREDOR" Type="Self.CORREDOR" Multiplicity="1" />
+          <End Role="VIAJE" Type="Self.VIAJE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CORREDOR">
+              <PropertyRef Name="IdCorredor" />
+            </Principal>
+            <Dependent Role="VIAJE">
+              <PropertyRef Name="IdCorredor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VIAJECTRL_CORREDOR1">
+          <End Role="CORREDOR" Type="Self.CORREDOR" Multiplicity="1" />
+          <End Role="VIAJECTRL" Type="Self.VIAJECTRL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CORREDOR">
+              <PropertyRef Name="IdCorredor" />
+            </Principal>
+            <Dependent Role="VIAJECTRL">
+              <PropertyRef Name="IdCorredor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VIAJECTRL_PLACAS">
+          <End Role="PLACAS" Type="Self.PLACAS" Multiplicity="0..1" />
+          <End Role="VIAJE" Type="Self.VIAJE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PLACAS">
+              <PropertyRef Name="IdPlaca" />
+            </Principal>
+            <Dependent Role="VIAJE">
+              <PropertyRef Name="idPlaca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VIAJECTRL_PLACAS1">
+          <End Role="PLACAS" Type="Self.PLACAS" Multiplicity="1" />
+          <End Role="VIAJECTRL" Type="Self.VIAJECTRL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PLACAS">
+              <PropertyRef Name="IdPlaca" />
+            </Principal>
+            <Dependent Role="VIAJECTRL">
+              <PropertyRef Name="idPlaca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VIAJECTRL_PRODUCTO">
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="0..1" />
+          <End Role="VIAJE" Type="Self.VIAJE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTO">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="VIAJE">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VIAJECTRL_PRODUCTO1">
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="1" />
+          <End Role="VIAJECTRL" Type="Self.VIAJECTRL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTO">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="VIAJECTRL">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VIAJECTRL_TRAILER">
+          <End Role="TRAILER" Type="Self.TRAILER" Multiplicity="0..1" />
+          <End Role="VIAJE" Type="Self.VIAJE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRAILER">
+              <PropertyRef Name="IdTrailer" />
+            </Principal>
+            <Dependent Role="VIAJE">
+              <PropertyRef Name="idTrailer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VIAJECTRL_TRAILER1">
+          <End Role="TRAILER" Type="Self.TRAILER" Multiplicity="1" />
+          <End Role="VIAJECTRL" Type="Self.VIAJECTRL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRAILER">
+              <PropertyRef Name="IdTrailer" />
+            </Principal>
+            <Dependent Role="VIAJECTRL">
+              <PropertyRef Name="idTrailer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -199,6 +337,9 @@ advertencia 6002: La tabla o vista 'CONTROLINGRESO.dbo.Checklist' no tiene defin
         <Function Name="TraerConductor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Cedula" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="TraerConductorId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="CONTROLINGRESOModelStoreContainer">
           <EntitySet Name="CONDUCTOR" EntityType="Self.CONDUCTOR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CORREDOR" EntityType="Self.CORREDOR" Schema="dbo" store:Type="Tables" />
@@ -208,13 +349,7 @@ advertencia 6002: La tabla o vista 'CONTROLINGRESO.dbo.Checklist' no tiene defin
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TRAILER" EntityType="Self.TRAILER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VIAJE" EntityType="Self.VIAJE" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Checklist" EntityType="Self.Checklist" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Checklist].[Id] AS [Id], 
-    [Checklist].[Checklist] AS [Checklist], 
-    [Checklist].[idViaje] AS [idViaje]
-    FROM [dbo].[Checklist] AS [Checklist]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="VIAJECTRL" EntityType="Self.VIAJECTRL" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_CONDUCTOR_INSTRUCTOR" Association="Self.FK_CONDUCTOR_INSTRUCTOR">
             <End Role="INSTRUCTOR" EntitySet="INSTRUCTOR" />
             <End Role="CONDUCTOR" EntitySet="CONDUCTOR" />
@@ -225,6 +360,10 @@ advertencia 6002: La tabla o vista 'CONTROLINGRESO.dbo.Checklist' no tiene defin
           </AssociationSet>
           <AssociationSet Name="FK_VIAJE_CORREDOR" Association="Self.FK_VIAJE_CORREDOR">
             <End Role="CORREDOR" EntitySet="CORREDOR" />
+            <End Role="VIAJE" EntitySet="VIAJE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VIAJE_INSTRUCTOR" Association="Self.FK_VIAJE_INSTRUCTOR">
+            <End Role="INSTRUCTOR" EntitySet="INSTRUCTOR" />
             <End Role="VIAJE" EntitySet="VIAJE" />
           </AssociationSet>
           <AssociationSet Name="FK_VIAJE_PLACAS" Association="Self.FK_VIAJE_PLACAS">
@@ -238,6 +377,46 @@ advertencia 6002: La tabla o vista 'CONTROLINGRESO.dbo.Checklist' no tiene defin
           <AssociationSet Name="FK_VIAJE_TRAILER" Association="Self.FK_VIAJE_TRAILER">
             <End Role="TRAILER" EntitySet="TRAILER" />
             <End Role="VIAJE" EntitySet="VIAJE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VIAJECTRL_CONDUCTOR" Association="Self.FK_VIAJECTRL_CONDUCTOR">
+            <End Role="CONDUCTOR" EntitySet="CONDUCTOR" />
+            <End Role="VIAJE" EntitySet="VIAJE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VIAJECTRL_CONDUCTOR1" Association="Self.FK_VIAJECTRL_CONDUCTOR1">
+            <End Role="CONDUCTOR" EntitySet="CONDUCTOR" />
+            <End Role="VIAJECTRL" EntitySet="VIAJECTRL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VIAJECTRL_CORREDOR" Association="Self.FK_VIAJECTRL_CORREDOR">
+            <End Role="CORREDOR" EntitySet="CORREDOR" />
+            <End Role="VIAJE" EntitySet="VIAJE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VIAJECTRL_CORREDOR1" Association="Self.FK_VIAJECTRL_CORREDOR1">
+            <End Role="CORREDOR" EntitySet="CORREDOR" />
+            <End Role="VIAJECTRL" EntitySet="VIAJECTRL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VIAJECTRL_PLACAS" Association="Self.FK_VIAJECTRL_PLACAS">
+            <End Role="PLACAS" EntitySet="PLACAS" />
+            <End Role="VIAJE" EntitySet="VIAJE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VIAJECTRL_PLACAS1" Association="Self.FK_VIAJECTRL_PLACAS1">
+            <End Role="PLACAS" EntitySet="PLACAS" />
+            <End Role="VIAJECTRL" EntitySet="VIAJECTRL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VIAJECTRL_PRODUCTO" Association="Self.FK_VIAJECTRL_PRODUCTO">
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+            <End Role="VIAJE" EntitySet="VIAJE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VIAJECTRL_PRODUCTO1" Association="Self.FK_VIAJECTRL_PRODUCTO1">
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+            <End Role="VIAJECTRL" EntitySet="VIAJECTRL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VIAJECTRL_TRAILER" Association="Self.FK_VIAJECTRL_TRAILER">
+            <End Role="TRAILER" EntitySet="TRAILER" />
+            <End Role="VIAJE" EntitySet="VIAJE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VIAJECTRL_TRAILER1" Association="Self.FK_VIAJECTRL_TRAILER1">
+            <End Role="TRAILER" EntitySet="TRAILER" />
+            <End Role="VIAJECTRL" EntitySet="VIAJECTRL" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -257,6 +436,7 @@ advertencia 6002: La tabla o vista 'CONTROLINGRESO.dbo.Checklist' no tiene defin
           <NavigationProperty Name="INSTRUCTOR" Relationship="Self.FK_CONDUCTOR_INSTRUCTOR" FromRole="CONDUCTOR" ToRole="INSTRUCTOR" />
           <Property Name="Cedula" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="VIAJE" Relationship="CONTROLINGRESOModel.FK_VIAJE_CONDUCTOR" FromRole="CONDUCTOR" ToRole="VIAJE" />
+          <NavigationProperty Name="VIAJECTRL" Relationship="CONTROLINGRESOModel.FK_VIAJECTRL_CONDUCTOR1" FromRole="CONDUCTOR" ToRole="VIAJECTRL" />
         </EntityType>
         <EntityType Name="CORREDOR">
           <Key>
@@ -266,6 +446,7 @@ advertencia 6002: La tabla o vista 'CONTROLINGRESO.dbo.Checklist' no tiene defin
           <Property Name="Corredor1" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Estado" Type="Boolean" />
           <NavigationProperty Name="VIAJE" Relationship="Self.FK_VIAJE_CORREDOR" FromRole="CORREDOR" ToRole="VIAJE" />
+          <NavigationProperty Name="VIAJECTRL" Relationship="CONTROLINGRESOModel.FK_VIAJECTRL_CORREDOR1" FromRole="CORREDOR" ToRole="VIAJECTRL" />
         </EntityType>
         <EntityType Name="INSTRUCTOR">
           <Key>
@@ -277,6 +458,7 @@ advertencia 6002: La tabla o vista 'CONTROLINGRESO.dbo.Checklist' no tiene defin
           <Property Name="Celular2" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Estado" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="CONDUCTOR" Relationship="Self.FK_CONDUCTOR_INSTRUCTOR" FromRole="INSTRUCTOR" ToRole="CONDUCTOR" />
+          <NavigationProperty Name="VIAJE" Relationship="CONTROLINGRESOModel.FK_VIAJE_INSTRUCTOR" FromRole="INSTRUCTOR" ToRole="VIAJE" />
         </EntityType>
         <EntityType Name="PLACAS">
           <Key>
@@ -286,6 +468,7 @@ advertencia 6002: La tabla o vista 'CONTROLINGRESO.dbo.Checklist' no tiene defin
           <Property Name="Placa" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Estado" Type="Boolean" />
           <NavigationProperty Name="VIAJE" Relationship="CONTROLINGRESOModel.FK_VIAJE_PLACAS" FromRole="PLACAS" ToRole="VIAJE" />
+          <NavigationProperty Name="VIAJECTRL" Relationship="CONTROLINGRESOModel.FK_VIAJECTRL_PLACAS1" FromRole="PLACAS" ToRole="VIAJECTRL" />
         </EntityType>
         <EntityType Name="PRODUCTO">
           <Key>
@@ -295,6 +478,7 @@ advertencia 6002: La tabla o vista 'CONTROLINGRESO.dbo.Checklist' no tiene defin
           <Property Name="Producto1" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Estado" Type="Boolean" />
           <NavigationProperty Name="VIAJE" Relationship="Self.FK_VIAJE_PRODUCTO" FromRole="PRODUCTO" ToRole="VIAJE" />
+          <NavigationProperty Name="VIAJECTRL" Relationship="CONTROLINGRESOModel.FK_VIAJECTRL_PRODUCTO1" FromRole="PRODUCTO" ToRole="VIAJECTRL" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -314,6 +498,7 @@ advertencia 6002: La tabla o vista 'CONTROLINGRESO.dbo.Checklist' no tiene defin
           <Property Name="PlacaTrailer" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Estado" Type="Boolean" />
           <NavigationProperty Name="VIAJE" Relationship="CONTROLINGRESOModel.FK_VIAJE_TRAILER" FromRole="TRAILER" ToRole="VIAJE" />
+          <NavigationProperty Name="VIAJECTRL" Relationship="CONTROLINGRESOModel.FK_VIAJECTRL_TRAILER1" FromRole="TRAILER" ToRole="VIAJECTRL" />
         </EntityType>
         <EntityType Name="VIAJE">
           <Key>
@@ -332,15 +517,9 @@ advertencia 6002: La tabla o vista 'CONTROLINGRESO.dbo.Checklist' no tiene defin
           <NavigationProperty Name="CONDUCTOR" Relationship="CONTROLINGRESOModel.FK_VIAJE_CONDUCTOR" FromRole="VIAJE" ToRole="CONDUCTOR" />
           <NavigationProperty Name="PLACAS" Relationship="CONTROLINGRESOModel.FK_VIAJE_PLACAS" FromRole="VIAJE" ToRole="PLACAS" />
           <NavigationProperty Name="TRAILER" Relationship="CONTROLINGRESOModel.FK_VIAJE_TRAILER" FromRole="VIAJE" ToRole="TRAILER" />
-        </EntityType>
-        <EntityType Name="Checklist">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="Checklist1" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Checklist1" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
-          <Property Name="idViaje" Type="Int32" />
+          <Property Name="Alcohotest" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="IdInstructor" Type="Int32" />
+          <NavigationProperty Name="INSTRUCTOR" Relationship="CONTROLINGRESOModel.FK_VIAJE_INSTRUCTOR" FromRole="VIAJE" ToRole="INSTRUCTOR" />
         </EntityType>
         <Association Name="FK_CONDUCTOR_INSTRUCTOR">
           <End Role="INSTRUCTOR" Type="Self.INSTRUCTOR" Multiplicity="1" />
@@ -387,7 +566,6 @@ advertencia 6002: La tabla o vista 'CONTROLINGRESO.dbo.Checklist' no tiene defin
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="TRAILER" EntityType="Self.TRAILER" />
           <EntitySet Name="VIAJE" EntityType="Self.VIAJE" />
-          <EntitySet Name="Checklist" EntityType="Self.Checklist" />
           <AssociationSet Name="FK_CONDUCTOR_INSTRUCTOR" Association="Self.FK_CONDUCTOR_INSTRUCTOR">
             <End Role="INSTRUCTOR" EntitySet="INSTRUCTOR" />
             <End Role="CONDUCTOR" EntitySet="CONDUCTOR" />
@@ -445,6 +623,34 @@ advertencia 6002: La tabla o vista 'CONTROLINGRESO.dbo.Checklist' no tiene defin
             <End Role="TRAILER" EntitySet="TRAILER" />
             <End Role="VIAJE" EntitySet="VIAJE" />
           </AssociationSet>
+          <FunctionImport Name="TraerConductorId" ReturnType="Collection(CONTROLINGRESOModel.TraerConductorId_Result)">
+          <Parameter Name="Id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="VIAJECTRL" EntityType="CONTROLINGRESOModel.VIAJECTRL" />
+          <AssociationSet Name="FK_VIAJECTRL_CONDUCTOR1" Association="CONTROLINGRESOModel.FK_VIAJECTRL_CONDUCTOR1">
+            <End Role="CONDUCTOR" EntitySet="CONDUCTOR" />
+            <End Role="VIAJECTRL" EntitySet="VIAJECTRL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VIAJECTRL_CORREDOR1" Association="CONTROLINGRESOModel.FK_VIAJECTRL_CORREDOR1">
+            <End Role="CORREDOR" EntitySet="CORREDOR" />
+            <End Role="VIAJECTRL" EntitySet="VIAJECTRL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VIAJECTRL_PLACAS1" Association="CONTROLINGRESOModel.FK_VIAJECTRL_PLACAS1">
+            <End Role="PLACAS" EntitySet="PLACAS" />
+            <End Role="VIAJECTRL" EntitySet="VIAJECTRL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VIAJECTRL_PRODUCTO1" Association="CONTROLINGRESOModel.FK_VIAJECTRL_PRODUCTO1">
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+            <End Role="VIAJECTRL" EntitySet="VIAJECTRL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VIAJECTRL_TRAILER1" Association="CONTROLINGRESOModel.FK_VIAJECTRL_TRAILER1">
+            <End Role="TRAILER" EntitySet="TRAILER" />
+            <End Role="VIAJECTRL" EntitySet="VIAJECTRL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VIAJE_INSTRUCTOR" Association="CONTROLINGRESOModel.FK_VIAJE_INSTRUCTOR">
+            <End Role="INSTRUCTOR" EntitySet="INSTRUCTOR" />
+            <End Role="VIAJE" EntitySet="VIAJE" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -495,6 +701,103 @@ advertencia 6002: La tabla o vista 'CONTROLINGRESO.dbo.Checklist' no tiene defin
             </Principal>
             <Dependent Role="VIAJE">
               <PropertyRef Name="idTrailer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="TraerConductorId_Result">
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="Celular1" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Celular2" Nullable="false" MaxLength="20" />
+        </ComplexType>
+        <EntityType Name="VIAJECTRL">
+          <Key>
+            <PropertyRef Name="IdViaje" />
+          </Key>
+          <Property Name="IdViaje" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdCorredor" Type="Int32" Nullable="false" />
+          <Property Name="IdProducto" Type="Int32" Nullable="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <Property Name="IdConductor" Type="Int32" Nullable="false" />
+          <Property Name="idPlaca" Type="Int32" Nullable="false" />
+          <Property Name="idTrailer" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Alcohotest" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="FechaCtrl" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="CONDUCTOR" Relationship="CONTROLINGRESOModel.FK_VIAJECTRL_CONDUCTOR1" FromRole="VIAJECTRL" ToRole="CONDUCTOR" />
+          <NavigationProperty Name="CORREDOR" Relationship="CONTROLINGRESOModel.FK_VIAJECTRL_CORREDOR1" FromRole="VIAJECTRL" ToRole="CORREDOR" />
+          <NavigationProperty Name="PLACAS" Relationship="CONTROLINGRESOModel.FK_VIAJECTRL_PLACAS1" FromRole="VIAJECTRL" ToRole="PLACAS" />
+          <NavigationProperty Name="PRODUCTO" Relationship="CONTROLINGRESOModel.FK_VIAJECTRL_PRODUCTO1" FromRole="VIAJECTRL" ToRole="PRODUCTO" />
+          <NavigationProperty Name="TRAILER" Relationship="CONTROLINGRESOModel.FK_VIAJECTRL_TRAILER1" FromRole="VIAJECTRL" ToRole="TRAILER" />
+        </EntityType>
+        <Association Name="FK_VIAJECTRL_CONDUCTOR1">
+          <End Type="CONTROLINGRESOModel.CONDUCTOR" Role="CONDUCTOR" Multiplicity="1" />
+          <End Type="CONTROLINGRESOModel.VIAJECTRL" Role="VIAJECTRL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CONDUCTOR">
+              <PropertyRef Name="IdConductor" />
+            </Principal>
+            <Dependent Role="VIAJECTRL">
+              <PropertyRef Name="IdConductor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VIAJECTRL_CORREDOR1">
+          <End Type="CONTROLINGRESOModel.CORREDOR" Role="CORREDOR" Multiplicity="1" />
+          <End Type="CONTROLINGRESOModel.VIAJECTRL" Role="VIAJECTRL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CORREDOR">
+              <PropertyRef Name="IdCorredor" />
+            </Principal>
+            <Dependent Role="VIAJECTRL">
+              <PropertyRef Name="IdCorredor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VIAJECTRL_PLACAS1">
+          <End Type="CONTROLINGRESOModel.PLACAS" Role="PLACAS" Multiplicity="1" />
+          <End Type="CONTROLINGRESOModel.VIAJECTRL" Role="VIAJECTRL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PLACAS">
+              <PropertyRef Name="IdPlaca" />
+            </Principal>
+            <Dependent Role="VIAJECTRL">
+              <PropertyRef Name="idPlaca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VIAJECTRL_PRODUCTO1">
+          <End Type="CONTROLINGRESOModel.PRODUCTO" Role="PRODUCTO" Multiplicity="1" />
+          <End Type="CONTROLINGRESOModel.VIAJECTRL" Role="VIAJECTRL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTO">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="VIAJECTRL">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VIAJECTRL_TRAILER1">
+          <End Type="CONTROLINGRESOModel.TRAILER" Role="TRAILER" Multiplicity="1" />
+          <End Type="CONTROLINGRESOModel.VIAJECTRL" Role="VIAJECTRL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRAILER">
+              <PropertyRef Name="IdTrailer" />
+            </Principal>
+            <Dependent Role="VIAJECTRL">
+              <PropertyRef Name="idTrailer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VIAJE_INSTRUCTOR">
+          <End Type="CONTROLINGRESOModel.INSTRUCTOR" Role="INSTRUCTOR" Multiplicity="0..1" />
+          <End Type="CONTROLINGRESOModel.VIAJE" Role="VIAJE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INSTRUCTOR">
+              <PropertyRef Name="IdInstructor" />
+            </Principal>
+            <Dependent Role="VIAJE">
+              <PropertyRef Name="IdInstructor" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -578,6 +881,8 @@ advertencia 6002: La tabla o vista 'CONTROLINGRESO.dbo.Checklist' no tiene defin
           <EntitySetMapping Name="VIAJE">
             <EntityTypeMapping TypeName="CONTROLINGRESOModel.VIAJE">
               <MappingFragment StoreEntitySet="VIAJE">
+                <ScalarProperty Name="IdInstructor" ColumnName="IdInstructor" />
+                <ScalarProperty Name="Alcohotest" ColumnName="Alcohotest" />
                 <ScalarProperty Name="Fecha" ColumnName="Fecha" />
                 <ScalarProperty Name="IdViaje" ColumnName="IdViaje" />
                 <ScalarProperty Name="IdCorredor" ColumnName="IdCorredor" />
@@ -586,15 +891,6 @@ advertencia 6002: La tabla o vista 'CONTROLINGRESO.dbo.Checklist' no tiene defin
                 <ScalarProperty Name="IdConductor" ColumnName="IdConductor" />
                 <ScalarProperty Name="idPlaca" ColumnName="idPlaca" />
                 <ScalarProperty Name="idTrailer" ColumnName="idTrailer" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Checklist">
-            <EntityTypeMapping TypeName="CONTROLINGRESOModel.Checklist">
-              <MappingFragment StoreEntitySet="Checklist">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Checklist1" ColumnName="Checklist" />
-                <ScalarProperty Name="idViaje" ColumnName="idViaje" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -631,6 +927,31 @@ advertencia 6002: La tabla o vista 'CONTROLINGRESO.dbo.Checklist' no tiene defin
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="TraerConductorId" FunctionName="CONTROLINGRESOModel.Store.TraerConductorId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CONTROLINGRESOModel.TraerConductorId_Result">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Celular1" ColumnName="Celular1" />
+                <ScalarProperty Name="Celular2" ColumnName="Celular2" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="VIAJECTRL">
+            <EntityTypeMapping TypeName="CONTROLINGRESOModel.VIAJECTRL">
+              <MappingFragment StoreEntitySet="VIAJECTRL">
+                <ScalarProperty Name="FechaCtrl" ColumnName="FechaCtrl" />
+                <ScalarProperty Name="Alcohotest" ColumnName="Alcohotest" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="idTrailer" ColumnName="idTrailer" />
+                <ScalarProperty Name="idPlaca" ColumnName="idPlaca" />
+                <ScalarProperty Name="IdConductor" ColumnName="IdConductor" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="IdCorredor" ColumnName="IdCorredor" />
+                <ScalarProperty Name="IdViaje" ColumnName="IdViaje" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

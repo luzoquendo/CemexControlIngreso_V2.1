@@ -24,11 +24,14 @@ namespace CemexControlIngreso_V2.Models
         public System.DateTime Fecha { get; set; }
         public string Alcohotest { get; set; }
         public System.DateTime FechaCtrl { get; set; }
+        public Nullable<int> IdInstructor { get; set; }
+        public string NumeroViaje { get; set; }
     
         public virtual CONDUCTOR CONDUCTOR { get; set; }
         public virtual CORREDOR CORREDOR { get; set; }
         public virtual PLACAS PLACAS { get; set; }
         public virtual PRODUCTO PRODUCTO { get; set; }
         public virtual TRAILER TRAILER { get; set; }
+        public virtual INSTRUCTOR INSTRUCTOR { get; set; }
     }
 }

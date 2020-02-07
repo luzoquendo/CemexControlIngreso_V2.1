@@ -1,4 +1,4 @@
-﻿@model CemexControlIngreso_V2.Models.VIAJE
+﻿@model CemexControlIngreso_V2.Models.VIAJECTRL
 @{
     var val = Model.IdConductor;
 }
@@ -26,7 +26,7 @@
                  debugger;
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("ConsultaId", "VIAJE")',
+                url: '@Url.Action("ConsultaId", "VIAJECTRL")',
                 data: { IdConductor: val },
                 datatype: "html",
                 success: function (data) {
@@ -102,7 +102,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Estado, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(m => m.Estado, new SelectList(new[] { new { Value = "true", Text = "Activo" }, new { Value = "false", Text = "Inactivo" }, }, "Value", "Text"))
+            @Html.DropDownListFor(m => m.Estado, new SelectList(new[] { new { Value = "true", Text = "En Curso" }, new { Value = "false", Text = "Fin Viaje" }, }, "Value", "Text"))
             @*@Html.EditorFor(model => model.Estado, new { htmlAttributes = new { @class = "form-control" } })*@
             @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
         </div>

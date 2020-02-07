@@ -21,6 +21,7 @@ namespace CemexControlIngreso_V2.Controllers
         {
             var cONDUCTOR = db.CONDUCTOR.Include(c => c.INSTRUCTOR);
             return View(cONDUCTOR.ToList());
+
         }
 
         // GET: CONDUCTOR/Details/5
@@ -80,12 +81,24 @@ namespace CemexControlIngreso_V2.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdConductor,Nombre,IdInstructor,Celular1,Celular2,Estado")] CONDUCTOR cONDUCTOR)
+        public ActionResult Create([Bind(Include = "IdConductor,Nombre,IdInstructor,Celular1,Celular2,Estado,Cedula")] CONDUCTOR cONDUCTOR)
         {
             if (ModelState.IsValid)
             {
-                db.CONDUCTOR.Add(cONDUCTOR);
-                db.SaveChanges();
+                bool existeUsuario = db.CONDUCTOR.Any(x => x.Cedula == cONDUCTOR.Cedula);
+                if (!existeUsuario)
+                {
+                    cONDUCTOR.Estado = true;
+                    cONDUCTOR.Nombre = cONDUCTOR.Nombre.ToUpper();
+                    db.CONDUCTOR.Add(cONDUCTOR);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    ViewBag.Script = "<script type='text/javascript'>alert('Ya existe un registro con este número de documento, por favor revise.');</script>";
+                    return RedirectToAction("Index");
+                }
+ 
                 return RedirectToAction("Index");
             }
 

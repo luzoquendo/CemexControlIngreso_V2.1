@@ -50,6 +50,7 @@ namespace CemexControlIngreso_V2.Controllers
         {
             if (ModelState.IsValid)
             {
+                tRAILER.PlacaTrailer = tRAILER.PlacaTrailer.ToUpper();
                 db.TRAILER.Add(tRAILER);
                 db.SaveChanges();
                 return RedirectToAction("Index");

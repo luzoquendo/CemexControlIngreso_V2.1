@@ -24,6 +24,9 @@
         <th>
             @Html.DisplayNameFor(model => model.INSTRUCTOR.Nombre)
         </th>
+         <th>
+            @Html.DisplayNameFor(model => model.Estado)
+        </th>
         <th></th>
     </tr>
 
@@ -42,9 +45,12 @@
             @Html.DisplayFor(modelItem => item.INSTRUCTOR.Nombre)
         </td>
         <td>
-            @Html.ActionLink("Editar", "Edit", new { id=item.IdConductor }) |
-            @Html.ActionLink("Consultar", "Details", new { id=item.IdConductor }) |
-            @Html.ActionLink("Borrar", "Delete", new { id=item.IdConductor })
+            @Html.DisplayFor(modelItem => item.Estado)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id = item.IdConductor }) |
+            @Html.ActionLink("Consultar", "Details", new { id = item.IdConductor }) |
+            @Html.ActionLink("Borrar", "Delete", new { id = item.IdConductor })
         </td>
     </tr>
 }

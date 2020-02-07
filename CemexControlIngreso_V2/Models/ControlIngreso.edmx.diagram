@@ -26,6 +26,7 @@
         <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJECTRL_PRODUCTO1" />
         <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJECTRL_TRAILER1" />
         <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJE_INSTRUCTOR" />
+        <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJECTRL_INSTRUCTOR" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

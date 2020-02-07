@@ -16,14 +16,14 @@ using Newtonsoft.Json;
 
 namespace CemexControlIngreso_V2.Controllers
 {
-    public class VIAJEController : Controller
+    public class VIAJECTRLController : Controller
     {
         private CONTROLINGRESOEntities db = new CONTROLINGRESOEntities();
         [Authorize]
         // GET: VIAJE
         public ActionResult Index()
         {
-            var vIAJE = db.VIAJE.Include(v => v.CONDUCTOR).Include(v => v.CORREDOR).Include(v => v.PRODUCTO).Include(v => v.PLACAS).Include(v => v.TRAILER);
+            var vIAJE = db.VIAJECTRL.Include(v => v.CONDUCTOR).Include(v => v.CORREDOR).Include(v => v.PRODUCTO).Include(v => v.PLACAS).Include(v => v.TRAILER);
             return View(vIAJE.ToList());
         }
 
@@ -34,7 +34,7 @@ namespace CemexControlIngreso_V2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VIAJE vIAJE = db.VIAJE.Find(id);
+            VIAJECTRL vIAJE = db.VIAJECTRL.Find(id);
             if (vIAJE == null)
             {
                 return HttpNotFound();
@@ -63,32 +63,12 @@ namespace CemexControlIngreso_V2.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdViaje,IdConductor,IdCorredor,IdProducto,Estado,IdPlaca,IdTrailer,Alcohotest,NumeroViaje")] VIAJE vIAJE)
+        public ActionResult Create([Bind(Include = "IdViaje,IdConductor,IdCorredor,IdProducto,Estado,IdPlaca,IdTrailer,Alcohotest, NumeroViaje")] VIAJECTRL vIAJE)
         {
             if (ModelState.IsValid)
             {
-                VIAJECTRL vIAJECTRL = new VIAJECTRL();
-                vIAJE.Fecha = DateTime.Now;
-                vIAJE.Estado = true;
-                db.VIAJE.Add(vIAJE);
+                db.VIAJECTRL.Add(vIAJE);
                 db.SaveChanges();
-
-                vIAJECTRL.Alcohotest = vIAJE.Alcohotest;
-                vIAJECTRL.Estado = vIAJE.Estado.Value;
-                vIAJECTRL.Fecha = vIAJE.Fecha.Value;
-                vIAJECTRL.FechaCtrl = DateTime.Now;
-                vIAJECTRL.IdConductor= vIAJE.IdConductor.Value;
-                vIAJECTRL.IdCorredor= vIAJE.IdCorredor;
-                vIAJECTRL.IdInstructor = vIAJE.IdInstructor;
-                vIAJECTRL.idPlaca = vIAJE.idPlaca.Value;
-                vIAJECTRL.IdProducto = vIAJE.IdProducto.Value;
-                vIAJECTRL.idTrailer = vIAJE.idTrailer.Value;
-                vIAJECTRL.IdViaje = vIAJE.IdViaje;
-                vIAJECTRL.NumeroViaje = vIAJE.NumeroViaje;
-
-                db.VIAJECTRL.Add(vIAJECTRL);
-                db.SaveChanges();
-
                 return RedirectToAction("Index");
             }
 
@@ -132,7 +112,7 @@ namespace CemexControlIngreso_V2.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             JavaScriptSerializer js = new JavaScriptSerializer();
-            VIAJE vIAJE = db.VIAJE.Find(id);
+            VIAJECTRL vIAJE = db.VIAJECTRL.Find(id);
             var inform = JsonConvert.SerializeObject(db.TraerConductorId(vIAJE.IdConductor));
             Inform[] inform1 = js.Deserialize<Inform[]>(inform);
 
@@ -158,7 +138,7 @@ namespace CemexControlIngreso_V2.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdViaje,IdConductor,IdCorredor,idProducto,Estado,IdPlaca,IdTrailer,alcohotest")] VIAJE vIAJE)
+        public ActionResult Edit([Bind(Include = "IdViaje,IdConductor,IdCorredor,idProducto,Estado,IdPlaca,IdTrailer,Alcohotest,NumeroViaje")] VIAJECTRL vIAJE)
         {
             if (ModelState.IsValid)
             {
@@ -172,7 +152,7 @@ namespace CemexControlIngreso_V2.Controllers
             ViewBag.IdTrailer = new SelectList(db.TRAILER, "IdTrailer", "PlacaTrailer", vIAJE.idTrailer);
             ViewBag.IdPlaca = new SelectList(db.PLACAS, "IdPlaca", "Placa", vIAJE.idPlaca);
             ViewBag.IdViaje = new SelectList(db.VIAJE, "IdViaje", "Viaje", vIAJE.IdViaje);
-            ViewBag.alcohotest = vIAJE.Alcohotest;
+            ViewBag.Alcohotest = vIAJE.Alcohotest;
             return View(vIAJE);
         }
 
@@ -183,7 +163,7 @@ namespace CemexControlIngreso_V2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VIAJE vIAJE = db.VIAJE.Find(id);
+            VIAJECTRL vIAJE = db.VIAJECTRL.Find(id);
             if (vIAJE == null)
             {
                 return HttpNotFound();
@@ -196,7 +176,7 @@ namespace CemexControlIngreso_V2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            VIAJE vIAJE = db.VIAJE.Find(id);
+            VIAJECTRL vIAJE = db.VIAJECTRL.Find(id);
             //db.VIAJE.Remove(vIAJE);
             vIAJE.Estado = false;
             db.SaveChanges();

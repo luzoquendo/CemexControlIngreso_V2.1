@@ -11,7 +11,7 @@ namespace CemexControlIngreso_V2.Models
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class VIAJE
     {
         public int IdViaje { get; set; }
@@ -24,6 +24,9 @@ namespace CemexControlIngreso_V2.Models
         public Nullable<System.DateTime> Fecha { get; set; }
         public string Alcohotest { get; set; }
         public Nullable<int> IdInstructor { get; set; }
+        public string NumeroViaje { get; set; }
+        public string NombreCond { get; set; }
+        public string Celular { get; set; }
     
         public virtual CORREDOR CORREDOR { get; set; }
         public virtual PRODUCTO PRODUCTO { get; set; }

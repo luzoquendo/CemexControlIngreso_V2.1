@@ -50,6 +50,7 @@ namespace CemexControlIngreso_V2.Controllers
         {
             if (ModelState.IsValid)
             {
+                pRODUCTO.Producto1 = pRODUCTO.Producto1.ToUpper();
                 db.PRODUCTO.Add(pRODUCTO);
                 db.SaveChanges();
                 return RedirectToAction("Index");

@@ -45,6 +45,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FontAwesome.Net, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FontAwesomeDotNet.1.1.1\lib\FontAwesome.Net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Owin, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.4.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
@@ -179,6 +182,7 @@
     <Compile Include="Controllers\PRODUCTOController.cs" />
     <Compile Include="Controllers\SALIDAController.cs" />
     <Compile Include="Controllers\TRAILERController.cs" />
+    <Compile Include="Controllers\VIAJECTRLController.cs" />
     <Compile Include="Controllers\VIAJEController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -373,6 +377,11 @@
     <Content Include="Views\REPORTES\Reportes.cshtml" />
     <Content Include="Views\REPORTES\Index.cshtml" />
     <Content Include="Views\SALIDA\Salida.cshtml" />
+    <Content Include="Views\VIAJECTRL\Create.cshtml" />
+    <Content Include="Views\VIAJECTRL\Delete.cshtml" />
+    <Content Include="Views\VIAJECTRL\Details.cshtml" />
+    <Content Include="Views\VIAJECTRL\Edit.cshtml" />
+    <Content Include="Views\VIAJECTRL\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

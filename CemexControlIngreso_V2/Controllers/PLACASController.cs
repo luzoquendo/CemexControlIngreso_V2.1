@@ -50,6 +50,7 @@ namespace CemexControlIngreso_V2.Controllers
         {
             if (ModelState.IsValid)
             {
+                pLACAS.Placa = pLACAS.Placa.ToUpper();
                 db.PLACAS.Add(pLACAS);
                 db.SaveChanges();
                 return RedirectToAction("Index");

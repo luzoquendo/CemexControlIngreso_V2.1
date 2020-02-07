@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -50,7 +52,21 @@ namespace CemexControlIngreso_V2.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.CORREDOR.Add(cORREDOR);
+                bool existeUsuario = db.CORREDOR.Any(x => x.Corredor1 == cORREDOR.Corredor1);
+                if (!existeUsuario)
+                {
+                    cORREDOR.Estado = true;
+                    cORREDOR.Corredor1 = cORREDOR.Corredor1.ToUpper();
+                    db.CORREDOR.Add(cORREDOR);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    ViewBag.Script = "<script type='text/javascript'>alert('Ya existe un registro con este nombre, por favor revise.');</script>";
+                    return RedirectToAction("Index");
+                }
+            }
+            db.CORREDOR.Add(cORREDOR);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -83,6 +99,7 @@ namespace CemexControlIngreso_V2.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(cORREDOR).State = EntityState.Modified;
+                cORREDOR.Corredor1 = cORREDOR.Corredor1.ToUpper();
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

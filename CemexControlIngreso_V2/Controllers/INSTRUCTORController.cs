@@ -51,8 +51,18 @@ namespace CemexControlIngreso_V2.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.INSTRUCTOR.Add(iNSTRUCTOR);
-                db.SaveChanges();
+                bool existeUsuario = db.INSTRUCTOR.Any(x => x.Nombre == iNSTRUCTOR.Nombre);
+                if (!existeUsuario)
+                {
+                    iNSTRUCTOR.Nombre = iNSTRUCTOR.Nombre.ToUpper();
+                    db.INSTRUCTOR.Add(iNSTRUCTOR);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    ViewBag.Script = "<script type='text/javascript'>alert('Ya existe un registro con este nombre, por favor revise.');</script>";
+                    return RedirectToAction("Index");
+                }
                 return RedirectToAction("Index");
             }
 

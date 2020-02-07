@@ -83,6 +83,7 @@
           <Property Name="Fecha" Type="datetime" />
           <Property Name="Alcohotest" Type="nvarchar" MaxLength="6" />
           <Property Name="IdInstructor" Type="int" />
+          <Property Name="NumeroViaje" Type="nvarchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="VIAJECTRL">
           <Key>
@@ -98,6 +99,8 @@
           <Property Name="Fecha" Type="datetime" Nullable="false" />
           <Property Name="Alcohotest" Type="nvarchar" MaxLength="6" Nullable="false" />
           <Property Name="FechaCtrl" Type="datetime" Nullable="false" />
+          <Property Name="IdInstructor" Type="int" />
+          <Property Name="NumeroViaje" Type="nvarchar" MaxLength="20" />
         </EntityType>
         <Association Name="FK_CONDUCTOR_INSTRUCTOR">
           <End Role="INSTRUCTOR" Type="Self.INSTRUCTOR" Multiplicity="1" />
@@ -228,6 +231,18 @@
             </Principal>
             <Dependent Role="VIAJECTRL">
               <PropertyRef Name="IdCorredor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VIAJECTRL_INSTRUCTOR">
+          <End Role="INSTRUCTOR" Type="Self.INSTRUCTOR" Multiplicity="0..1" />
+          <End Role="VIAJECTRL" Type="Self.VIAJECTRL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INSTRUCTOR">
+              <PropertyRef Name="IdInstructor" />
+            </Principal>
+            <Dependent Role="VIAJECTRL">
+              <PropertyRef Name="IdInstructor" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -394,6 +409,10 @@
             <End Role="CORREDOR" EntitySet="CORREDOR" />
             <End Role="VIAJECTRL" EntitySet="VIAJECTRL" />
           </AssociationSet>
+          <AssociationSet Name="FK_VIAJECTRL_INSTRUCTOR" Association="Self.FK_VIAJECTRL_INSTRUCTOR">
+            <End Role="INSTRUCTOR" EntitySet="INSTRUCTOR" />
+            <End Role="VIAJECTRL" EntitySet="VIAJECTRL" />
+          </AssociationSet>
           <AssociationSet Name="FK_VIAJECTRL_PLACAS" Association="Self.FK_VIAJECTRL_PLACAS">
             <End Role="PLACAS" EntitySet="PLACAS" />
             <End Role="VIAJE" EntitySet="VIAJE" />
@@ -459,6 +478,7 @@
           <Property Name="Estado" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="CONDUCTOR" Relationship="Self.FK_CONDUCTOR_INSTRUCTOR" FromRole="INSTRUCTOR" ToRole="CONDUCTOR" />
           <NavigationProperty Name="VIAJE" Relationship="CONTROLINGRESOModel.FK_VIAJE_INSTRUCTOR" FromRole="INSTRUCTOR" ToRole="VIAJE" />
+          <NavigationProperty Name="VIAJECTRL" Relationship="CONTROLINGRESOModel.FK_VIAJECTRL_INSTRUCTOR" FromRole="INSTRUCTOR" ToRole="VIAJECTRL" />
         </EntityType>
         <EntityType Name="PLACAS">
           <Key>
@@ -520,6 +540,7 @@
           <Property Name="Alcohotest" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
           <Property Name="IdInstructor" Type="Int32" />
           <NavigationProperty Name="INSTRUCTOR" Relationship="CONTROLINGRESOModel.FK_VIAJE_INSTRUCTOR" FromRole="VIAJE" ToRole="INSTRUCTOR" />
+          <Property Name="NumeroViaje" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_CONDUCTOR_INSTRUCTOR">
           <End Role="INSTRUCTOR" Type="Self.INSTRUCTOR" Multiplicity="1" />
@@ -651,6 +672,10 @@
             <End Role="INSTRUCTOR" EntitySet="INSTRUCTOR" />
             <End Role="VIAJE" EntitySet="VIAJE" />
           </AssociationSet>
+          <AssociationSet Name="FK_VIAJECTRL_INSTRUCTOR" Association="CONTROLINGRESOModel.FK_VIAJECTRL_INSTRUCTOR">
+            <End Role="INSTRUCTOR" EntitySet="INSTRUCTOR" />
+            <End Role="VIAJECTRL" EntitySet="VIAJECTRL" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -728,6 +753,9 @@
           <NavigationProperty Name="PLACAS" Relationship="CONTROLINGRESOModel.FK_VIAJECTRL_PLACAS1" FromRole="VIAJECTRL" ToRole="PLACAS" />
           <NavigationProperty Name="PRODUCTO" Relationship="CONTROLINGRESOModel.FK_VIAJECTRL_PRODUCTO1" FromRole="VIAJECTRL" ToRole="PRODUCTO" />
           <NavigationProperty Name="TRAILER" Relationship="CONTROLINGRESOModel.FK_VIAJECTRL_TRAILER1" FromRole="VIAJECTRL" ToRole="TRAILER" />
+          <Property Name="IdInstructor" Type="Int32" />
+          <Property Name="NumeroViaje" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="INSTRUCTOR" Relationship="CONTROLINGRESOModel.FK_VIAJECTRL_INSTRUCTOR" FromRole="VIAJECTRL" ToRole="INSTRUCTOR" />
         </EntityType>
         <Association Name="FK_VIAJECTRL_CONDUCTOR1">
           <End Type="CONTROLINGRESOModel.CONDUCTOR" Role="CONDUCTOR" Multiplicity="1" />
@@ -797,6 +825,18 @@
               <PropertyRef Name="IdInstructor" />
             </Principal>
             <Dependent Role="VIAJE">
+              <PropertyRef Name="IdInstructor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VIAJECTRL_INSTRUCTOR">
+          <End Type="CONTROLINGRESOModel.INSTRUCTOR" Role="INSTRUCTOR" Multiplicity="0..1" />
+          <End Type="CONTROLINGRESOModel.VIAJECTRL" Role="VIAJECTRL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INSTRUCTOR">
+              <PropertyRef Name="IdInstructor" />
+            </Principal>
+            <Dependent Role="VIAJECTRL">
               <PropertyRef Name="IdInstructor" />
             </Dependent>
           </ReferentialConstraint>
@@ -881,6 +921,7 @@
           <EntitySetMapping Name="VIAJE">
             <EntityTypeMapping TypeName="CONTROLINGRESOModel.VIAJE">
               <MappingFragment StoreEntitySet="VIAJE">
+                <ScalarProperty Name="NumeroViaje" ColumnName="NumeroViaje" />
                 <ScalarProperty Name="IdInstructor" ColumnName="IdInstructor" />
                 <ScalarProperty Name="Alcohotest" ColumnName="Alcohotest" />
                 <ScalarProperty Name="Fecha" ColumnName="Fecha" />
@@ -939,6 +980,8 @@
           <EntitySetMapping Name="VIAJECTRL">
             <EntityTypeMapping TypeName="CONTROLINGRESOModel.VIAJECTRL">
               <MappingFragment StoreEntitySet="VIAJECTRL">
+                <ScalarProperty Name="NumeroViaje" ColumnName="NumeroViaje" />
+                <ScalarProperty Name="IdInstructor" ColumnName="IdInstructor" />
                 <ScalarProperty Name="FechaCtrl" ColumnName="FechaCtrl" />
                 <ScalarProperty Name="Alcohotest" ColumnName="Alcohotest" />
                 <ScalarProperty Name="Fecha" ColumnName="Fecha" />

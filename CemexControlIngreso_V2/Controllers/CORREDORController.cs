@@ -66,11 +66,7 @@ namespace CemexControlIngreso_V2.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            db.CORREDOR.Add(cORREDOR);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
+    
             return View(cORREDOR);
         }
 

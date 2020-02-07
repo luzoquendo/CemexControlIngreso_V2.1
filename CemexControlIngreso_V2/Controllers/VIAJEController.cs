@@ -67,29 +67,37 @@ namespace CemexControlIngreso_V2.Controllers
         {
             if (ModelState.IsValid)
             {
-                VIAJECTRL vIAJECTRL = new VIAJECTRL();
-                vIAJE.Fecha = DateTime.Now;
-                vIAJE.Estado = true;
-                db.VIAJE.Add(vIAJE);
-                db.SaveChanges();
+                bool existeUsuario = db.VIAJE.Any(x => x.IdConductor == vIAJE.IdConductor && x.IdCorredor == vIAJE.IdCorredor && x.IdInstructor == vIAJE.IdInstructor && x.idPlaca == vIAJE.idPlaca && x.IdProducto == vIAJE.IdProducto && x.idTrailer == vIAJE.idTrailer && x.Fecha == vIAJE.Fecha);
+                if (!existeUsuario)
+                {
+                    VIAJECTRL vIAJECTRL = new VIAJECTRL();
+                    vIAJE.Fecha = DateTime.Now;
+                    vIAJE.Estado = true;
+                    db.VIAJE.Add(vIAJE);
+                    db.SaveChanges();
 
-                vIAJECTRL.Alcohotest = vIAJE.Alcohotest;
-                vIAJECTRL.Estado = vIAJE.Estado.Value;
-                vIAJECTRL.Fecha = vIAJE.Fecha.Value;
-                vIAJECTRL.FechaCtrl = DateTime.Now;
-                vIAJECTRL.IdConductor= vIAJE.IdConductor.Value;
-                vIAJECTRL.IdCorredor= vIAJE.IdCorredor;
-                vIAJECTRL.IdInstructor = vIAJE.IdInstructor;
-                vIAJECTRL.idPlaca = vIAJE.idPlaca.Value;
-                vIAJECTRL.IdProducto = vIAJE.IdProducto.Value;
-                vIAJECTRL.idTrailer = vIAJE.idTrailer.Value;
-                vIAJECTRL.IdViaje = vIAJE.IdViaje;
-                vIAJECTRL.NumeroViaje = vIAJE.NumeroViaje;
+                    vIAJECTRL.Alcohotest = vIAJE.Alcohotest;
+                    vIAJECTRL.Estado = vIAJE.Estado;
+                    vIAJECTRL.Fecha = vIAJE.Fecha.Value;
+                    vIAJECTRL.FechaCtrl = DateTime.Now;
+                    vIAJECTRL.IdConductor = vIAJE.IdConductor.Value;
+                    vIAJECTRL.IdCorredor = vIAJE.IdCorredor;
+                    vIAJECTRL.IdInstructor = vIAJE.IdInstructor;
+                    vIAJECTRL.idPlaca = vIAJE.idPlaca.Value;
+                    vIAJECTRL.IdProducto = vIAJE.IdProducto.Value;
+                    vIAJECTRL.idTrailer = vIAJE.idTrailer.Value;
+                    vIAJECTRL.IdViaje = vIAJE.IdViaje;
+                    vIAJECTRL.NumeroViaje = vIAJE.NumeroViaje;
 
-                db.VIAJECTRL.Add(vIAJECTRL);
-                db.SaveChanges();
-
-                return RedirectToAction("Index");
+                    db.VIAJECTRL.Add(vIAJECTRL);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewBag.Script = "<script type='text/javascript'>alert('Ya existe un registro con este nombre, por favor revise.');</script>";
+                    return RedirectToAction("Index");
+                }
             }
 
             ViewBag.IdConductor = new SelectList(db.CONDUCTOR, "IdConductor", "Conductor1",vIAJE.IdConductor);

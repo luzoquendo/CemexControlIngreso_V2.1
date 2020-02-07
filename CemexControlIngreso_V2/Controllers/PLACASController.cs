@@ -50,9 +50,18 @@ namespace CemexControlIngreso_V2.Controllers
         {
             if (ModelState.IsValid)
             {
-                pLACAS.Placa = pLACAS.Placa.ToUpper();
-                db.PLACAS.Add(pLACAS);
-                db.SaveChanges();
+                bool existeUsuario = db.PLACAS.Any(x => x.Placa == pLACAS.Placa);
+                if (!existeUsuario)
+                {
+                    pLACAS.Placa = pLACAS.Placa.ToUpper();
+                    db.PLACAS.Add(pLACAS);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    ViewBag.Script = "<script type='text/javascript'>alert('Ya existe un registro con este número de placa, por favor revise.');</script>";
+                    return RedirectToAction("Index");
+                }
                 return RedirectToAction("Index");
             }
 

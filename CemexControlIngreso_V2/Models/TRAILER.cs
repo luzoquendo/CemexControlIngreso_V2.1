@@ -23,7 +23,7 @@ namespace CemexControlIngreso_V2.Models
     
         public int IdTrailer { get; set; }
         public string PlacaTrailer { get; set; }
-        public Nullable<bool> Estado { get; set; }
+        public bool Estado { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VIAJE> VIAJE { get; set; }

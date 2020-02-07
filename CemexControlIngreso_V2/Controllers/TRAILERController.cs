@@ -50,10 +50,19 @@ namespace CemexControlIngreso_V2.Controllers
         {
             if (ModelState.IsValid)
             {
-                tRAILER.PlacaTrailer = tRAILER.PlacaTrailer.ToUpper();
-                db.TRAILER.Add(tRAILER);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                bool existeUsuario = db.TRAILER.Any(x => x.PlacaTrailer == tRAILER.PlacaTrailer);
+                if (!existeUsuario)
+                {
+                    tRAILER.PlacaTrailer = tRAILER.PlacaTrailer.ToUpper();
+                    db.TRAILER.Add(tRAILER);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewBag.Script = "<script type='text/javascript'>alert('Ya existe un registro con este nombre, por favor revise.');</script>";
+                    return RedirectToAction("Index");
+                }
             }
 
             return View(tRAILER);

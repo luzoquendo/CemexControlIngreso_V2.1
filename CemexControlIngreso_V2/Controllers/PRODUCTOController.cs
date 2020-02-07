@@ -50,10 +50,18 @@ namespace CemexControlIngreso_V2.Controllers
         {
             if (ModelState.IsValid)
             {
-                pRODUCTO.Producto1 = pRODUCTO.Producto1.ToUpper();
-                db.PRODUCTO.Add(pRODUCTO);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                bool existeUsuario = db.PRODUCTO.Any(x => x.Producto1 == pRODUCTO.Producto1);
+                if (!existeUsuario)
+                {
+                    pRODUCTO.Producto1 = pRODUCTO.Producto1.ToUpper();
+                    db.PRODUCTO.Add(pRODUCTO);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    ViewBag.Script = "<script type='text/javascript'>alert('Ya existe un registro con este nombre, por favor revise.');</script>";
+                    return RedirectToAction("Index");
+                }
             }
 
             return View(pRODUCTO);

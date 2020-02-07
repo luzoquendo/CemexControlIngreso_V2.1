@@ -17,7 +17,7 @@ namespace CemexControlIngreso_V2.Models
         public int IdViaje { get; set; }
         public int IdCorredor { get; set; }
         public Nullable<int> IdProducto { get; set; }
-        public Nullable<bool> Estado { get; set; }
+        public bool Estado { get; set; }
         public Nullable<int> IdConductor { get; set; }
         public Nullable<int> idPlaca { get; set; }
         public Nullable<int> idTrailer { get; set; }

@@ -14,6 +14,9 @@
         <th>
             @Html.DisplayNameFor(model => model.PlacaTrailer)
         </th>
+        <td>
+            @Html.DisplayFor(modelItem => item.Estado)
+        </td>
         <th></th>
     </tr>
 
@@ -23,9 +26,12 @@
             @Html.DisplayFor(modelItem => item.PlacaTrailer)
         </td>
         <td>
-            @Html.ActionLink("Editar", "Edit", new { id=item.IdTrailer }) |
-            @Html.ActionLink("Consultar", "Details", new { id=item.IdTrailer }) |
-            @Html.ActionLink("Borrar", "Delete", new { id=item.IdTrailer })
+            @Html.DisplayFor(modelItem => item.Estado)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id = item.IdTrailer }) |
+            @Html.ActionLink("Consultar", "Details", new { id = item.IdTrailer }) |
+            @Html.ActionLink("Borrar", "Delete", new { id = item.IdTrailer })
         </td>
     </tr>
 }

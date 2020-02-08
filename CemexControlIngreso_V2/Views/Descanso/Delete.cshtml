@@ -1,0 +1,48 @@
+﻿@model CemexControlIngreso_V2.Models.Descanso
+
+@{
+    ViewBag.Title = "Borrar";
+}
+
+<h2>Borrar</h2>
+
+<h3>>Está usted seguro de borrar este registro?</h3>
+<div>
+    <h4>PLACAS</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IdConductor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdConductor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IdViaje)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdViaje)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoDescanso)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoDescanso)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Borrar" class="btn btn-default" /> |
+            @Html.ActionLink("Regresar", "Index")
+        </div>
+    }
+</div>

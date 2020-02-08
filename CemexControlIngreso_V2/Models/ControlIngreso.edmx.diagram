@@ -27,6 +27,10 @@
         <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJECTRL_TRAILER1" />
         <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJE_INSTRUCTOR" />
         <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJECTRL_INSTRUCTOR" />
+        <EntityTypeShape EntityType="CONTROLINGRESOModel.Descanso" Width="1.5" PointX="7.75" PointY="2.125" IsExpanded="false" />
+        <AssociationConnector Association="CONTROLINGRESOModel.FK_Descanso_CONDUCTOR" />
+        <AssociationConnector Association="CONTROLINGRESOModel.FK_Descanso_VIAJE" />
+        <AssociationConnector Association="CONTROLINGRESOModel.FK_Descanso_VIAJECTRL" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -39,6 +39,7 @@ namespace CemexControlIngreso_V2.Controllers
         // GET: INSTRUCTOR/Create
         public ActionResult Create()
         {
+            ViewBag.showSuccessAlert = false;
             return View();
         }
 
@@ -51,6 +52,8 @@ namespace CemexControlIngreso_V2.Controllers
         {
             if (ModelState.IsValid)
             {
+                
+
                 bool existeUsuario = db.INSTRUCTOR.Any(x => x.Nombre == iNSTRUCTOR.Nombre);
                 if (!existeUsuario)
                 {

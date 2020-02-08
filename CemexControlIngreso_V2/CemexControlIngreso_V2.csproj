@@ -175,6 +175,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CONDUCTORController.cs" />
     <Compile Include="Controllers\CORREDORController.cs" />
+    <Compile Include="Controllers\DESCANSOController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\INSTRUCTORController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -207,6 +208,9 @@
       <DependentUpon>ControlIngreso.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\CORREDOR.cs">
+      <DependentUpon>ControlIngreso.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Descanso.cs">
       <DependentUpon>ControlIngreso.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
@@ -376,12 +380,17 @@
     <Content Include="Views\VIAJE\Index.cshtml" />
     <Content Include="Views\REPORTES\Reportes.cshtml" />
     <Content Include="Views\REPORTES\Index.cshtml" />
-    <Content Include="Views\SALIDA\Salida.cshtml" />
     <Content Include="Views\VIAJECTRL\Create.cshtml" />
     <Content Include="Views\VIAJECTRL\Delete.cshtml" />
     <Content Include="Views\VIAJECTRL\Details.cshtml" />
     <Content Include="Views\VIAJECTRL\Edit.cshtml" />
     <Content Include="Views\VIAJECTRL\Index.cshtml" />
+    <Content Include="Views\Shared\_CheckList.cshtml" />
+    <Content Include="Views\Descanso\Create.cshtml" />
+    <Content Include="Views\Descanso\Delete.cshtml" />
+    <Content Include="Views\Descanso\Details.cshtml" />
+    <Content Include="Views\Descanso\Edit.cshtml" />
+    <Content Include="Views\Descanso\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

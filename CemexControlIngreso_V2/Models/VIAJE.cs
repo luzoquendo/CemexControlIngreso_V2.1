@@ -11,13 +11,19 @@ namespace CemexControlIngreso_V2.Models
 {
     using System;
     using System.Collections.Generic;
-
+    
     public partial class VIAJE
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public VIAJE()
+        {
+            this.Descanso = new HashSet<Descanso>();
+        }
+    
         public int IdViaje { get; set; }
         public int IdCorredor { get; set; }
         public Nullable<int> IdProducto { get; set; }
-        public bool Estado { get; set; }
+        public Nullable<bool> Estado { get; set; }
         public Nullable<int> IdConductor { get; set; }
         public Nullable<int> idPlaca { get; set; }
         public Nullable<int> idTrailer { get; set; }
@@ -25,8 +31,6 @@ namespace CemexControlIngreso_V2.Models
         public string Alcohotest { get; set; }
         public Nullable<int> IdInstructor { get; set; }
         public string NumeroViaje { get; set; }
-        public string NombreCond { get; set; }
-        public string Celular { get; set; }
     
         public virtual CORREDOR CORREDOR { get; set; }
         public virtual PRODUCTO PRODUCTO { get; set; }
@@ -34,5 +38,7 @@ namespace CemexControlIngreso_V2.Models
         public virtual PLACAS PLACAS { get; set; }
         public virtual TRAILER TRAILER { get; set; }
         public virtual INSTRUCTOR INSTRUCTOR { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Descanso> Descanso { get; set; }
     }
 }

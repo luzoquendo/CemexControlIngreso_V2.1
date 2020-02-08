@@ -13,6 +13,11 @@ namespace CemexControlIngreso_V2.Controllers
             return View();
         }
 
+        public ActionResult Checklist()
+        {
+            return View();
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

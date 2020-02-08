@@ -61,6 +61,7 @@ namespace CemexControlIngreso_V2.Controllers
         // POST: VIAJE/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
+        [ValidateInput(false)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "IdViaje,IdConductor,IdCorredor,IdProducto,Estado,IdPlaca,IdTrailer,Alcohotest,NumeroViaje")] VIAJE vIAJE)
@@ -77,7 +78,7 @@ namespace CemexControlIngreso_V2.Controllers
                     db.SaveChanges();
 
                     vIAJECTRL.Alcohotest = vIAJE.Alcohotest;
-                    vIAJECTRL.Estado = vIAJE.Estado;
+                    vIAJECTRL.Estado = vIAJE.Estado.Value;
                     vIAJECTRL.Fecha = vIAJE.Fecha.Value;
                     vIAJECTRL.FechaCtrl = DateTime.Now;
                     vIAJECTRL.IdConductor = vIAJE.IdConductor.Value;
@@ -157,7 +158,8 @@ namespace CemexControlIngreso_V2.Controllers
             ViewBag.IdTrailer = new SelectList(db.TRAILER, "IdTrailer", "PlacaTrailer", vIAJE.idTrailer);
             ViewBag.IdPlaca = new SelectList(db.PLACAS, "IdPlaca", "Placa", vIAJE.idPlaca);
             ViewBag.IdViaje = new SelectList(db.VIAJE, "IdViaje", "Viaje", vIAJE.IdViaje);
-            ViewBag.Alcohotest = vIAJE.Alcohotest;
+            ViewBag.Alcohotest = "";
+            ViewBag.Fecha = vIAJE.Fecha;
             return View(vIAJE);
         }
 

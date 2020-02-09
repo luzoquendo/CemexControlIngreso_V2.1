@@ -1,8 +1,4 @@
 ﻿@model CemexControlIngreso_V2.Models.VIAJECTRL
-@{
-    var val = Model.IdConductor;
-}
-
 
 @{
     ViewBag.Title = "Editar";
@@ -20,29 +16,8 @@
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.IdViaje)
+ 
 
-    <script>
-        function callChangefunc(val) {
-                 debugger;
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("ConsultaId", "VIAJECTRL")',
-                data: { IdConductor: val },
-                datatype: "html",
-                success: function (data) {
-                    debugger;
-                    $('#NombreCond').val(data.split(",")[0].split(":")[1].replace(/"/g,""));
-                    $('#Celular').val(data.split(",")[1].split(":")[1].replace(/"/g, ""));
-                }
-            });
-    }
-    </script>
-
-    <div window.onload="callChangefunc(model.IdConductor);" />
-
-
-
-    $( document ).ready( callChangefunc(model.IdConductor) );
 
     <div class="form-group">
         @Html.Label("Nombre", null, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -86,21 +61,10 @@
         </div>
     </div>
     <div class="form-group">
-        @Html.Label("Prueba Alcoholemia", null, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextBox("Alcohotest", "", new { @class = "form-control" })
-        </div>
-        @*@Html.LabelFor(model => model.Alcohotest, "Prueba Alcoholemia", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Alcohotest)
-                @Html.ValidationMessageFor(model => model.Alcohotest, "", new { @class = "text-danger" })
-            </div>*@
-    </div>
-    <div class="form-group">
         @Html.LabelFor(model => model.Fecha, "Fecha Viaje", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Fecha)
-            @Html.ValidationMessageFor(model => model.Fecha, "", new { @class = "text-danger" })
+            @*@Html.ValidationMessageFor(model => model.Fecha, "", new { @class = "text-danger" })*@
         </div>
     </div>
     <div class="form-group">
@@ -111,6 +75,20 @@
         </div>
     </div>
     <div class="form-group">
+        @Html.Label("Prueba Alcoholemia", null, htmlAttributes: new { @class = "control-label col-sm-2" })
+        <div class="col-xs-10">
+            @Html.TextBox("Alcohotest", "", new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.Label("Fecha Control", null, htmlAttributes: new { @class = "control-label col-sm-2" })
+        <div class="col-xs-10">
+            @Html.TextBox("FechaCtrl", "", new { @class = "form-control" })
+        </div>
+    </div>
+
+
+    @*<div class="form-group">
         @Html.Label("CheckList", "", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.Partial("_CheckList")
@@ -120,10 +98,9 @@
         @Html.LabelFor(model => model.Estado, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.DropDownListFor(m => m.Estado, new SelectList(new[] { new { Value = "true", Text = "En Curso" }, new { Value = "false", Text = "Fin Viaje" }, }, "Value", "Text"))
-            @*@Html.EditorFor(model => model.Estado, new { htmlAttributes = new { @class = "form-control" } })*@
             @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
         </div>
-    </div>
+    </div>*@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
@@ -139,11 +116,11 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-        <script type="text/JavaScript">
-           
-            
+    @*<script type="text/JavaScript">
+
+
             $(document).ready(function () {
-                
+
                 $.ajax({
                 type: 'POST',
                     url: '@Url.Action("ConsultaId", "VIAJE")',
@@ -158,5 +135,5 @@
             });
             });
 
-        </script>
+    </script>*@
 }

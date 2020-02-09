@@ -145,6 +145,7 @@ namespace CemexControlIngreso_V2.Controllers
                 db.Entry(vIAJE).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
+                //return new RedirectResult(DESCANSOController.Url.RouteUrl(new { action = "Edit", p = 1}));
             }
             ViewBag.IdConductor = new SelectList(db.CONDUCTOR, "IdConductor", "Nombre", vIAJE.IdConductor);
             ViewBag.IdCorredor = new SelectList(db.CORREDOR, "IdCorredor", "Corredor1", vIAJE.IdCorredor);

@@ -6,6 +6,7 @@
 
 <h2>Crear</h2>
 
+
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
@@ -17,7 +18,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.IdConductor, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.IdConductor, new { htmlAttributes = new { @class = "form-control", @style = " text-transform:uppercase; " } })
+            @Html.DropDownList("IdConductor", null, htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.IdConductor, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -25,7 +26,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.IdViaje, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.@Html.EditorFor(m => m.IdViaje, new { htmlAttributes = new { @class = "form-control", @style = " text-transform:uppercase; " } })
+            @Html.DropDownList("IdViaje", null, htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.IdViaje, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -33,7 +34,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.TipoDescanso, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.@Html.EditorFor(m => m.TipoDescanso, new { htmlAttributes = new { @class = "form-control", @style = " text-transform:uppercase; " } })
+            @Html.EditorFor(m => m.TipoDescanso, new { htmlAttributes = new { @class = "form-control", @style = " text-transform:uppercase; " } })
             @Html.ValidationMessageFor(model => model.TipoDescanso, "", new { @class = "text-danger" })
         </div>
     </div>

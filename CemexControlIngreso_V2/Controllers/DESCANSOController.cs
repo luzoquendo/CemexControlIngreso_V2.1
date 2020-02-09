@@ -8,7 +8,9 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using CemexControlIngreso_V2.Models;
+using Newtonsoft.Json;
 
 namespace CemexControlIngreso_V2.Controllers
 {
@@ -44,15 +46,108 @@ namespace CemexControlIngreso_V2.Controllers
         {
             ViewBag.IdConductor = new SelectList(db.CONDUCTOR.
                 Where(o => o.Estado == true), "IdConductor", "Cedula");
-            ViewBag.IdCorredor = new SelectList(db.CORREDOR.
-                Where(o => o.Estado == true), "IdCorredor", "Corredor1");
-            ViewBag.IdProducto = new SelectList(db.PRODUCTO.
-                Where(o => o.Estado == true), "idProducto", "Producto1");
-            ViewBag.IdTrailer = new SelectList(db.TRAILER.
-                Where(o => o.Estado == true), "IdTrailer", "PlacaTrailer");
-            ViewBag.IdPlaca = new SelectList(db.PLACAS.
-                Where(o => o.Estado == true), "IdPlaca", "Placa");
+            ViewBag.IdViaje = new SelectList(db.VIAJE.
+                Where(o => o.Estado == true), "IdViaje", "NumeroViaje");
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "IdConductor,IdViaje")] Descanso descanso)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Descanso.Add(descanso);
+                descanso.FechaDescanso = DateTime.Now;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.IdConductor = new SelectList(db.CONDUCTOR, "IdConductor", "Conductor1", descanso.IdConductor);
+            ViewBag.IdViaje = new SelectList(db.VIAJE, "IdViaje", "Viaje", descanso.IdViaje);
+            return View(descanso);
+        }
+
+        public class Inform
+        {
+            public string Nombre { get; set; }
+            public string Celular1 { get; set; }
+            public string Celular2 { get; set; }
+        }
+
+        // GET: VIAJE/Edit/5
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            Descanso descanso = db.Descanso.Find(id);
+            var inform = JsonConvert.SerializeObject(db.TraerConductorId(descanso.IdConductor));
+            Inform[] inform1 = js.Deserialize<Inform[]>(inform);
+
+            if (descanso == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.IdConductor = new SelectList(db.CONDUCTOR, "idConductor", "Nombre", descanso.IdConductor);
+            ViewBag.IdViaje = new SelectList(db.VIAJE, "IdViaje", "Viaje", descanso.IdViaje);
+            return View(descanso);
+        }
+
+        // POST: VIAJE/Edit/5
+        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
+        // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "IdViaje,IdConductor,FechaDescanso")] Descanso descanso)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(descanso).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.IdConductor = new SelectList(db.CONDUCTOR, "IdConductor", "Nombre", descanso.IdConductor);
+            ViewBag.IdViaje = new SelectList(db.VIAJE, "IdViaje", "Viaje", descanso.IdViaje);
+            ViewBag.Fecha = descanso.FechaDescanso;
+            return View(descanso);
+        }
+
+        // GET: VIAJE/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Descanso descanso = db.Descanso.Find(id);
+            if (descanso == null)
+            {
+                return HttpNotFound();
+            }
+            return View(descanso);
+        }
+
+        // POST: VIAJE/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Descanso descanso = db.Descanso.Find(id);
+            db.Descanso.Remove(descanso);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

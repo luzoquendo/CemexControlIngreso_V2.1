@@ -19,6 +19,7 @@ namespace CemexControlIngreso_V2.Controllers
     public class VIAJEController : Controller
     {
         private CONTROLINGRESOEntities db = new CONTROLINGRESOEntities();
+       
         [Authorize]
         // GET: VIAJE
         public ActionResult Index()
@@ -108,6 +109,8 @@ namespace CemexControlIngreso_V2.Controllers
             ViewBag.IdPlaca = new SelectList(db.PLACAS, "IdPlaca", "Placa", vIAJE.idPlaca);
             ViewBag.IdViaje = new SelectList(db.VIAJE, "IdViaje", "Viaje", vIAJE.IdViaje);
             ViewBag.alcohotest = new SelectList(db.VIAJE, "Alcohotest", "Alcohotest", vIAJE.Alcohotest);
+
+
             return View(vIAJE);
         }
 
@@ -168,7 +171,7 @@ namespace CemexControlIngreso_V2.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdViaje,IdConductor,IdCorredor,idProducto,Estado,IdPlaca,IdTrailer,alcohotest")] VIAJE vIAJE)
+        public ActionResult Edit([Bind(Include = "IdViaje,IdConductor,IdCorredor,idProducto,Estado,IdPlaca,IdTrailer,alcohotest,Fecha")] VIAJE vIAJE)
         {
             if (ModelState.IsValid)
             {
@@ -183,6 +186,7 @@ namespace CemexControlIngreso_V2.Controllers
             ViewBag.IdPlaca = new SelectList(db.PLACAS, "IdPlaca", "Placa", vIAJE.idPlaca);
             ViewBag.IdViaje = new SelectList(db.VIAJE, "IdViaje", "Viaje", vIAJE.IdViaje);
             ViewBag.alcohotest = vIAJE.Alcohotest;
+            ViewBag.Fecha = vIAJE.Fecha;
             return View(vIAJE);
         }
 

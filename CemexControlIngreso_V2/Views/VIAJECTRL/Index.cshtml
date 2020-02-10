@@ -4,7 +4,7 @@
     ViewBag.Title = "Viaje Control Nodo";
 }
 
-<h2>Viaje</h2>
+<h2>Control Viaje</h2>
 
 <table class="table">
     <tr>
@@ -35,38 +35,42 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.CONDUCTOR.Nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PRODUCTO.Producto1)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CORREDOR.Corredor1)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PLACAS.Placa)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TRAILER.PlacaTrailer)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Alcohotest)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Fecha)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Estado)
-        </td>
-        <td>
-            @Html.ActionLink("Editar", "Edit", new { id = item.IdViaje }) |
-            @Html.ActionLink("Consultar", "Details", new { id = item.IdViaje }) |
-            @Html.ActionLink("Borrar", "Delete", new { id = item.IdViaje })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            @if (item.Estado)
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.CONDUCTOR.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PRODUCTO.Producto1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CORREDOR.Corredor1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PLACAS.Placa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TRAILER.PlacaTrailer)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Alcohotest)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fecha)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Estado)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "Edit", new { id = item.IdViaje }) |
+                    @Html.ActionLink("Consultar", "Details", new { id = item.IdViaje }) |
+                    @Html.ActionLink("Borrar", "Delete", new { id = item.IdViaje })
+                </td>
+            }
+        </tr>
+    }
 
 </table>

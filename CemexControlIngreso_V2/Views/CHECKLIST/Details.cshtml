@@ -1,0 +1,66 @@
+﻿@model CemexControlIngreso_V2.Models.CHECKLIST
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CHECKLIST</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Llantas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Llantas)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Motor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Motor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Aceite)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Aceite)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fecha)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VIAJE.Alcohotest)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VIAJE.Alcohotest)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VIAJECTRL.Alcohotest)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VIAJECTRL.Alcohotest)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

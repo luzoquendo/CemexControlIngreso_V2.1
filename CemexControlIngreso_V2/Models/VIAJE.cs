@@ -18,6 +18,7 @@ namespace CemexControlIngreso_V2.Models
         public VIAJE()
         {
             this.Descanso = new HashSet<Descanso>();
+            this.CHECKLIST = new HashSet<CHECKLIST>();
         }
     
         public int IdViaje { get; set; }
@@ -40,5 +41,7 @@ namespace CemexControlIngreso_V2.Models
         public virtual INSTRUCTOR INSTRUCTOR { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Descanso> Descanso { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CHECKLIST> CHECKLIST { get; set; }
     }
 }

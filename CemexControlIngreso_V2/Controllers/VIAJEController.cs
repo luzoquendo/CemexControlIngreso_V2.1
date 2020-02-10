@@ -19,7 +19,7 @@ namespace CemexControlIngreso_V2.Controllers
     public class VIAJEController : Controller
     {
         private CONTROLINGRESOEntities db = new CONTROLINGRESOEntities();
-       
+        private CONTROLINGRESOEntities db1 = new CONTROLINGRESOEntities();
         [Authorize]
         // GET: VIAJE
         public ActionResult Index()
@@ -65,22 +65,24 @@ namespace CemexControlIngreso_V2.Controllers
         [ValidateInput(false)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdViaje,IdConductor,IdCorredor,IdProducto,Estado,IdPlaca,IdTrailer,Alcohotest,NumeroViaje")] VIAJE vIAJE)
+        public ActionResult Create([Bind(Include = "IdViaje,IdConductor,IdCorredor,IdProducto,Estado,IdPlaca,IdTrailer,Alcohotest,NumeroViaje,Fecha")] VIAJE vIAJE)
         {
             if (ModelState.IsValid)
             {
-                bool existeUsuario = db.VIAJE.Any(x => x.IdConductor == vIAJE.IdConductor && x.IdCorredor == vIAJE.IdCorredor && x.IdInstructor == vIAJE.IdInstructor && x.idPlaca == vIAJE.idPlaca && x.IdProducto == vIAJE.IdProducto && x.idTrailer == vIAJE.idTrailer && x.Fecha == vIAJE.Fecha);
+                bool existeUsuario = db.VIAJE.Any(x => x.IdConductor == vIAJE.IdConductor && x.Estado == true); //db.VIAJE.Any(x => x.IdConductor == vIAJE.IdConductor && x.IdCorredor == vIAJE.IdCorredor && x.IdInstructor == vIAJE.IdInstructor && x.idPlaca == vIAJE.idPlaca && x.IdProducto == vIAJE.IdProducto && x.idTrailer == vIAJE.idTrailer && x.Estado == vIAJE.Estado);
+                bool estadoUsuario = db.VIAJE.Any(x => x.Estado == true);
                 if (!existeUsuario)
                 {
-                    VIAJECTRL vIAJECTRL = new VIAJECTRL();
+                    
                     vIAJE.Fecha = DateTime.Now;
                     vIAJE.Estado = true;
                     db.VIAJE.Add(vIAJE);
                     db.SaveChanges();
 
+                    VIAJECTRL vIAJECTRL = new VIAJECTRL();
                     vIAJECTRL.Alcohotest = vIAJE.Alcohotest;
                     vIAJECTRL.Estado = vIAJE.Estado.Value;
-                    vIAJECTRL.Fecha = vIAJE.Fecha.Value;
+                    vIAJECTRL.Fecha = DateTime.Now;
                     vIAJECTRL.FechaCtrl = DateTime.Now;
                     vIAJECTRL.IdConductor = vIAJE.IdConductor.Value;
                     vIAJECTRL.IdCorredor = vIAJE.IdCorredor;
@@ -91,8 +93,8 @@ namespace CemexControlIngreso_V2.Controllers
                     vIAJECTRL.IdViaje = vIAJE.IdViaje;
                     vIAJECTRL.NumeroViaje = vIAJE.NumeroViaje;
 
-                    db.VIAJECTRL.Add(vIAJECTRL);
-                    db.SaveChanges();
+                    db1.VIAJECTRL.Add(vIAJECTRL);
+                    db1.SaveChanges();
                     return RedirectToAction("Index");
                 }
                 else

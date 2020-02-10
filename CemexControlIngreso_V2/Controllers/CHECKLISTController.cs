@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.Entity;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -12,120 +10,116 @@ using CemexControlIngreso_V2.Models;
 
 namespace CemexControlIngreso_V2.Controllers
 {
-    [Authorize]
-    public class CORREDORController : Controller
+    public class CHECKLISTController : Controller
     {
         private CONTROLINGRESOEntities db = new CONTROLINGRESOEntities();
 
-        // GET: CORREDOR
+        // GET: CHECKLIST
         public ActionResult Index()
         {
-            return View(db.CORREDOR.ToList());
+            var cHECKLIST = db.CHECKLIST.Include(c => c.VIAJE).Include(c => c.VIAJECTRL);
+            return View(cHECKLIST.ToList());
         }
 
-        // GET: CORREDOR/Details/5
+        // GET: CHECKLIST/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CORREDOR cORREDOR = db.CORREDOR.Find(id);
-            if (cORREDOR == null)
+            CHECKLIST cHECKLIST = db.CHECKLIST.Find(id);
+            if (cHECKLIST == null)
             {
                 return HttpNotFound();
             }
-            return View(cORREDOR);
+            return View(cHECKLIST);
         }
 
-        // GET: CORREDOR/Create
+        // GET: CHECKLIST/Create
         public ActionResult Create()
         {
+            ViewBag.IdViaje = new SelectList(db.VIAJE, "IdViaje", "Alcohotest");
+            ViewBag.IdViaje = new SelectList(db.VIAJECTRL, "IdViaje", "Alcohotest");
             return View();
         }
 
-        // POST: CORREDOR/Create
+        // POST: CHECKLIST/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdCorredor,Corredor1,Estado")] CORREDOR cORREDOR)
+        public ActionResult Create([Bind(Include = "Id,Llantas,Motor,Aceite,IdViaje,Fecha")] CHECKLIST cHECKLIST)
         {
             if (ModelState.IsValid)
             {
-                bool existeUsuario = db.CORREDOR.Any(x => x.Corredor1 == cORREDOR.Corredor1);
-                if (!existeUsuario)
-                {
-                    cORREDOR.Estado = true;
-                    cORREDOR.Corredor1 = cORREDOR.Corredor1.ToUpper();
-                    db.CORREDOR.Add(cORREDOR);
-                    db.SaveChanges();
-                }
-                else
-                {
-                    ViewBag.Script = "<script type='text/javascript'>alert('Ya existe un registro con este nombre, por favor revise.');</script>";
-                    return RedirectToAction("Index");
-                }
+                db.CHECKLIST.Add(cHECKLIST);
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
-    
-            return View(cORREDOR);
+
+            ViewBag.IdViaje = new SelectList(db.VIAJE, "IdViaje", "Alcohotest", cHECKLIST.IdViaje);
+            ViewBag.IdViaje = new SelectList(db.VIAJECTRL, "IdViaje", "Alcohotest", cHECKLIST.IdViaje);
+            return View(cHECKLIST);
         }
 
-        // GET: CORREDOR/Edit/5
+        // GET: CHECKLIST/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CORREDOR cORREDOR = db.CORREDOR.Find(id);
-            if (cORREDOR == null)
+            CHECKLIST cHECKLIST = db.CHECKLIST.Find(id);
+            if (cHECKLIST == null)
             {
                 return HttpNotFound();
             }
-            return View(cORREDOR);
+            ViewBag.IdViaje = new SelectList(db.VIAJE, "IdViaje", "Alcohotest", cHECKLIST.IdViaje);
+            ViewBag.IdViaje = new SelectList(db.VIAJECTRL, "IdViaje", "Alcohotest", cHECKLIST.IdViaje);
+            return View(cHECKLIST);
         }
 
-        // POST: CORREDOR/Edit/5
+        // POST: CHECKLIST/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdCorredor,Corredor1,Estado")] CORREDOR cORREDOR)
+        public ActionResult Edit([Bind(Include = "Id,Llantas,Motor,Aceite,IdViaje,Fecha")] CHECKLIST cHECKLIST)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(cORREDOR).State = EntityState.Modified;
-                cORREDOR.Corredor1 = cORREDOR.Corredor1.ToUpper();
+                db.Entry(cHECKLIST).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(cORREDOR);
+            ViewBag.IdViaje = new SelectList(db.VIAJE, "IdViaje", "Alcohotest", cHECKLIST.IdViaje);
+            ViewBag.IdViaje = new SelectList(db.VIAJECTRL, "IdViaje", "Alcohotest", cHECKLIST.IdViaje);
+            return View(cHECKLIST);
         }
 
-        // GET: CORREDOR/Delete/5
+        // GET: CHECKLIST/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CORREDOR cORREDOR = db.CORREDOR.Find(id);
-            if (cORREDOR == null)
+            CHECKLIST cHECKLIST = db.CHECKLIST.Find(id);
+            if (cHECKLIST == null)
             {
                 return HttpNotFound();
             }
-            return View(cORREDOR);
+            return View(cHECKLIST);
         }
 
-        // POST: CORREDOR/Delete/5
+        // POST: CHECKLIST/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            CORREDOR cORREDOR = db.CORREDOR.Find(id);
-            //db.CORREDOR.Remove(cORREDOR);
-            cORREDOR.Estado = false;
+            CHECKLIST cHECKLIST = db.CHECKLIST.Find(id);
+            db.CHECKLIST.Remove(cHECKLIST);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -18,6 +18,7 @@ namespace CemexControlIngreso_V2.Controllers
 {
     public class VIAJECTRLController : Controller
     {
+        private int conductorid = 0;
         private CONTROLINGRESOEntities db = new CONTROLINGRESOEntities();
         [Authorize]
         // GET: VIAJE
@@ -107,12 +108,14 @@ namespace CemexControlIngreso_V2.Controllers
         // GET: VIAJE/Edit/5
         public ActionResult Edit(int? id)
         {
+            
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             JavaScriptSerializer js = new JavaScriptSerializer();
             VIAJECTRL vIAJE = db.VIAJECTRL.Find(id);
+            conductorid = vIAJE.IdConductor;
             var inform = JsonConvert.SerializeObject(db.TraerConductorId(vIAJE.IdConductor));
             Inform[] inform1 = js.Deserialize<Inform[]>(inform);
 
@@ -123,12 +126,13 @@ namespace CemexControlIngreso_V2.Controllers
 
             ViewBag.NombreCond = inform1[0].Nombre;
             ViewBag.Celular = inform1[0].Celular1;
-            ViewBag.IdConductor = new SelectList(db.CONDUCTOR,"idConductor", "Nombre", vIAJE.IdConductor);
+            ViewBag.IdConductor = new SelectList(db.CONDUCTOR,"idConductor", "Nombre", conductorid);
             ViewBag.IdCorredor = new SelectList(db.CORREDOR, "IdCorredor", "Corredor1", vIAJE.IdCorredor);
             ViewBag.IdProducto = new SelectList(db.PRODUCTO, "IdProducto", "Producto1", vIAJE.IdProducto);
             ViewBag.IdTrailer = new SelectList(db.TRAILER, "IdTrailer", "PlacaTrailer", vIAJE.idTrailer);
             ViewBag.IdPlaca = new SelectList(db.PLACAS, "IdPlaca", "Placa", vIAJE.idPlaca);
             ViewBag.IdViaje = new SelectList(db.VIAJE, "IdViaje", "Viaje", vIAJE.IdViaje);
+            ViewBag.Fecha = vIAJE.Fecha.ToString().Replace(" a. m.", "");
             ViewBag.Alcohotest = vIAJE.Alcohotest;
             return View(vIAJE);
         }
@@ -138,22 +142,45 @@ namespace CemexControlIngreso_V2.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdViaje,IdConductor,IdCorredor,idProducto,Estado,IdPlaca,IdTrailer,Alcohotest,NumeroViaje")] VIAJECTRL vIAJE)
+        //public ActionResult Edit([Bind(Include = "IdViaje,IdConductor,IdCorredor,idProducto,Estado,IdPlaca,IdTrailer,Alcohotest,NumeroViaje, Aceite, LLantas, Motor")] VIAJECTRL vIAJE)
+        public ActionResult Edit(string IdViaje, string IdConductor, string IdCorredor, string idProducto, string Estado, string IdPlaca, string IdTrailer, string Alcohotest, string NumeroViaje, DateTime Fecha)
         {
+
+            VIAJECTRL vIAJE1 = new VIAJECTRL();
+            VIAJECTRL vIAJE = db.VIAJECTRL.Find(Convert.ToInt32(IdViaje));
+            conductorid = vIAJE.IdConductor;
             if (ModelState.IsValid)
             {
+                vIAJE1.IdViaje = Convert.ToInt32(IdViaje);
+                vIAJE1.IdConductor = conductorid;
+                vIAJE1.idPlaca = Convert.ToInt32(IdPlaca);
+                vIAJE1.idTrailer = Convert.ToInt32(IdTrailer);
+                vIAJE1.IdProducto = Convert.ToInt32(idProducto);
+                vIAJE1.IdCorredor = Convert.ToInt32(IdCorredor);
+                vIAJE1.Fecha = Convert.ToDateTime(Fecha);
+                vIAJE1.NumeroViaje = NumeroViaje;
+                vIAJE1.Alcohotest = Alcohotest;
+                vIAJE1.FechaCtrl = System.DateTime.Now;
+                vIAJE1.Estado = true;
+                db.VIAJECTRL.Add(vIAJE1);
+                //db.Entry(vIAJE).State = EntityState.Modified;
+                db.SaveChanges();
+
+                vIAJE.Estado = false;
                 db.Entry(vIAJE).State = EntityState.Modified;
                 db.SaveChanges();
+
+                //cHECKLIST.Aceite = vIAJE.a;
                 return RedirectToAction("Index");
                 //return new RedirectResult(DESCANSOController.Url.RouteUrl(new { action = "Edit", p = 1}));
             }
-            ViewBag.IdConductor = new SelectList(db.CONDUCTOR, "IdConductor", "Nombre", vIAJE.IdConductor);
-            ViewBag.IdCorredor = new SelectList(db.CORREDOR, "IdCorredor", "Corredor1", vIAJE.IdCorredor);
-            ViewBag.IdProducto = new SelectList(db.PRODUCTO, "idProducto", "Producto1", vIAJE.IdProducto);
-            ViewBag.IdTrailer = new SelectList(db.TRAILER, "IdTrailer", "PlacaTrailer", vIAJE.idTrailer);
-            ViewBag.IdPlaca = new SelectList(db.PLACAS, "IdPlaca", "Placa", vIAJE.idPlaca);
-            ViewBag.IdViaje = new SelectList(db.VIAJE, "IdViaje", "Viaje", vIAJE.IdViaje);
-            ViewBag.Alcohotest = vIAJE.Alcohotest;
+            ViewBag.IdConductor = new SelectList(db.CONDUCTOR, "IdConductor", "Nombre", IdConductor);
+            ViewBag.IdCorredor = new SelectList(db.CORREDOR, "IdCorredor", "Corredor1", IdCorredor);
+            ViewBag.IdProducto = new SelectList(db.PRODUCTO, "idProducto", "Producto1", idProducto);
+            ViewBag.IdTrailer = new SelectList(db.TRAILER, "IdTrailer", "PlacaTrailer", IdTrailer);
+            ViewBag.IdPlaca = new SelectList(db.PLACAS, "IdPlaca", "Placa", IdPlaca);
+            ViewBag.IdViaje = new SelectList(db.VIAJE, "IdViaje", "Viaje", IdViaje);
+            ViewBag.Alcohotest = Alcohotest;
             return View(vIAJE);
         }
 
@@ -191,6 +218,42 @@ namespace CemexControlIngreso_V2.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult _Empresas()
+        {
+            try
+            {
+                return PartialView();
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ChildActionOnly]
+        public ActionResult _CHECKLIST([Bind(Include = "LLantas,Motor,Aceite,IdViaje")] CHECKLIST cHECKLIST)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    cHECKLIST.Fecha = DateTime.Now;
+                    db.CHECKLIST.Add(cHECKLIST);
+
+                    db.SaveChanges();
+
+                }
+
+                return PartialView();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 }

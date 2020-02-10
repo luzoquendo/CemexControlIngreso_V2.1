@@ -5,6 +5,17 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="CONTROLINGRESOModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CHECKLIST">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Llantas" Type="bit" Nullable="false" />
+          <Property Name="Motor" Type="bit" Nullable="false" />
+          <Property Name="Aceite" Type="bit" Nullable="false" />
+          <Property Name="IdViaje" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="CONDUCTOR">
           <Key>
             <PropertyRef Name="IdConductor" />
@@ -112,12 +123,36 @@ advertencia 6002: La tabla o vista 'CONTROLINGRESO.dbo.Descanso' no tiene defini
           <Property Name="IdConductor" Type="int" Nullable="false" />
           <Property Name="idPlaca" Type="int" Nullable="false" />
           <Property Name="idTrailer" Type="int" Nullable="false" />
-          <Property Name="Fecha" Type="datetime" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" />
           <Property Name="Alcohotest" Type="nvarchar" MaxLength="6" Nullable="false" />
-          <Property Name="FechaCtrl" Type="datetime" Nullable="false" />
+          <Property Name="FechaCtrl" Type="datetime" />
           <Property Name="IdInstructor" Type="int" />
           <Property Name="NumeroViaje" Type="nvarchar" MaxLength="20" />
         </EntityType>
+        <Association Name="FK_CHECKLIST_VIAJE">
+          <End Role="VIAJE" Type="Self.VIAJE" Multiplicity="1" />
+          <End Role="CHECKLIST" Type="Self.CHECKLIST" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VIAJE">
+              <PropertyRef Name="IdViaje" />
+            </Principal>
+            <Dependent Role="CHECKLIST">
+              <PropertyRef Name="IdViaje" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CHECKLIST_VIAJECTRL">
+          <End Role="VIAJECTRL" Type="Self.VIAJECTRL" Multiplicity="1" />
+          <End Role="CHECKLIST" Type="Self.CHECKLIST" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VIAJECTRL">
+              <PropertyRef Name="IdViaje" />
+            </Principal>
+            <Dependent Role="CHECKLIST">
+              <PropertyRef Name="IdViaje" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CONDUCTOR_INSTRUCTOR">
           <End Role="INSTRUCTOR" Type="Self.INSTRUCTOR" Multiplicity="1" />
           <End Role="CONDUCTOR" Type="Self.CONDUCTOR" Multiplicity="*" />
@@ -408,6 +443,7 @@ advertencia 6002: La tabla o vista 'CONTROLINGRESO.dbo.Descanso' no tiene defini
           <Parameter Name="Id" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="CONTROLINGRESOModelStoreContainer">
+          <EntitySet Name="CHECKLIST" EntityType="Self.CHECKLIST" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CONDUCTOR" EntityType="Self.CONDUCTOR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CORREDOR" EntityType="Self.CORREDOR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="INSTRUCTOR" EntityType="Self.INSTRUCTOR" Schema="dbo" store:Type="Tables" />
@@ -426,6 +462,14 @@ advertencia 6002: La tabla o vista 'CONTROLINGRESO.dbo.Descanso' no tiene defini
     [Descanso].[IdViaje] AS [IdViaje]
     FROM [dbo].[Descanso] AS [Descanso]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK_CHECKLIST_VIAJE" Association="Self.FK_CHECKLIST_VIAJE">
+            <End Role="VIAJE" EntitySet="VIAJE" />
+            <End Role="CHECKLIST" EntitySet="CHECKLIST" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CHECKLIST_VIAJECTRL" Association="Self.FK_CHECKLIST_VIAJECTRL">
+            <End Role="VIAJECTRL" EntitySet="VIAJECTRL" />
+            <End Role="CHECKLIST" EntitySet="CHECKLIST" />
+          </AssociationSet>
           <AssociationSet Name="FK_CONDUCTOR_INSTRUCTOR" Association="Self.FK_CONDUCTOR_INSTRUCTOR">
             <End Role="INSTRUCTOR" EntitySet="INSTRUCTOR" />
             <End Role="CONDUCTOR" EntitySet="CONDUCTOR" />
@@ -616,6 +660,7 @@ advertencia 6002: La tabla o vista 'CONTROLINGRESO.dbo.Descanso' no tiene defini
           <NavigationProperty Name="INSTRUCTOR" Relationship="CONTROLINGRESOModel.FK_VIAJE_INSTRUCTOR" FromRole="VIAJE" ToRole="INSTRUCTOR" />
           <Property Name="NumeroViaje" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Descanso" Relationship="CONTROLINGRESOModel.FK_Descanso_VIAJE" FromRole="VIAJE" ToRole="Descanso" />
+          <NavigationProperty Name="CHECKLIST" Relationship="CONTROLINGRESOModel.FK_CHECKLIST_VIAJE" FromRole="VIAJE" ToRole="CHECKLIST" />
         </EntityType>
         <Association Name="FK_CONDUCTOR_INSTRUCTOR">
           <End Role="INSTRUCTOR" Type="Self.INSTRUCTOR" Multiplicity="1" />
@@ -764,6 +809,15 @@ advertencia 6002: La tabla o vista 'CONTROLINGRESO.dbo.Descanso' no tiene defini
             <End Role="VIAJECTRL" EntitySet="VIAJECTRL" />
             <End Role="Descanso" EntitySet="Descanso" />
           </AssociationSet>
+          <EntitySet Name="CHECKLIST" EntityType="CONTROLINGRESOModel.CHECKLIST" />
+          <AssociationSet Name="FK_CHECKLIST_VIAJE" Association="CONTROLINGRESOModel.FK_CHECKLIST_VIAJE">
+            <End Role="VIAJE" EntitySet="VIAJE" />
+            <End Role="CHECKLIST" EntitySet="CHECKLIST" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CHECKLIST_VIAJECTRL" Association="CONTROLINGRESOModel.FK_CHECKLIST_VIAJECTRL">
+            <End Role="VIAJECTRL" EntitySet="VIAJECTRL" />
+            <End Role="CHECKLIST" EntitySet="CHECKLIST" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -833,9 +887,9 @@ advertencia 6002: La tabla o vista 'CONTROLINGRESO.dbo.Descanso' no tiene defini
           <Property Name="IdConductor" Type="Int32" Nullable="false" />
           <Property Name="idPlaca" Type="Int32" Nullable="false" />
           <Property Name="idTrailer" Type="Int32" Nullable="false" />
-          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Fecha" Type="DateTime" Nullable="true" Precision="3" annotation:StoreGeneratedPattern="None" />
           <Property Name="Alcohotest" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
-          <Property Name="FechaCtrl" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaCtrl" Type="DateTime" Nullable="true" Precision="3" annotation:StoreGeneratedPattern="None" />
           <NavigationProperty Name="CONDUCTOR" Relationship="CONTROLINGRESOModel.FK_VIAJECTRL_CONDUCTOR1" FromRole="VIAJECTRL" ToRole="CONDUCTOR" />
           <NavigationProperty Name="CORREDOR" Relationship="CONTROLINGRESOModel.FK_VIAJECTRL_CORREDOR1" FromRole="VIAJECTRL" ToRole="CORREDOR" />
           <NavigationProperty Name="PLACAS" Relationship="CONTROLINGRESOModel.FK_VIAJECTRL_PLACAS1" FromRole="VIAJECTRL" ToRole="PLACAS" />
@@ -845,6 +899,7 @@ advertencia 6002: La tabla o vista 'CONTROLINGRESO.dbo.Descanso' no tiene defini
           <Property Name="NumeroViaje" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="INSTRUCTOR" Relationship="CONTROLINGRESOModel.FK_VIAJECTRL_INSTRUCTOR" FromRole="VIAJECTRL" ToRole="INSTRUCTOR" />
           <NavigationProperty Name="Descanso" Relationship="CONTROLINGRESOModel.FK_Descanso_VIAJECTRL" FromRole="VIAJECTRL" ToRole="Descanso" />
+          <NavigationProperty Name="CHECKLIST" Relationship="CONTROLINGRESOModel.FK_CHECKLIST_VIAJECTRL" FromRole="VIAJECTRL" ToRole="CHECKLIST" />
         </EntityType>
         <Association Name="FK_VIAJECTRL_CONDUCTOR1">
           <End Type="CONTROLINGRESOModel.CONDUCTOR" Role="CONDUCTOR" Multiplicity="1" />
@@ -979,6 +1034,43 @@ advertencia 6002: La tabla o vista 'CONTROLINGRESO.dbo.Descanso' no tiene defini
               <PropertyRef Name="IdViaje" />
             </Principal>
             <Dependent Role="Descanso">
+              <PropertyRef Name="IdViaje" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CHECKLIST">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Llantas" Type="Boolean" Nullable="false" />
+          <Property Name="Motor" Type="Boolean" Nullable="false" />
+          <Property Name="Aceite" Type="Boolean" Nullable="false" />
+          <Property Name="IdViaje" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="VIAJE" Relationship="CONTROLINGRESOModel.FK_CHECKLIST_VIAJE" FromRole="CHECKLIST" ToRole="VIAJE" />
+          <NavigationProperty Name="VIAJECTRL" Relationship="CONTROLINGRESOModel.FK_CHECKLIST_VIAJECTRL" FromRole="CHECKLIST" ToRole="VIAJECTRL" />
+        </EntityType>
+        <Association Name="FK_CHECKLIST_VIAJE">
+          <End Type="CONTROLINGRESOModel.VIAJE" Role="VIAJE" Multiplicity="1" />
+          <End Type="CONTROLINGRESOModel.CHECKLIST" Role="CHECKLIST" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VIAJE">
+              <PropertyRef Name="IdViaje" />
+            </Principal>
+            <Dependent Role="CHECKLIST">
+              <PropertyRef Name="IdViaje" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CHECKLIST_VIAJECTRL">
+          <End Type="CONTROLINGRESOModel.VIAJECTRL" Role="VIAJECTRL" Multiplicity="1" />
+          <End Type="CONTROLINGRESOModel.CHECKLIST" Role="CHECKLIST" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VIAJECTRL">
+              <PropertyRef Name="IdViaje" />
+            </Principal>
+            <Dependent Role="CHECKLIST">
               <PropertyRef Name="IdViaje" />
             </Dependent>
           </ReferentialConstraint>
@@ -1145,6 +1237,18 @@ advertencia 6002: La tabla o vista 'CONTROLINGRESO.dbo.Descanso' no tiene defini
                 <ScalarProperty Name="FechaDescanso" ColumnName="FechaDescanso" />
                 <ScalarProperty Name="IdConductor" ColumnName="IdConductor" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CHECKLIST">
+            <EntityTypeMapping TypeName="CONTROLINGRESOModel.CHECKLIST">
+              <MappingFragment StoreEntitySet="CHECKLIST">
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="IdViaje" ColumnName="IdViaje" />
+                <ScalarProperty Name="Aceite" ColumnName="Aceite" />
+                <ScalarProperty Name="Motor" ColumnName="Motor" />
+                <ScalarProperty Name="Llantas" ColumnName="Llantas" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

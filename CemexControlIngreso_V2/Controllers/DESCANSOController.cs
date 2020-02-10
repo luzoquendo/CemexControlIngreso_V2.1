@@ -11,6 +11,7 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using CemexControlIngreso_V2.Models;
 using Newtonsoft.Json;
+using System.Net.Mail;
 
 namespace CemexControlIngreso_V2.Controllers
 {
@@ -60,6 +61,40 @@ namespace CemexControlIngreso_V2.Controllers
                 db.Descanso.Add(descanso);
                 descanso.FechaDescanso = DateTime.Now;
                 db.SaveChanges();
+
+                MailMessage mail = new MailMessage();
+                mail.To.Add("oquendolm@gmail.com");
+                mail.From = new MailAddress("oquendolm@gmail.com");
+                mail.BodyEncoding = System.Text.Encoding.Default;
+                mail.Subject = "Prueba Correo";
+                mail.Priority = System.Net.Mail.MailPriority.High;
+                string Body = "Tiempo de Descanso";
+                mail.Body = Body;
+                mail.IsBodyHtml = true;
+
+                using (var smtp = new SmtpClient())
+                {
+                    smtp.Host = "smtp.gmail.com";   //smtp.gmail.com
+                    smtp.Port = 587;   //587  465
+
+                    var credential = new System.Net.NetworkCredential
+                    {
+                        UserName = "oquendolm@gmail.com",
+                        Password = "JpAo2802"
+                    };
+                    smtp.Credentials = credential;
+                    smtp.UseDefaultCredentials = false;
+                    smtp.EnableSsl = true;
+                    try
+                    {
+                        smtp.Send(mail);
+                    }
+                    catch (System.Net.Mail.SmtpException ex)
+                    {
+                        throw new Exception(ex.Message.ToString());
+                    }
+                }
+
                 return RedirectToAction("Index");
             }
 

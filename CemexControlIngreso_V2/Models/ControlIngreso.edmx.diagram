@@ -19,7 +19,7 @@
         <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJE_CONDUCTOR" />
         <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJE_PLACAS" />
         <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJE_TRAILER" />
-        <EntityTypeShape EntityType="CONTROLINGRESOModel.VIAJECTRL" Width="1.5" PointX="2.5" PointY="4.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="CONTROLINGRESOModel.VIAJECTRL" Width="1.5" PointX="2.75" PointY="1.25" IsExpanded="true" />
         <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJECTRL_CONDUCTOR1" />
         <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJECTRL_CORREDOR1" />
         <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJECTRL_PLACAS1" />
@@ -31,6 +31,9 @@
         <AssociationConnector Association="CONTROLINGRESOModel.FK_Descanso_CONDUCTOR" />
         <AssociationConnector Association="CONTROLINGRESOModel.FK_Descanso_VIAJE" />
         <AssociationConnector Association="CONTROLINGRESOModel.FK_Descanso_VIAJECTRL" />
+        <EntityTypeShape EntityType="CONTROLINGRESOModel.CHECKLIST" Width="1.5" PointX="5.375" PointY="4.375" IsExpanded="false" />
+        <AssociationConnector Association="CONTROLINGRESOModel.FK_CHECKLIST_VIAJE" />
+        <AssociationConnector Association="CONTROLINGRESOModel.FK_CHECKLIST_VIAJECTRL" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

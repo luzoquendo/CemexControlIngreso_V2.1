@@ -65,8 +65,10 @@ namespace CemexControlIngreso_V2.Controllers
         [ValidateInput(false)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdViaje,IdConductor,IdCorredor,IdProducto,Estado,IdPlaca,IdTrailer,Alcohotest,NumeroViaje,Fecha")] VIAJE vIAJE)
+        public ActionResult Create([Bind(Include = "IdViaje,IdConductor,IdCorredor,IdProducto,Estado,IdPlaca,IdTrailer,Alcohotest,NumeroViaje")] VIAJE vIAJE)
         {
+            vIAJE.Fecha = DateTime.Now;
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
             if (ModelState.IsValid)
             {
                 bool existeUsuario = db.VIAJE.Any(x => x.IdConductor == vIAJE.IdConductor && x.Estado == true); //db.VIAJE.Any(x => x.IdConductor == vIAJE.IdConductor && x.IdCorredor == vIAJE.IdCorredor && x.IdInstructor == vIAJE.IdInstructor && x.idPlaca == vIAJE.idPlaca && x.IdProducto == vIAJE.IdProducto && x.idTrailer == vIAJE.idTrailer && x.Estado == vIAJE.Estado);
@@ -74,7 +76,7 @@ namespace CemexControlIngreso_V2.Controllers
                 if (!existeUsuario)
                 {
                     
-                    vIAJE.Fecha = DateTime.Now;
+                   
                     vIAJE.Estado = true;
                     db.VIAJE.Add(vIAJE);
                     db.SaveChanges();

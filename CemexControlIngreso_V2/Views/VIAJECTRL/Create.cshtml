@@ -91,12 +91,12 @@
             @Html.TextBox("NumeroViaje", "", new { @class = "form-control" })
         </div>
     </div>
-    <div class="form-group">
+    @*<div class="form-group">
         @Html.Label("CheckList", "", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.Partial("_CheckList")
         </div>
-    </div>
+    </div>*@
     <div class="form-group">
         @Html.LabelFor(model => model.Estado, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">

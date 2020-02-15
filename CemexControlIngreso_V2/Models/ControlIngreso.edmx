@@ -36,15 +36,9 @@
           <Property Name="Corredor" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="Estado" Type="bit" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'CONTROLINGRESO.dbo.Descanso' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="Descanso">
           <Key>
             <PropertyRef Name="id" />
-            <PropertyRef Name="IdConductor" />
-            <PropertyRef Name="FechaDescanso" />
-            <PropertyRef Name="TipoDescanso" />
-            <PropertyRef Name="IdViaje" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdConductor" Type="int" Nullable="false" />
@@ -442,10 +436,14 @@ advertencia 6002: La tabla o vista 'CONTROLINGRESO.dbo.Descanso' no tiene defini
         <Function Name="TraerConductorId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
         </Function>
+        <Function Name="TraerViajeConductorId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="CONTROLINGRESOModelStoreContainer">
           <EntitySet Name="CHECKLIST" EntityType="Self.CHECKLIST" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CONDUCTOR" EntityType="Self.CONDUCTOR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CORREDOR" EntityType="Self.CORREDOR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Descanso" EntityType="Self.Descanso" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="INSTRUCTOR" EntityType="Self.INSTRUCTOR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PLACAS" EntityType="Self.PLACAS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PRODUCTO" EntityType="Self.PRODUCTO" Schema="dbo" store:Type="Tables" />
@@ -453,15 +451,6 @@ advertencia 6002: La tabla o vista 'CONTROLINGRESO.dbo.Descanso' no tiene defini
           <EntitySet Name="TRAILER" EntityType="Self.TRAILER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VIAJE" EntityType="Self.VIAJE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VIAJECTRL" EntityType="Self.VIAJECTRL" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Descanso" EntityType="Self.Descanso" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Descanso].[id] AS [id], 
-    [Descanso].[IdConductor] AS [IdConductor], 
-    [Descanso].[FechaDescanso] AS [FechaDescanso], 
-    [Descanso].[TipoDescanso] AS [TipoDescanso], 
-    [Descanso].[IdViaje] AS [IdViaje]
-    FROM [dbo].[Descanso] AS [Descanso]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_CHECKLIST_VIAJE" Association="Self.FK_CHECKLIST_VIAJE">
             <End Role="VIAJE" EntitySet="VIAJE" />
             <End Role="CHECKLIST" EntitySet="CHECKLIST" />
@@ -818,6 +807,9 @@ advertencia 6002: La tabla o vista 'CONTROLINGRESO.dbo.Descanso' no tiene defini
             <End Role="VIAJECTRL" EntitySet="VIAJECTRL" />
             <End Role="CHECKLIST" EntitySet="CHECKLIST" />
           </AssociationSet>
+          <FunctionImport Name="TraerViajeConductorId" ReturnType="Collection(Int32)">
+          <Parameter Name="Id" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -988,10 +980,6 @@ advertencia 6002: La tabla o vista 'CONTROLINGRESO.dbo.Descanso' no tiene defini
         <EntityType Name="Descanso">
           <Key>
             <PropertyRef Name="id" />
-            <PropertyRef Name="IdConductor" />
-            <PropertyRef Name="FechaDescanso" />
-            <PropertyRef Name="TipoDescanso" />
-            <PropertyRef Name="IdViaje" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IdConductor" Type="Int32" Nullable="false" />
@@ -1252,6 +1240,7 @@ advertencia 6002: La tabla o vista 'CONTROLINGRESO.dbo.Descanso' no tiene defini
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="TraerViajeConductorId" FunctionName="CONTROLINGRESOModel.Store.TraerViajeConductorId" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

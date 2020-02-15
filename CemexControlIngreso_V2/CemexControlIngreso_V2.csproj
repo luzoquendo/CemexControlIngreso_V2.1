@@ -34,6 +34,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -277,6 +278,7 @@
     <Content Include="Images\instructor.png" />
     <Content Include="Images\Instructor1.jpg" />
     <Content Include="Images\Instructor3.jpg" />
+    <Content Include="Images\layout_set_logo.gif" />
     <Content Include="Images\Placa.png" />
     <Content Include="Images\Placa2.png" />
     <Content Include="Images\Producto.png" />
@@ -300,6 +302,7 @@
     <Content Include="Models\ControlIngreso.edmx.diagram">
       <DependentUpon>ControlIngreso.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

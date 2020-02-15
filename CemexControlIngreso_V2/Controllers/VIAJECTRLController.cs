@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
+using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
@@ -145,7 +146,7 @@ namespace CemexControlIngreso_V2.Controllers
         //public ActionResult Edit([Bind(Include = "IdViaje,IdConductor,IdCorredor,idProducto,Estado,IdPlaca,IdTrailer,Alcohotest,NumeroViaje, Aceite, LLantas, Motor")] VIAJECTRL vIAJE)
         public ActionResult Edit(string IdViaje, string IdConductor, string IdCorredor, string idProducto, string Estado, string IdPlaca, string IdTrailer, string Alcohotest, string NumeroViaje, DateTime Fecha)
         {
-
+            bool ok = autorizado();
             VIAJECTRL vIAJE1 = new VIAJECTRL();
             VIAJECTRL vIAJE = db.VIAJECTRL.Find(Convert.ToInt32(IdViaje));
             conductorid = vIAJE.IdConductor;
@@ -254,6 +255,37 @@ namespace CemexControlIngreso_V2.Controllers
             {
                 throw;
             }
+        }
+
+        public bool autorizado()
+        {
+            var tbl = new DataTable();
+
+            using (var conn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\\ZKTeco\\ZKAccess3.5\\Access.accdb"))
+            {
+                string sql = "SELECT * FROM acc_monitor_log";
+                OleDbCommand cmd = new OleDbCommand(sql, conn);
+                conn.Open();
+
+                OleDbDataReader reader;
+
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+
+                {
+
+                    Console.Write(reader.GetString(0).ToString() + "\t \t");
+
+                    Console.Write(reader.GetString(1).ToString() + "\t \t ");
+
+                    Console.WriteLine(reader.GetDecimal(2));
+
+                }
+                reader.Close();
+                conn.Close();
+            }
+            return true;
         }
     }
 }

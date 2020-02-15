@@ -159,5 +159,14 @@ namespace CemexControlIngreso_V2.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TraerConductorId_Result>("TraerConductorId", idParameter);
         }
+    
+        public virtual ObjectResult<Nullable<int>> TraerViajeConductorId(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("TraerViajeConductorId", idParameter);
+        }
     }
 }

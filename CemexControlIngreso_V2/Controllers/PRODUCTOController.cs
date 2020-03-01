@@ -12,7 +12,7 @@ namespace CemexControlIngreso_V2.Controllers
 {
     public class PRODUCTOController : Controller
     {
-        private CONTROLINGRESOEntities db = new CONTROLINGRESOEntities();
+        private CONTROLINGRESOEntities3 db = new CONTROLINGRESOEntities3();
 
         // GET: PRODUCTO
         public ActionResult Index()
@@ -50,7 +50,7 @@ namespace CemexControlIngreso_V2.Controllers
         {
             if (ModelState.IsValid)
             {
-                bool existeUsuario = db.PRODUCTO.Any(x => x.Producto1 == pRODUCTO.Producto1);
+                bool existeUsuario = db.PRODUCTO.Any(x => x.Producto1.ToUpper() == pRODUCTO.Producto1.ToUpper());
                 if (!existeUsuario)
                 {
                     pRODUCTO.Producto1 = pRODUCTO.Producto1.ToUpper();
@@ -59,11 +59,9 @@ namespace CemexControlIngreso_V2.Controllers
                 }
                 else
                 {
-                    ViewBag.Script = "<script type='text/javascript'>alert('Ya existe un registro con este nombre, por favor revise.');</script>";
-                    return RedirectToAction("Index");
+                    ViewBag.Message = "Ya existe un registro con este nombre, " + pRODUCTO.Producto1 + " por favor revise...";
                 }
             }
-
             return View(pRODUCTO);
         }
 
@@ -91,9 +89,17 @@ namespace CemexControlIngreso_V2.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(pRODUCTO).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                bool existeUsuario = db.PRODUCTO.Any(x => x.Producto1.ToUpper() == pRODUCTO.Producto1.ToUpper());
+                if (!existeUsuario)
+                {
+                    db.Entry(pRODUCTO).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewBag.Message = "Ya existe un registro con este nombre, " + pRODUCTO.Producto1 + " por favor revise...";
+                }
             }
             return View(pRODUCTO);
         }

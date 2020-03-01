@@ -4,36 +4,55 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="6fd0c065676a43d6ab2dcf16f3248076" Name="Diagram1">
-        <EntityTypeShape EntityType="CONTROLINGRESOModel.CONDUCTOR" Width="1.5" PointX="4.875" PointY="2.75" IsExpanded="false" />
-        <EntityTypeShape EntityType="CONTROLINGRESOModel.CORREDOR" Width="1.5" PointX="0.5" PointY="1.875" IsExpanded="false" />
-        <EntityTypeShape EntityType="CONTROLINGRESOModel.INSTRUCTOR" Width="1.5" PointX="2.75" PointY="2.75" IsExpanded="false" />
-        <EntityTypeShape EntityType="CONTROLINGRESOModel.PLACAS" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CONTROLINGRESOModel.PRODUCTO" Width="1.5" PointX="0.5" PointY="3.5" IsExpanded="false" />
-        <EntityTypeShape EntityType="CONTROLINGRESOModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="false" />
-        <EntityTypeShape EntityType="CONTROLINGRESOModel.TRAILER" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="false" />
-        <EntityTypeShape EntityType="CONTROLINGRESOModel.VIAJE" Width="1.5" PointX="3.5" PointY="0.5" IsExpanded="false" />
+      <Diagram DiagramId="0c011bdf5eaf41c49dee0577754ebb3c" Name="Diagram1">
+        <EntityTypeShape EntityType="CONTROLINGRESOModel.AspNetRoles" Width="1.5" PointX="5.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CONTROLINGRESOModel.AspNetUserClaims" Width="1.5" PointX="10.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="CONTROLINGRESOModel.AspNetUserLogins" Width="1.5" PointX="10.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CONTROLINGRESOModel.AspNetUsers" Width="1.5" PointX="8" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CONTROLINGRESOModel.CHECKLIST" Width="1.5" PointX="10.5" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CONTROLINGRESOModel.CONDUCTOR" Width="1.5" PointX="3" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CONTROLINGRESOModel.CONDUCTORESDESCANSANDO" Width="1.5" PointX="10.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CONTROLINGRESOModel.CORREDOR" Width="1.5" PointX="3" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CONTROLINGRESOModel.INSTRUCTOR" Width="1.5" PointX="0.75" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CONTROLINGRESOModel.PLACAS" Width="1.5" PointX="3" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CONTROLINGRESOModel.PRODUCTO" Width="1.5" PointX="3" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CONTROLINGRESOModel.sysdiagrams" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CONTROLINGRESOModel.TIEMPOENTRENODOS" Width="1.5" PointX="12.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CONTROLINGRESOModel.TIEMPOSDEDESCANSO" Width="1.5" PointX="12.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CONTROLINGRESOModel.TIPOTRAILER" Width="1.5" PointX="0.75" PointY="19" IsExpanded="true" />
+        <EntityTypeShape EntityType="CONTROLINGRESOModel.TRAILER" Width="1.5" PointX="3" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CONTROLINGRESOModel.VEHICULOSRUTA" Width="1.5" PointX="12.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CONTROLINGRESOModel.VIAJE" Width="1.5" PointX="8.25" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CONTROLINGRESOModel.VIAJECTRL" Width="1.5" PointX="5.25" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CONTROLINGRESOModel.VIAJESPORCONDUCTOR" Width="1.5" PointX="12.75" PointY="13.75" IsExpanded="true" />
+        <AssociationConnector Association="CONTROLINGRESOModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="CONTROLINGRESOModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="CONTROLINGRESOModel.FK_CHECKLIST_VIAJE" ManuallyRouted="false" />
+        <AssociationConnector Association="CONTROLINGRESOModel.FK_CHECKLIST_VIAJECTRL" ManuallyRouted="false" />
         <AssociationConnector Association="CONTROLINGRESOModel.FK_CONDUCTOR_INSTRUCTOR" ManuallyRouted="false" />
+        <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJE_CONDUCTOR" ManuallyRouted="false" />
+        <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJECTRL_CONDUCTOR" ManuallyRouted="false" />
+        <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJECTRL_CONDUCTOR1" ManuallyRouted="false" />
         <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJE_CORREDOR" ManuallyRouted="false" />
+        <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJECTRL_CORREDOR" ManuallyRouted="false" />
+        <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJECTRL_CORREDOR1" ManuallyRouted="false" />
+        <AssociationConnector Association="CONTROLINGRESOModel.FK_PLACAS_INSTRUCTOR" ManuallyRouted="false" />
+        <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJE_INSTRUCTOR" ManuallyRouted="false" />
+        <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJECTRL_INSTRUCTOR" ManuallyRouted="false" />
+        <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJE_PLACAS" ManuallyRouted="false" />
+        <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJECTRL_PLACAS" ManuallyRouted="false" />
+        <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJECTRL_PLACAS1" ManuallyRouted="false" />
         <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJE_PRODUCTO" ManuallyRouted="false" />
-        <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJE_CONDUCTOR" />
-        <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJE_PLACAS" />
-        <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJE_TRAILER" />
-        <EntityTypeShape EntityType="CONTROLINGRESOModel.VIAJECTRL" Width="1.5" PointX="1.5" PointY="0.625" IsExpanded="true" />
-        <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJECTRL_CONDUCTOR1" />
-        <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJECTRL_CORREDOR1" />
-        <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJECTRL_PLACAS1" />
-        <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJECTRL_PRODUCTO1" />
-        <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJECTRL_TRAILER1" />
-        <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJE_INSTRUCTOR" />
-        <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJECTRL_INSTRUCTOR" />
-        <EntityTypeShape EntityType="CONTROLINGRESOModel.Descanso" Width="1.5" PointX="8" PointY="1.25" IsExpanded="true" />
+        <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJECTRL_PRODUCTO" ManuallyRouted="false" />
+        <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJECTRL_PRODUCTO1" ManuallyRouted="false" />
+        <AssociationConnector Association="CONTROLINGRESOModel.FK_TRAILER_TIPOTRAILER" ManuallyRouted="false" />
+        <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJE_TRAILER" ManuallyRouted="false" />
+        <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJECTRL_TRAILER" ManuallyRouted="false" />
+        <AssociationConnector Association="CONTROLINGRESOModel.FK_VIAJECTRL_TRAILER1" ManuallyRouted="false" />
+        <AssociationConnector Association="CONTROLINGRESOModel.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="CONTROLINGRESOModel.Descanso" Width="1.5" PointX="5.625" PointY="7.75" />
         <AssociationConnector Association="CONTROLINGRESOModel.FK_Descanso_CONDUCTOR" />
-        <AssociationConnector Association="CONTROLINGRESOModel.FK_Descanso_VIAJE" />
         <AssociationConnector Association="CONTROLINGRESOModel.FK_Descanso_VIAJECTRL" />
-        <EntityTypeShape EntityType="CONTROLINGRESOModel.CHECKLIST" Width="1.5" PointX="5.375" PointY="4.375" IsExpanded="false" />
-        <AssociationConnector Association="CONTROLINGRESOModel.FK_CHECKLIST_VIAJE" />
-        <AssociationConnector Association="CONTROLINGRESOModel.FK_CHECKLIST_VIAJECTRL" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

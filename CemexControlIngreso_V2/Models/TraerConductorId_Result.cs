@@ -16,5 +16,6 @@ namespace CemexControlIngreso_V2.Models
         public string Nombre { get; set; }
         public string Celular1 { get; set; }
         public string Celular2 { get; set; }
+        public string Cedula { get; set; }
     }
 }

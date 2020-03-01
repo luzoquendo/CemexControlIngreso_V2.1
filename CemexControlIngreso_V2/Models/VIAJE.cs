@@ -17,31 +17,34 @@ namespace CemexControlIngreso_V2.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public VIAJE()
         {
-            this.Descanso = new HashSet<Descanso>();
-            this.CHECKLIST = new HashSet<CHECKLIST>();
+            this.CHECKLIST1 = new HashSet<CHECKLIST>();
         }
     
         public int IdViaje { get; set; }
         public int IdCorredor { get; set; }
-        public Nullable<int> IdProducto { get; set; }
-        public Nullable<bool> Estado { get; set; }
+        public int IdProducto { get; set; }
+        public bool Estado { get; set; }
         public Nullable<int> IdConductor { get; set; }
-        public Nullable<int> idPlaca { get; set; }
-        public Nullable<int> idTrailer { get; set; }
-        public Nullable<System.DateTime> Fecha { get; set; }
+        public int idPlaca { get; set; }
+        public int idTrailer { get; set; }
+        public System.DateTime Fecha { get; set; }
         public string Alcohotest { get; set; }
-        public Nullable<int> IdInstructor { get; set; }
+        public int IdInstructor { get; set; }
         public string NumeroViaje { get; set; }
+        public string Checklist { get; set; }
     
-        public virtual CORREDOR CORREDOR { get; set; }
-        public virtual PRODUCTO PRODUCTO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CHECKLIST> CHECKLIST1 { get; set; }
         public virtual CONDUCTOR CONDUCTOR { get; set; }
-        public virtual PLACAS PLACAS { get; set; }
-        public virtual TRAILER TRAILER { get; set; }
+        public virtual CONDUCTOR CONDUCTOR1 { get; set; }
+        public virtual CORREDOR CORREDOR { get; set; }
+        public virtual CORREDOR CORREDOR1 { get; set; }
         public virtual INSTRUCTOR INSTRUCTOR { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Descanso> Descanso { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CHECKLIST> CHECKLIST { get; set; }
+        public virtual PLACAS PLACAS { get; set; }
+        public virtual PLACAS PLACAS1 { get; set; }
+        public virtual PRODUCTO PRODUCTO { get; set; }
+        public virtual PRODUCTO PRODUCTO1 { get; set; }
+        public virtual TRAILER TRAILER { get; set; }
+        public virtual TRAILER TRAILER1 { get; set; }
     }
 }

@@ -17,8 +17,8 @@ namespace CemexControlIngreso_V2.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public VIAJECTRL()
         {
+            this.CHECKLIST1 = new HashSet<CHECKLIST>();
             this.Descanso = new HashSet<Descanso>();
-            this.CHECKLIST = new HashSet<CHECKLIST>();
         }
     
         public int IdViaje { get; set; }
@@ -28,21 +28,22 @@ namespace CemexControlIngreso_V2.Models
         public int IdConductor { get; set; }
         public int idPlaca { get; set; }
         public int idTrailer { get; set; }
-        public Nullable<System.DateTime> Fecha { get; set; }
+        public System.DateTime Fecha { get; set; }
         public string Alcohotest { get; set; }
-        public Nullable<System.DateTime> FechaCtrl { get; set; }
-        public Nullable<int> IdInstructor { get; set; }
+        public System.DateTime FechaCtrl { get; set; }
+        public int IdInstructor { get; set; }
         public string NumeroViaje { get; set; }
+        public string Checklist { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CHECKLIST> CHECKLIST1 { get; set; }
         public virtual CONDUCTOR CONDUCTOR { get; set; }
         public virtual CORREDOR CORREDOR { get; set; }
+        public virtual INSTRUCTOR INSTRUCTOR { get; set; }
         public virtual PLACAS PLACAS { get; set; }
         public virtual PRODUCTO PRODUCTO { get; set; }
         public virtual TRAILER TRAILER { get; set; }
-        public virtual INSTRUCTOR INSTRUCTOR { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Descanso> Descanso { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CHECKLIST> CHECKLIST { get; set; }
     }
 }

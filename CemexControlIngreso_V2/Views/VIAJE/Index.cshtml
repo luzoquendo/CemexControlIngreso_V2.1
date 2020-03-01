@@ -7,18 +7,20 @@
 <h2>Viaje</h2>
 
 <p>
-    @Html.ActionLink("Crear", "Create")
+    <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+            <li>@Html.ActionLink("Crear", "Create", "Viaje")</li>
+            <li>@Html.ActionLink("Carga Masiva", "Importar_Click", "Viaje")</li>
+        </ul>
+    </div>
 </p>
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.NumeroViaje)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.CONDUCTOR.Nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PRODUCTO.Producto1)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CORREDOR.Corredor1)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.PLACAS.Placa)
@@ -27,10 +29,13 @@
             @Html.DisplayNameFor(model => model.TRAILER.PlacaTrailer)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Alcohotest)
+            @Html.DisplayNameFor(model => model.PRODUCTO.Producto1)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.NumeroViaje)
+            @Html.DisplayNameFor(model => model.CORREDOR.Corredor1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Alcohotest)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Estado)
@@ -41,13 +46,10 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.NumeroViaje)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.CONDUCTOR.Nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PRODUCTO.Producto1)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CORREDOR.Corredor1)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.PLACAS.Placa)
@@ -56,10 +58,13 @@
             @Html.DisplayFor(modelItem => item.TRAILER.PlacaTrailer)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Alcohotest)
+            @Html.DisplayFor(modelItem => item.PRODUCTO.Producto1)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.NumeroViaje)
+            @Html.DisplayFor(modelItem => item.CORREDOR.Corredor1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Alcohotest)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Estado)

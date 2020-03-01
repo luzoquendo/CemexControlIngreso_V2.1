@@ -12,7 +12,7 @@ namespace CemexControlIngreso_V2.Controllers
 {
     public class PLACASController : Controller
     {
-        private CONTROLINGRESOEntities db = new CONTROLINGRESOEntities();
+        private CONTROLINGRESOEntities3 db = new CONTROLINGRESOEntities3();
 
         // GET: PLACAS
         public ActionResult Index()
@@ -50,7 +50,7 @@ namespace CemexControlIngreso_V2.Controllers
         {
             if (ModelState.IsValid)
             {
-                bool existeUsuario = db.PLACAS.Any(x => x.Placa == pLACAS.Placa);
+                bool existeUsuario = db.PLACAS.Any(x => x.Placa.ToUpper() == pLACAS.Placa.ToUpper());
                 if (!existeUsuario)
                 {
                     pLACAS.Placa = pLACAS.Placa.ToUpper();
@@ -59,12 +59,9 @@ namespace CemexControlIngreso_V2.Controllers
                 }
                 else
                 {
-                    ViewBag.Script = "<script type='text/javascript'>alert('Ya existe un registro con este número de placa, por favor revise.');</script>";
-                    return RedirectToAction("Index");
+                    ViewBag.Message = "Ya existe un registro con este número de placa,"+pLACAS.Placa+" por favor revise...";
                 }
-                return RedirectToAction("Index");
             }
-
             return View(pLACAS);
         }
 
@@ -92,9 +89,17 @@ namespace CemexControlIngreso_V2.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(pLACAS).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                bool existeUsuario = db.PLACAS.Any(x => x.Placa.ToUpper() == pLACAS.Placa.ToUpper());
+                if (!existeUsuario)
+                {
+                    db.Entry(pLACAS).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewBag.Message = "Ya existe un registro con este número de placa," + pLACAS.Placa + " por favor revise...";
+                }
             }
             return View(pLACAS);
         }

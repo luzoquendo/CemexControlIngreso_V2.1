@@ -18,12 +18,11 @@ namespace CemexControlIngreso_V2.Controllers
     public class DESCANSOController : Controller
     {
         // GET: DESCANSO
-        private CONTROLINGRESOEntities db = new CONTROLINGRESOEntities();
-        [Authorize]
+        private CONTROLINGRESOEntities3 db = new CONTROLINGRESOEntities3();
         // GET: VIAJE
         public ActionResult Index()
         {
-            var dESCANSO = db.Descanso.Include(v => v.CONDUCTOR).Include(v => v.VIAJE);
+            var dESCANSO = db.Descanso.Include(v => v.CONDUCTOR).Include(v => v.VIAJECTRL);
             return View(dESCANSO.ToList());
         }
 

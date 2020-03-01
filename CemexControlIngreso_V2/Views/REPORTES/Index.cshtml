@@ -5,3 +5,81 @@
 
 <h2>Reportes</h2>
 
+<!-- Top Navigation -->
+
+<div class="container">
+    <!-- Top Navigation -->
+
+    <section class="header">
+        <header>
+            @*<h1 class="heading">Control de Ingreso Conductores Nodos Fusa y Tocancipá.</h1>*@
+            <link href="~/Content/Styles.css" rel="stylesheet" type="text/css" />
+        </header>
+
+    </section>
+    <div class="wrapper">
+        <div class="wrap">
+            <h1 class="Start">Reportes</h1>
+            <a href="@Url.Action("VehiculosRuta", "Reportes", "Vehiculos en Ruta" )">
+                <div class="btn-big red">
+                    <i class="fa fa-user fa-2x"></i>
+                    <span class="label bottom">Vehículos en Ruta</span>
+                </div>
+            </a>
+            <a href="@Url.Action("Index", "Reportes", "Conductores Descansando")">
+                <div class="btn-big green last">
+                    <i class="fa fa-minus-square fa-2x"></i>
+                    <span class="label bottom">Conductores Descansando</span>
+                </div>
+            </a>
+            <a href="@Url.Action("Index", "Reportes", "Tiempo entre Nodos")">
+                <div class="btn-big yellow">
+                    <i class="fa fa-truck fa-2x"></i>
+                    <span class="label bottom">Tiempo entre Nodos</span>
+                </div>
+            </a>
+            <a href="@Url.Action("Index", "Reportes", "Viajes por Conductor")">
+                <div class="btn-big blue">
+                    <i class="fa fa-road fa-2x"></i>
+                    <span class="label bottom">Viajes por Conductor</span>
+                </div>
+            </a>
+            <a href="@Url.Action("Index", "Reportes", "Control Conductores")">
+                <div class="btn-big red-light">
+                    <i class="fa fa-dropbox fa-2x"></i>
+                    <span class="label bottom">Control Conductores</span>
+                </div>
+            </a>
+            <a href="@Url.Action("Index", "Reportes", "Control Viaje")">
+                <div class="btn-big orange">
+                    <i class="fa fa-book fa-2x"></i>
+                    <span class="label bottom">Control Viaje</span>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="navbar-collapse collapse">
+        <nav>
+            <li>@Html.ActionLink("Vehiculos en Ruta", "Create", "Viaje")</li>
+            <li>@Html.ActionLink("Conductores Descansando", "CargaMasiva", "Viaje")</li>
+            <li>@Html.ActionLink("Tiempo entre Nodos", "Create", "Viaje")</li>
+            <li>@Html.ActionLink("Viajes por Conductor", "CargaMasiva", "Viaje")</li>
+            <li>@Html.ActionLink("Control Conductores", "Create", "Viaje")</li>
+            <li>@Html.ActionLink("Control Viajes", "CargaMasiva", "Viaje")</li>
+            <li>@Html.ActionLink("Informe 1", "Inf1", "Reportes")</li>
+            <li>
+                @Html.BeginForm("Inf2", "Reportes", FormMethod.Post)
+                {
+
+                <input type="text" name="txt1" value="param1" />
+
+                @*@Html.DropDownList()*@
+
+                <input type="submit" name="name" value="go" />
+
+                }
+            </li>
+        </nav>
+    </div>
+</div>

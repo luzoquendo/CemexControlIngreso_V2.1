@@ -13,7 +13,7 @@ namespace CemexControlIngreso_V2.Controllers
     public class INSTRUCTORController : Controller
     {
 
-        private CONTROLINGRESOEntities db = new CONTROLINGRESOEntities();
+        private CONTROLINGRESOEntities3 db = new CONTROLINGRESOEntities3();
 
         // GET: INSTRUCTOR
         public ActionResult Index()
@@ -52,9 +52,7 @@ namespace CemexControlIngreso_V2.Controllers
         {
             if (ModelState.IsValid)
             {
-                
-
-                bool existeUsuario = db.INSTRUCTOR.Any(x => x.Nombre == iNSTRUCTOR.Nombre);
+                bool existeUsuario = db.INSTRUCTOR.Any(x => x.Nombre.ToUpper() == iNSTRUCTOR.Nombre.ToUpper());
                 if (!existeUsuario)
                 {
                     iNSTRUCTOR.Nombre = iNSTRUCTOR.Nombre.ToUpper();
@@ -63,10 +61,8 @@ namespace CemexControlIngreso_V2.Controllers
                 }
                 else
                 {
-                    ViewBag.Script = "<script type='text/javascript'>alert('Ya existe un registro con este nombre, por favor revise.');</script>";
-                    return RedirectToAction("Index");
+                    ViewBag.Message = "Ya existe un registro con este nombre,"+ iNSTRUCTOR.Nombre+" por favor revise...";
                 }
-                return RedirectToAction("Index");
             }
 
             return View(iNSTRUCTOR);
@@ -96,9 +92,17 @@ namespace CemexControlIngreso_V2.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(iNSTRUCTOR).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                bool existeUsuario = db.INSTRUCTOR.Any(x => x.Nombre.ToUpper() == iNSTRUCTOR.Nombre.ToUpper());
+                if (!existeUsuario)
+                {
+                    db.Entry(iNSTRUCTOR).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewBag.Message = "Ya existe un registro con este nombre," + iNSTRUCTOR.Nombre + " por favor revise...";
+                }
             }
             return View(iNSTRUCTOR);
         }

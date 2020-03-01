@@ -14,14 +14,13 @@ namespace CemexControlIngreso_V2.Models
     
     public partial class Descanso
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         public int IdConductor { get; set; }
         public System.DateTime FechaDescanso { get; set; }
-        public string TipoDescanso { get; set; }
         public int IdViaje { get; set; }
+        public string Estado { get; set; }
     
         public virtual CONDUCTOR CONDUCTOR { get; set; }
-        public virtual VIAJE VIAJE { get; set; }
         public virtual VIAJECTRL VIAJECTRL { get; set; }
     }
 }

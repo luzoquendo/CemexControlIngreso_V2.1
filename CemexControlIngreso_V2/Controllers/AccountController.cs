@@ -79,10 +79,11 @@ namespace CemexControlIngreso_V2.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    return View("Home"); //RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
-                    return View("Lockout");
+                    return View("IndexConductor");
                 case SignInStatus.RequiresVerification:
+                     return View("IndexUsuario");
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:

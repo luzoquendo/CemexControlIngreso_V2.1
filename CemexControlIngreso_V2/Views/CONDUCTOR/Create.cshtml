@@ -78,4 +78,13 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+        window.onload = function () {
+            window.alert("@ViewBag.Message");
+        };
+        </script>
+    }
 }

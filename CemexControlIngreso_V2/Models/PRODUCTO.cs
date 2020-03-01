@@ -18,15 +18,19 @@ namespace CemexControlIngreso_V2.Models
         public PRODUCTO()
         {
             this.VIAJE = new HashSet<VIAJE>();
+            this.VIAJE1 = new HashSet<VIAJE>();
             this.VIAJECTRL = new HashSet<VIAJECTRL>();
         }
     
         public int IdProducto { get; set; }
+        public string CodigoProducto { get; set; }
         public string Producto1 { get; set; }
-        public Nullable<bool> Estado { get; set; }
+        public bool Estado { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VIAJE> VIAJE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VIAJE> VIAJE1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VIAJECTRL> VIAJECTRL { get; set; }
     }

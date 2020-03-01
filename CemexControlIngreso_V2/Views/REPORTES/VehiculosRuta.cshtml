@@ -1,0 +1,81 @@
+﻿@model IEnumerable<CemexControlIngreso_V2.Models.VEHICULOSRUTA>
+
+@{
+    ViewBag.Title = "Vehiculos en Ruta";
+}
+
+<h2>Reporte</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.NumeroViaje)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Placa)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Trailer)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Conductor)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Celular)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Corredor)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Fecha)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TiempoRestante)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NumeroViaje)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Placa)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Trailer)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Conductor)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Celular)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Corredor)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Fecha)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TiempoRestante)
+                    </td>
+                    <td>
+                        @*@Html.ActionLink("Editar", "Edit", new { id = item.IdProducto }) |
+                            @Html.ActionLink("Consultar", "Details", new { id = item.IdProducto }) |
+                            @Html.ActionLink("Borrar*@", "Delete", new { id = item.IdProducto })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+}
+

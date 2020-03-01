@@ -12,7 +12,7 @@ namespace CemexControlIngreso_V2.Controllers
 {
     public class TRAILERController : Controller
     {
-        private CONTROLINGRESOEntities db = new CONTROLINGRESOEntities();
+        private CONTROLINGRESOEntities3 db = new CONTROLINGRESOEntities3();
 
         // GET: TRAILER
         public ActionResult Index()
@@ -50,7 +50,7 @@ namespace CemexControlIngreso_V2.Controllers
         {
             if (ModelState.IsValid)
             {
-                bool existeUsuario = db.TRAILER.Any(x => x.PlacaTrailer == tRAILER.PlacaTrailer);
+                bool existeUsuario = db.TRAILER.Any(x => x.PlacaTrailer.ToUpper() == tRAILER.PlacaTrailer.ToUpper());
                 if (!existeUsuario)
                 {
                     tRAILER.PlacaTrailer = tRAILER.PlacaTrailer.ToUpper();
@@ -60,8 +60,7 @@ namespace CemexControlIngreso_V2.Controllers
                 }
                 else
                 {
-                    ViewBag.Script = "<script type='text/javascript'>alert('Ya existe un registro con este nombre, por favor revise.');</script>";
-                    return RedirectToAction("Index");
+                    ViewBag.Message = "Ya existe un registro con este numero de trailer, " + tRAILER.PlacaTrailer + " por favor revise...";
                 }
             }
 
@@ -92,9 +91,17 @@ namespace CemexControlIngreso_V2.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(tRAILER).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                bool existeUsuario = db.TRAILER.Any(x => x.PlacaTrailer.ToUpper() == tRAILER.PlacaTrailer.ToUpper());
+                if (!existeUsuario)
+                {
+                    db.Entry(tRAILER).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewBag.Message = "Ya existe un registro con este numero de trailer, " + tRAILER.PlacaTrailer + " por favor revise...";
+                }
             }
             return View(tRAILER);
         }

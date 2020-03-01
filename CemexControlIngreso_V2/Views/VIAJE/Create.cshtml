@@ -11,99 +11,111 @@
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <h4>VIAJE</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(model => model.IdConductor, "Conductor", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("IdConductor", null, htmlAttributes: new { @class = "form-control", @onchange = "callChangefunc(IdConductor.selectedOptions[0].label)" })
-            @Html.ValidationMessageFor(model => model.IdConductor, "", new { @class = "text-danger" })
+    <div class="form-horizontal">
+        <h4>VIAJE</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Fecha, "Fecha Viaje", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                @*@Html.TextBox("Fecha", "", new { @class = "form-control", @Value = ViewBag.Fecha })*@
+                @Html.TextBox("Fecha", "", new { @class = "form-control form_datetime", @Value = DateTime.Now, @readonly = "readonly" })
+            </div>
         </div>
-    </div>
-    <script>
-        function callChangefunc(val) {
+        <div class="form-group">
+            @Html.Label("INFORMACION VEHICULO", null, htmlAttributes: new { @class = "control-label col-md-3" })
+            @Html.Label(" ", null, htmlAttributes: new { @class = "control-label col-md-3" })
+            @Html.Label("INFORMACION CONDUCTOR", null, htmlAttributes: new { @class = "control-label col-md-3" })
 
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("Consulta", "VIAJE")',
-                data: { id: val },
-                datatype: "html",
-                success: function (data) {
-                    debugger;
-                    $('#NombreCond').val(data.split(",")[0].split(":")[1].replace(/"/g,""));
-                    $('#Celular').val(data.split(",")[1].split(":")[1].replace(/"/g, ""));
-                }
-            });
-    }
-    </script>
-    <div class="form-group">
-        @Html.Label("Nombre", null, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextBox("NombreCond", "", new { @class = "form-control", @style = " text-transform:uppercase; " })
         </div>
-    </div>
-    <div class="form-group">
-        @Html.Label("Celular", null, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextBox("Celular", "", new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.idPlaca, "Placa", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("idPlaca", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.idPlaca, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.idTrailer, "Trailer", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("idTrailer", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.idTrailer, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.IdProducto, "Producto", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("IdProducto", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.IdProducto, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.IdCorredor, "Corredor", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("IdCorredor", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.IdCorredor, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.Label("Prueba Alcoholemia", null, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextBox("Alcohotest", "", new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.Label("Número Viaje", null, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextBox("NumeroViaje", "", new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
+        <div class="form-group">
+            @Html.LabelFor(model => model.idPlaca, "Placa", htmlAttributes: new { @class = "control-label col-md-2", @onchange = "callChangeplaca(idPlaca.selectedOptions[0].label)" })
+            <div class="col-md-3">
+                @Html.DropDownList("idPlaca", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.idPlaca, "", new { @class = "text-danger" })
+            </div>
 
-        @Html.LabelFor(model => model.Fecha, "Fecha Viaje", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-3">
-            @*@Html.TextBox("Fecha", "", new { @class = "form-control", @Value = ViewBag.Fecha })*@
-            @Html.TextBox("Fecha", "", new { @class = "form-control form_datetime", @Value = DateTime.Now })
+            @Html.LabelFor(model => model.IdConductor, "Conductor", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                @Html.DropDownList("IdConductor", null, htmlAttributes: new { @class = "form-control", @onchange = "callChangefunc(IdConductor.selectedOptions[0].label)" })
+                @Html.ValidationMessageFor(model => model.IdConductor, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.idTrailer, "Trailer", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                @Html.DropDownList("idTrailer", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.idTrailer, "", new { @class = "text-danger" })
+            </div>
+
+            @Html.Label("Nombre", null, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                @Html.TextBox("NombreCond", "", new { @class = "form-control", @style = " text-transform:uppercase; " })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Número CheckList", null, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                @Html.TextBox("Checklist", "", new { @class = "form-control" })
+            </div>
+            @Html.Label("Instructor", null, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                @Html.TextBox("Instructor", "", new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label(" ", null, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                @Html.Label(" ", null, htmlAttributes: new { @class = "control-label col-md-2" })
+            </div>
+            @Html.Label("Celular", null, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                @Html.TextBox("Celular", "", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label(" ", null, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                @Html.Label(" ", null, htmlAttributes: new { @class = "control-label col-md-2" })
+            </div>
+            @Html.Label("Prueba Alcoholemia", null, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                @Html.TextBox("Alcohotest", "", new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label(" ", null, htmlAttributes: new { @class = "control-label col-md-3" })
+            @Html.Label("VIAJE ASIGNADO", null, htmlAttributes: new { @class = "control-label col-md-3" })
+            @Html.Label(" ", null, htmlAttributes: new { @class = "control-label col-md-3" })
+        </div>
+        <div class="form-group">
+            @Html.Label("Número Viaje", null, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBox("NumeroViaje", "", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.IdProducto, "Producto", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                @Html.DropDownList("IdProducto", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IdProducto, "", new { @class = "text-danger" })
+            </div>
+
+            @Html.LabelFor(model => model.IdCorredor, "Corredor", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                @Html.DropDownList("IdCorredor", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IdCorredor, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Crear" class="btn btn-default" />
+            </div>
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Crear" class="btn btn-default" />
-        </div>
-    </div>
-</div>
 }
 
 <div>
@@ -112,4 +124,60 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+        window.onload = function () {
+            window.alert("@ViewBag.Message");
+        };
+        </script>
+    }
+
+    <script>
+                function callChangeplaca(val) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("ConsultaViajePlaca", "VIAJE")',
+                        data: { id: val },
+                        datatype: "html",
+                        success: function (data) {
+                            debugger;
+                            $('#NombreCond').val(data.split(",")[0].split(":")[1].replace(/"/g,""));
+                            $('#Celular').val(data.split(",")[1].split(":")[1].replace(/"/g, ""));
+                        }
+                    });
+                }
+    </script>
+
+    <script>
+                function callChangefunc(val) {
+                    var idinst = "";
+                    var promise = $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("Consulta", "VIAJE")',
+                        data: { id: val },
+                        datatype: "html",
+                        success: function (data) {
+                            debugger;
+                            $('#NombreCond').val(data.split(",")[0].split(":")[1].replace(/"/g,""));
+                            $('#Celular').val(data.split(",")[1].split(":")[1].replace(/"/g, ""));
+                            idinst = data.split(",")[3].split(":")[1].replace(/}/g, "").replace(/]/g, "");
+                        }
+                    });
+                    promise.then(function () {
+                        $.ajax({
+                            type: 'POST',
+                            url: '@Url.Action("TraerInstructor", "VIAJE")',
+                            data: { id: idinst },
+                            datatype: "html",
+                            success: function (data) {
+                                debugger;
+                                $('#Instructor').val(data.replace("[", "").replace("]", "").replace(/"/g, "").replace(/\r\n/g, ""));
+                            }
+                        });
+                    });
+                }
+    </script>
 }
+

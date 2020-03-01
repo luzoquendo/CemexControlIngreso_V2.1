@@ -17,9 +17,7 @@
         <th>
             @Html.DisplayNameFor(model => model.IdViaje)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TipoDescanso)
-        </th>
+
         <th></th>
     </tr>
 
@@ -32,13 +30,11 @@
             <td>
                 @Html.DisplayFor(modelItem => item.IdViaje)
             </td>
+
             <td>
-                @Html.DisplayFor(modelItem => item.TipoDescanso)
-            </td>
-            <td>
-                @Html.ActionLink("Editar", "Edit", new { id = item.id }) |
-                @Html.ActionLink("Consultar", "Details", new { id = item.id }) |
-                @Html.ActionLink("Borrar", "Delete", new { id = item.id })
+                @Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Consultar", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Borrar", "Delete", new { id = item.Id})
             </td>
         </tr>
     }

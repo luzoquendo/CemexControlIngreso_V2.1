@@ -12,10 +12,9 @@ using CemexControlIngreso_V2.Models;
 
 namespace CemexControlIngreso_V2.Controllers
 {
-    [Authorize]
     public class CORREDORController : Controller
     {
-        private CONTROLINGRESOEntities db = new CONTROLINGRESOEntities();
+        private CONTROLINGRESOEntities3 db = new CONTROLINGRESOEntities3();
 
         // GET: CORREDOR
         public ActionResult Index()
@@ -63,8 +62,7 @@ namespace CemexControlIngreso_V2.Controllers
                 }
                 else
                 {
-                    ViewBag.Script = "<script type='text/javascript'>alert('Ya existe un registro con este nombre, por favor revise.');</script>";
-                    return RedirectToAction("Index");
+                    ViewBag.Message = "Ya existe un registro con este nombre, por favor revise...";
                 }
             }
     
@@ -95,10 +93,18 @@ namespace CemexControlIngreso_V2.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(cORREDOR).State = EntityState.Modified;
-                cORREDOR.Corredor1 = cORREDOR.Corredor1.ToUpper();
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                bool existeUsuario = db.CORREDOR.Any(x => x.Corredor1 == cORREDOR.Corredor1);
+                if (!existeUsuario)
+                {
+                    db.Entry(cORREDOR).State = EntityState.Modified;
+                    cORREDOR.Corredor1 = cORREDOR.Corredor1.ToUpper();
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewBag.Message = "Ya existe un registro con este nombre, por favor revise...";
+                }
             }
             return View(cORREDOR);
         }

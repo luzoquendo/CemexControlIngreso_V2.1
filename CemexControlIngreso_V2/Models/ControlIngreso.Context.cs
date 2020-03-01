@@ -15,10 +15,10 @@ namespace CemexControlIngreso_V2.Models
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class CONTROLINGRESOEntities : DbContext
+    public partial class CONTROLINGRESOEntities3 : DbContext
     {
-        public CONTROLINGRESOEntities()
-            : base("name=CONTROLINGRESOEntities")
+        public CONTROLINGRESOEntities3()
+            : base("name=CONTROLINGRESOEntities3")
         {
         }
     
@@ -27,17 +27,54 @@ namespace CemexControlIngreso_V2.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
+        public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
+        public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
+        public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
+        public virtual DbSet<CHECKLIST> CHECKLIST { get; set; }
         public virtual DbSet<CONDUCTOR> CONDUCTOR { get; set; }
+        public virtual DbSet<CONDUCTORESDESCANSANDO> CONDUCTORESDESCANSANDO { get; set; }
         public virtual DbSet<CORREDOR> CORREDOR { get; set; }
         public virtual DbSet<INSTRUCTOR> INSTRUCTOR { get; set; }
         public virtual DbSet<PLACAS> PLACAS { get; set; }
         public virtual DbSet<PRODUCTO> PRODUCTO { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<TIEMPOENTRENODOS> TIEMPOENTRENODOS { get; set; }
+        public virtual DbSet<TIEMPOSDEDESCANSO> TIEMPOSDEDESCANSO { get; set; }
+        public virtual DbSet<TIPOTRAILER> TIPOTRAILER { get; set; }
         public virtual DbSet<TRAILER> TRAILER { get; set; }
+        public virtual DbSet<VEHICULOSRUTA> VEHICULOSRUTA { get; set; }
         public virtual DbSet<VIAJE> VIAJE { get; set; }
         public virtual DbSet<VIAJECTRL> VIAJECTRL { get; set; }
+        public virtual DbSet<VIAJESPORCONDUCTOR> VIAJESPORCONDUCTOR { get; set; }
         public virtual DbSet<Descanso> Descanso { get; set; }
-        public virtual DbSet<CHECKLIST> CHECKLIST { get; set; }
+    
+        public virtual int ActualizarViaje(Nullable<int> numeroViaje)
+        {
+            var numeroViajeParameter = numeroViaje.HasValue ?
+                new ObjectParameter("NumeroViaje", numeroViaje) :
+                new ObjectParameter("NumeroViaje", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ActualizarViaje", numeroViajeParameter);
+        }
+    
+        public virtual ObjectResult<RepTiempoEntreNodos_Result> RepTiempoEntreNodos(Nullable<System.DateTime> fechaInicial, Nullable<System.DateTime> fechaFinal)
+        {
+            var fechaInicialParameter = fechaInicial.HasValue ?
+                new ObjectParameter("FechaInicial", fechaInicial) :
+                new ObjectParameter("FechaInicial", typeof(System.DateTime));
+    
+            var fechaFinalParameter = fechaFinal.HasValue ?
+                new ObjectParameter("FechaFinal", fechaFinal) :
+                new ObjectParameter("FechaFinal", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<RepTiempoEntreNodos_Result>("RepTiempoEntreNodos", fechaInicialParameter, fechaFinalParameter);
+        }
+    
+        public virtual ObjectResult<RepVehiculosEnRuta_Result> RepVehiculosEnRuta()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<RepVehiculosEnRuta_Result>("RepVehiculosEnRuta");
+        }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
@@ -151,6 +188,15 @@ namespace CemexControlIngreso_V2.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TraerConductor_Result>("TraerConductor", cedulaParameter);
         }
     
+        public virtual ObjectResult<TraerConductorDisponible_Result> TraerConductorDisponible(string cedula)
+        {
+            var cedulaParameter = cedula != null ?
+                new ObjectParameter("Cedula", cedula) :
+                new ObjectParameter("Cedula", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TraerConductorDisponible_Result>("TraerConductorDisponible", cedulaParameter);
+        }
+    
         public virtual ObjectResult<TraerConductorId_Result> TraerConductorId(Nullable<int> id)
         {
             var idParameter = id.HasValue ?
@@ -160,6 +206,15 @@ namespace CemexControlIngreso_V2.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TraerConductorId_Result>("TraerConductorId", idParameter);
         }
     
+        public virtual ObjectResult<string> TraerInstructor(string id)
+        {
+            var idParameter = id != null ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("TraerInstructor", idParameter);
+        }
+    
         public virtual ObjectResult<Nullable<int>> TraerViajeConductorId(Nullable<int> id)
         {
             var idParameter = id.HasValue ?
@@ -167,6 +222,33 @@ namespace CemexControlIngreso_V2.Models
                 new ObjectParameter("Id", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("TraerViajeConductorId", idParameter);
+        }
+    
+        public virtual ObjectResult<TraerViajeId_Result> TraerViajeId(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TraerViajeId_Result>("TraerViajeId", idParameter);
+        }
+    
+        public virtual ObjectResult<TraerViajePlaca_Result> TraerViajePlaca(string placa)
+        {
+            var placaParameter = placa != null ?
+                new ObjectParameter("Placa", placa) :
+                new ObjectParameter("Placa", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TraerViajePlaca_Result>("TraerViajePlaca", placaParameter);
+        }
+    
+        public virtual ObjectResult<string> TraerInstructorIdCond(string id)
+        {
+            var idParameter = id != null ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("TraerInstructorIdCond", idParameter);
         }
     }
 }

@@ -1,0 +1,118 @@
+﻿@{
+    ViewBag.Title = "Control de Ingreso Sedes Cemex";
+}
+
+
+<div class="jumbotron">
+    <div class="form-group">
+
+        <div class="col-md-3">
+            <img src="~/Images/layout_set_logo.gif" />
+        </div>
+        <h2>CIC Nodos Fusa y Tocancipá</h2>
+        <div class="col-md-7">
+
+            <p class="lead">Control de Ingreso Conductores Nodos Log Fusa y Tocancipá.</p>
+            @*<link href="~/Content/font-awesome.min.css" rel="stylesheet" />*@
+            <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+        </div>
+
+    </div>
+
+</div>
+
+<div class="container">
+    <!-- Top Navigation -->
+
+    <section class="header">
+        <header>
+            @*<h1 class="heading">Control de Ingreso Conductores Nodos Fusa y Tocancipá.</h1>*@
+            <link href="~/Content/Styles.css" rel="stylesheet" type="text/css" />
+        </header>
+
+    </section>
+    <div class="wrapper">
+        <div class="wrap">
+            <h1 class="Start">Inicio</h1>
+            <a href="@Url.Action("Index", "Conductor", "Conductor")">
+                <div class="btn-small red">
+                    <i class="fa fa-user fa-2x"></i>
+                    <span class="label bottom">Conductor</span>
+                </div>
+            </a>
+            <a href="@Url.Action("Index", "Placas", "Placas")">
+                <div class="btn-small green last">
+                    <i class="fa fa-minus-square fa-2x"></i>
+                    <span class="label bottom">Placas</span>
+                </div>
+            </a>
+            <a href="@Url.Action("Index", "Trailer", "Trailer")">
+                <div class="btn-big yellow">
+                    <i class="fa fa-truck fa-2x"></i>
+                    <span class="label bottom">Trailer</span>
+                </div>
+            </a>
+            <a href="@Url.Action("Index", "Corredor", "Corredor")">
+                <div class="btn-big blue">
+                    <i class="fa fa-road fa-2x"></i>
+                    <span class="label bottom">Corredor</span>
+                </div>
+            </a>
+            <a href="@Url.Action("Index", "Producto", "Producto")">
+                <div class="btn-big red-light">
+                    <i class="fa fa-dropbox fa-2x"></i>
+                    <span class="label bottom">Producto</span>
+                </div>
+            </a>
+            <a href="@Url.Action("Index", "Instructor", "Instructor")">
+                <div class="btn-big orange">
+                    <i class="fa fa-book fa-2x"></i>
+                    <span class="label bottom">Instructor</span>
+                </div>
+            </a>
+            <a href="@Url.Action("Index", "Reportes", "Reportes")">
+                <div class="btn-big gray">
+                    <i class="fa fa-print fa-2x"></i>
+                    <span class="label bottom">Reportes</span>
+                </div>
+            </a>
+            <a href="@Url.Action("Index", "Viaje", "Asignar Viaje")">
+                <div class="btn-small blue-nav last">
+                    <i class="fa fa-share-square fa-2x"></i>
+                    <span class="label bottom">Viaje</span>
+                </div>
+            </a>
+            <a href="@Url.Action("Index", "Viajectrl", "Llegada Nodo")">
+                <div class="btn-big red">
+                    <i class="fa fa-share-square fa-2x"></i>
+                    <span class="label bottom">Llegada Nodo</span>
+                </div>
+            </a>
+            <a href="@Url.Action("Index", "Descanso", "Descanso")">
+                <div class="btn-small blue-nav last">
+                    <i class="fa  fa-moon-o fa-2x"></i>
+                    <span class="label bottom">Descanso</span>
+                </div>
+            </a>
+            <a href="@Url.Action("Index", "ControlViajes", "Descanso")">
+                <div class="btn-big green last">
+                    <i class="fa  fa-moon-o fa-2x"></i>
+                    <span class="label bottom">Control de Viajes</span>
+                </div>
+            </a>
+            <a href="@Url.Action("Index", "ControlEmpleados", "Account/Register")">
+                <div class="btn-big red">
+                    <i class="fa fa-users fa-2x"></i>
+                    <span class="label bottom">Control Empleados</span>
+                </div>
+            </a>
+            <a href="@Url.Action("Index", "Checklist", "Account/Register")">
+                <div class="btn-big blue">
+                    <i class="fa fa-users fa-2x"></i>
+                    <span class="label bottom">Checklist</span>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+

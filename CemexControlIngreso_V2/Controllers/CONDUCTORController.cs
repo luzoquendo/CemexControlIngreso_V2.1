@@ -14,7 +14,7 @@ namespace CemexControlIngreso_V2.Controllers
 {
     public class CONDUCTORController : Controller
     {
-        private CONTROLINGRESOEntities db = new CONTROLINGRESOEntities();
+        private CONTROLINGRESOEntities3 db = new CONTROLINGRESOEntities3();
 
         // GET: CONDUCTOR
         public ActionResult Index()
@@ -95,11 +95,10 @@ namespace CemexControlIngreso_V2.Controllers
                 }
                 else
                 {
-                    ViewBag.Script = "<script type='text/javascript'>alert('Ya existe un registro con este número de documento, por favor revise.');</script>";
-                    return RedirectToAction("Index");
+                    ViewBag.Message = "Ya existe un registro con este numero de Cedula, "+ cONDUCTOR.Cedula +" por favor revise...";
                 }
  
-                return RedirectToAction("Index");
+                //return RedirectToAction("Index");
             }
 
             ViewBag.IdInstructor = new SelectList(db.INSTRUCTOR, "IdInstructor", "Nombre", cONDUCTOR.IdInstructor);
@@ -131,9 +130,17 @@ namespace CemexControlIngreso_V2.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(cONDUCTOR).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                bool existeUsuario = db.CONDUCTOR.Any(x => x.Cedula == cONDUCTOR.Cedula);
+                if (!existeUsuario)
+                {
+                    db.Entry(cONDUCTOR).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewBag.Message = "Ya existe un registro con este numero de Cedula, " + cONDUCTOR.Cedula + " por favor revise...";
+                }
             }
             ViewBag.IdInstructor = new SelectList(db.INSTRUCTOR, "IdInstructor", "Nombre", cONDUCTOR.IdInstructor);
             return View(cONDUCTOR);

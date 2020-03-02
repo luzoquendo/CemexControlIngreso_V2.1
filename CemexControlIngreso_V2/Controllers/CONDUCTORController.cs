@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using CemexControlIngreso_V2.Models;
 
 namespace CemexControlIngreso_V2.Controllers
@@ -92,6 +93,7 @@ namespace CemexControlIngreso_V2.Controllers
                     cONDUCTOR.Nombre = cONDUCTOR.Nombre.ToUpper();
                     db.CONDUCTOR.Add(cONDUCTOR);
                     db.SaveChanges();
+                    return RedirectToAction("Index");
                 }
                 else
                 {
@@ -126,24 +128,27 @@ namespace CemexControlIngreso_V2.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdConductor,Nombre,IdInstructor,Celular1,Celular2,Estado")] CONDUCTOR cONDUCTOR)
+        //public ActionResult Edit([Bind(Include = "IdConductor,Nombre,IdInstructor,Celular1,Celular2,Estado,Cedula")] CONDUCTOR cONDUCTOR)
+        public ActionResult Edit(string IdConductor, string IdInstructor, string Celular1, string Celular2, bool Estado)
         {
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            CONDUCTOR cONDUCT = db.CONDUCTOR.Find(Convert.ToInt32(IdConductor));
+            var Cedula = cONDUCT.Cedula;
+
             if (ModelState.IsValid)
             {
-                bool existeUsuario = db.CONDUCTOR.Any(x => x.Cedula == cONDUCTOR.Cedula);
-                if (!existeUsuario)
-                {
-                    db.Entry(cONDUCTOR).State = EntityState.Modified;
+                    cONDUCT.Celular1 = Celular1;
+                    cONDUCT.Cedula = IdConductor;
+                    cONDUCT.Celular2 = Celular2;
+                    cONDUCT.IdInstructor = Convert.ToInt32(IdInstructor);
+                    cONDUCT.Estado = Estado;
+
+                    db.Entry(cONDUCT).State = EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("Index");
-                }
-                else
-                {
-                    ViewBag.Message = "Ya existe un registro con este numero de Cedula, " + cONDUCTOR.Cedula + " por favor revise...";
-                }
             }
-            ViewBag.IdInstructor = new SelectList(db.INSTRUCTOR, "IdInstructor", "Nombre", cONDUCTOR.IdInstructor);
-            return View(cONDUCTOR);
+            ViewBag.IdInstructor = new SelectList(db.INSTRUCTOR, "IdInstructor", "Nombre", cONDUCT.IdInstructor);
+            return View(cONDUCT);
         }
 
         // GET: CONDUCTOR/Delete/5

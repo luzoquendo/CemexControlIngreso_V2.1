@@ -106,7 +106,6 @@ namespace CemexControlIngreso_V2.Controllers
         // GET: VIAJE/Edit/5
         public ActionResult Edit(int? id)
         {
-            ViewBag.Message = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXxx por favor revise...";
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

@@ -80,8 +80,7 @@ namespace CemexControlIngreso_V2.Controllers
         {
             try
             {
-                var Reporte = db.VEHICULOSRUTA;
-                return View(Reporte.ToList());
+                return View(db.VEHICULOSRUTA.ToList());
 
             }
             catch

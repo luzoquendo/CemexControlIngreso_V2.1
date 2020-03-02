@@ -20,16 +20,16 @@
     <div class="wrapper">
         <div class="wrap">
             <h1 class="Start">Reportes</h1>
-            <a href="@Url.Action("VehiculosRuta", "Reportes", "Vehiculos en Ruta" )">
-                <div class="btn-big red">
-                    <i class="fa fa-user fa-2x"></i>
-                    <span class="label bottom">Vehículos en Ruta</span>
+            <a href="@Url.Action("VehiculosRuta", "Reportes", "Control Viaje")">
+                <div class="btn-big orange">
+                    <i class="fa fa-book fa-2x"></i>
+                    <span class="label bottom">Control Viaje</span>
                 </div>
             </a>
-            <a href="@Url.Action("Index", "Reportes", "Conductores Descansando")">
-                <div class="btn-big green last">
-                    <i class="fa fa-minus-square fa-2x"></i>
-                    <span class="label bottom">Conductores Descansando</span>
+            <a href="@Url.Action("Index", "Reportes", "Control Conductores")">
+                <div class="btn-big red-light">
+                    <i class="fa fa-dropbox fa-2x"></i>
+                    <span class="label bottom">Control Conductores</span>
                 </div>
             </a>
             <a href="@Url.Action("Index", "Reportes", "Tiempo entre Nodos")">
@@ -44,18 +44,6 @@
                     <span class="label bottom">Viajes por Conductor</span>
                 </div>
             </a>
-            <a href="@Url.Action("Index", "Reportes", "Control Conductores")">
-                <div class="btn-big red-light">
-                    <i class="fa fa-dropbox fa-2x"></i>
-                    <span class="label bottom">Control Conductores</span>
-                </div>
-            </a>
-            <a href="@Url.Action("Index", "Reportes", "Control Viaje")">
-                <div class="btn-big orange">
-                    <i class="fa fa-book fa-2x"></i>
-                    <span class="label bottom">Control Viaje</span>
-                </div>
-            </a>
         </div>
     </div>
 
@@ -67,7 +55,7 @@
             <li>@Html.ActionLink("Viajes por Conductor", "CargaMasiva", "Viaje")</li>
             <li>@Html.ActionLink("Control Conductores", "Create", "Viaje")</li>
             <li>@Html.ActionLink("Control Viajes", "CargaMasiva", "Viaje")</li>
-            <li>@Html.ActionLink("Informe 1", "Inf1", "Reportes")</li>
+            <li>@Html.ActionLink("Informe 1", "VehiculosRuta", "Reportes")</li>
             <li>
                 @Html.BeginForm("Inf2", "Reportes", FormMethod.Post)
                 {

@@ -17,7 +17,8 @@ namespace CemexControlIngreso_V2.Controllers
         // GET: TRAILER
         public ActionResult Index()
         {
-            return View(db.TRAILER.ToList());
+            var tRAILER = db.TRAILER.Include(c => c.TIPOTRAILER);
+            return View(tRAILER.ToList());
         }
 
         // GET: TRAILER/Details/5
@@ -38,6 +39,7 @@ namespace CemexControlIngreso_V2.Controllers
         // GET: TRAILER/Create
         public ActionResult Create()
         {
+            ViewBag.IdTipoTrailer = new SelectList(db.TIPOTRAILER, "Id", "IdTipoTrailer");
             return View();
         }
 
@@ -46,7 +48,7 @@ namespace CemexControlIngreso_V2.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdTrailer,PlacaTrailer,Estado")] TRAILER tRAILER)
+        public ActionResult Create([Bind(Include = "IdTrailer,PlacaTrailer,Estado,IdTipoTrailer")] TRAILER tRAILER)
         {
             if (ModelState.IsValid)
             {
@@ -54,6 +56,7 @@ namespace CemexControlIngreso_V2.Controllers
                 if (!existeUsuario)
                 {
                     tRAILER.PlacaTrailer = tRAILER.PlacaTrailer.ToUpper();
+                    tRAILER.Estado = true;
                     db.TRAILER.Add(tRAILER);
                     db.SaveChanges();
                     return RedirectToAction("Index");
@@ -63,7 +66,7 @@ namespace CemexControlIngreso_V2.Controllers
                     ViewBag.Message = "Ya existe un registro con este numero de trailer, " + tRAILER.PlacaTrailer + " por favor revise...";
                 }
             }
-
+            ViewBag.IdTipoTrailer = new SelectList(db.TIPOTRAILER, "Id", "TipoTrailer1", tRAILER.IdTipoTrailer);
             return View(tRAILER);
         }
 
@@ -79,6 +82,7 @@ namespace CemexControlIngreso_V2.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.IdTipoTrailer = new SelectList(db.TIPOTRAILER, "Id", "TipoTrailer1", tRAILER.IdTipoTrailer);
             return View(tRAILER);
         }
 
@@ -87,22 +91,18 @@ namespace CemexControlIngreso_V2.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdTrailer,PlacaTrailer,Estado")] TRAILER tRAILER)
+        public ActionResult Edit([Bind(Include = "IdTrailer,PlacaTrailer,Estado,IdTipoTrailer")] TRAILER tRAILER)
         {
             if (ModelState.IsValid)
             {
                 bool existeUsuario = db.TRAILER.Any(x => x.PlacaTrailer.ToUpper() == tRAILER.PlacaTrailer.ToUpper());
-                if (!existeUsuario)
-                {
+
                     db.Entry(tRAILER).State = EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("Index");
-                }
-                else
-                {
-                    ViewBag.Message = "Ya existe un registro con este numero de trailer, " + tRAILER.PlacaTrailer + " por favor revise...";
-                }
+  
             }
+            ViewBag.IdTipoTrailer = new SelectList(db.TIPOTRAILER, "Id", "TipoTrailer1", tRAILER.IdTipoTrailer);
             return View(tRAILER);
         }
 

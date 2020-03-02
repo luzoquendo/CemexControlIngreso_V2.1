@@ -80,6 +80,9 @@
       <HintPath>..\packages\System.Data.OleDb.4.7.0\lib\net461\System.Data.OleDb.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Transactions" />
@@ -89,6 +92,12 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\CemexControlIngreso\CemexControlIngreso\bin\System.Web.Mvc.dll</HintPath>
@@ -177,6 +186,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CONDUCTORController.cs" />
     <Compile Include="Controllers\CORREDORController.cs" />
@@ -190,6 +200,7 @@
     <Compile Include="Controllers\PRODUCTOController.cs" />
     <Compile Include="Controllers\ReportesController.cs" />
     <Compile Include="Controllers\TRAILERController.cs" />
+    <Compile Include="Controllers\UsuariosController.cs" />
     <Compile Include="Controllers\VIAJECTRLController.cs" />
     <Compile Include="Controllers\VIAJEController.cs" />
     <Compile Include="Global.asax.cs">
@@ -255,6 +266,9 @@
     <Compile Include="Models\RepVehiculosEnRuta_Result.cs">
       <DependentUpon>CONTROLINGRESO.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ROLES.cs">
+      <DependentUpon>CONTROLINGRESO.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>CONTROLINGRESO.tt</DependentUpon>
     </Compile>
@@ -289,6 +303,12 @@
       <DependentUpon>CONTROLINGRESO.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TRAILER.cs">
+      <DependentUpon>CONTROLINGRESO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Usuarios.cs">
+      <DependentUpon>CONTROLINGRESO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\USUARIOSROLE.cs">
       <DependentUpon>CONTROLINGRESO.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VEHICULOSRUTA.cs">

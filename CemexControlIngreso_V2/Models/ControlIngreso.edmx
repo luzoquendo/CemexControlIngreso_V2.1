@@ -137,6 +137,14 @@
           <Property Name="Producto" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="Estado" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="ROLES">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdRole" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -184,6 +192,22 @@
           <Property Name="PlacaTrailer" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="Estado" Type="bit" Nullable="false" />
           <Property Name="IdTipoTrailer" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="CodigoUsuario" />
+          </Key>
+          <Property Name="CodigoUsuario" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Contraseña" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="IdRole" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="USUARIOSROLE">
+          <Key>
+            <PropertyRef Name="IdRole" />
+          </Key>
+          <Property Name="IdRole" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdUsuario" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="VEHICULOSRUTA">
           <Key>
@@ -372,6 +396,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ROLES_USUARIOSROLE">
+          <End Role="USUARIOSROLE" Type="Self.USUARIOSROLE" Multiplicity="1" />
+          <End Role="ROLES" Type="Self.ROLES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIOSROLE">
+              <PropertyRef Name="IdRole" />
+            </Principal>
+            <Dependent Role="ROLES">
+              <PropertyRef Name="IdRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TRAILER_TIPOTRAILER">
           <End Role="TIPOTRAILER" Type="Self.TIPOTRAILER" Multiplicity="1" />
           <End Role="TRAILER" Type="Self.TRAILER" Multiplicity="*" />
@@ -381,6 +417,18 @@
             </Principal>
             <Dependent Role="TRAILER">
               <PropertyRef Name="IdTipoTrailer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USUARIOSROLE_Usuarios">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="USUARIOSROLE" Type="Self.USUARIOSROLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="CodigoUsuario" />
+            </Principal>
+            <Dependent Role="USUARIOSROLE">
+              <PropertyRef Name="IdUsuario" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -665,11 +713,14 @@
           <EntitySet Name="INSTRUCTOR" EntityType="Self.INSTRUCTOR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PLACAS" EntityType="Self.PLACAS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PRODUCTO" EntityType="Self.PRODUCTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ROLES" EntityType="Self.ROLES" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TIEMPOENTRENODOS" EntityType="Self.TIEMPOENTRENODOS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TIEMPOSDEDESCANSO" EntityType="Self.TIEMPOSDEDESCANSO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TIPOTRAILER" EntityType="Self.TIPOTRAILER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TRAILER" EntityType="Self.TRAILER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USUARIOSROLE" EntityType="Self.USUARIOSROLE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VEHICULOSRUTA" EntityType="Self.VEHICULOSRUTA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VIAJE" EntityType="Self.VIAJE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VIAJECTRL" EntityType="Self.VIAJECTRL" Schema="dbo" store:Type="Tables" />
@@ -714,9 +765,17 @@
             <End Role="INSTRUCTOR" EntitySet="INSTRUCTOR" />
             <End Role="PLACAS" EntitySet="PLACAS" />
           </AssociationSet>
+          <AssociationSet Name="FK_ROLES_USUARIOSROLE" Association="Self.FK_ROLES_USUARIOSROLE">
+            <End Role="USUARIOSROLE" EntitySet="USUARIOSROLE" />
+            <End Role="ROLES" EntitySet="ROLES" />
+          </AssociationSet>
           <AssociationSet Name="FK_TRAILER_TIPOTRAILER" Association="Self.FK_TRAILER_TIPOTRAILER">
             <End Role="TIPOTRAILER" EntitySet="TIPOTRAILER" />
             <End Role="TRAILER" EntitySet="TRAILER" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USUARIOSROLE_Usuarios" Association="Self.FK_USUARIOSROLE_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="USUARIOSROLE" EntitySet="USUARIOSROLE" />
           </AssociationSet>
           <AssociationSet Name="FK_VIAJE_CONDUCTOR" Association="Self.FK_VIAJE_CONDUCTOR">
             <End Role="CONDUCTOR" EntitySet="CONDUCTOR" />
@@ -1552,6 +1611,17 @@
             <End Role="VIAJECTRL" EntitySet="VIAJECTRL" />
             <End Role="Descanso" EntitySet="Descanso" />
           </AssociationSet>
+          <EntitySet Name="ROLES" EntityType="CONTROLINGRESOModel.ROLES" />
+          <EntitySet Name="USUARIOSROLE" EntityType="CONTROLINGRESOModel.USUARIOSROLE" />
+          <AssociationSet Name="FK_ROLES_USUARIOSROLE" Association="CONTROLINGRESOModel.FK_ROLES_USUARIOSROLE">
+            <End Role="USUARIOSROLE" EntitySet="USUARIOSROLE" />
+            <End Role="ROLES" EntitySet="ROLES" />
+          </AssociationSet>
+          <EntitySet Name="Usuarios" EntityType="CONTROLINGRESOModel.Usuarios" />
+          <AssociationSet Name="FK_USUARIOSROLE_Usuarios" Association="CONTROLINGRESOModel.FK_USUARIOSROLE_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="USUARIOSROLE" EntitySet="USUARIOSROLE" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="RepTiempoEntreNodos_Result">
           <Property Type="String" Name="NumeroViaje" Nullable="false" MaxLength="20" />
@@ -1665,6 +1735,58 @@
             </Principal>
             <Dependent Role="Descanso">
               <PropertyRef Name="IdViaje" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ROLES">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdRole" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="USUARIOSROLE" Relationship="CONTROLINGRESOModel.FK_ROLES_USUARIOSROLE" FromRole="ROLES" ToRole="USUARIOSROLE" />
+        </EntityType>
+        <EntityType Name="USUARIOSROLE">
+          <Key>
+            <PropertyRef Name="IdRole" />
+          </Key>
+          <Property Name="IdRole" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ROLES" Relationship="CONTROLINGRESOModel.FK_ROLES_USUARIOSROLE" FromRole="USUARIOSROLE" ToRole="ROLES" />
+          <NavigationProperty Name="Usuarios" Relationship="CONTROLINGRESOModel.FK_USUARIOSROLE_Usuarios" FromRole="USUARIOSROLE" ToRole="Usuarios" />
+        </EntityType>
+        <Association Name="FK_ROLES_USUARIOSROLE">
+          <End Type="CONTROLINGRESOModel.USUARIOSROLE" Role="USUARIOSROLE" Multiplicity="1" />
+          <End Type="CONTROLINGRESOModel.ROLES" Role="ROLES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIOSROLE">
+              <PropertyRef Name="IdRole" />
+            </Principal>
+            <Dependent Role="ROLES">
+              <PropertyRef Name="IdRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="CodigoUsuario" />
+          </Key>
+          <Property Name="CodigoUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Contraseña" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IdRole" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="USUARIOSROLE" Relationship="CONTROLINGRESOModel.FK_USUARIOSROLE_Usuarios" FromRole="Usuarios" ToRole="USUARIOSROLE" />
+        </EntityType>
+        <Association Name="FK_USUARIOSROLE_Usuarios">
+          <End Type="CONTROLINGRESOModel.Usuarios" Role="Usuarios" Multiplicity="1" />
+          <End Type="CONTROLINGRESOModel.USUARIOSROLE" Role="USUARIOSROLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="CodigoUsuario" />
+            </Principal>
+            <Dependent Role="USUARIOSROLE">
+              <PropertyRef Name="IdUsuario" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2053,6 +2175,33 @@
                 <ScalarProperty Name="FechaDescanso" ColumnName="FechaDescanso" />
                 <ScalarProperty Name="IdConductor" ColumnName="IdConductor" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ROLES">
+            <EntityTypeMapping TypeName="CONTROLINGRESOModel.ROLES">
+              <MappingFragment StoreEntitySet="ROLES">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdRole" ColumnName="IdRole" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USUARIOSROLE">
+            <EntityTypeMapping TypeName="CONTROLINGRESOModel.USUARIOSROLE">
+              <MappingFragment StoreEntitySet="USUARIOSROLE">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdRole" ColumnName="IdRole" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="CONTROLINGRESOModel.Usuarios">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="IdRole" ColumnName="IdRole" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Contraseña" ColumnName="Contraseña" />
+                <ScalarProperty Name="CodigoUsuario" ColumnName="CodigoUsuario" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -17,7 +17,8 @@ namespace CemexControlIngreso_V2.Controllers
         // GET: PLACAS
         public ActionResult Index()
         {
-            return View(db.PLACAS.ToList());
+            var PLACAS = db.PLACAS.Include(c => c.INSTRUCTOR);
+            return View(PLACAS.ToList());
         }
 
         // GET: PLACAS/Details/5
@@ -38,6 +39,9 @@ namespace CemexControlIngreso_V2.Controllers
         // GET: PLACAS/Create
         public ActionResult Create()
         {
+            ViewBag.IdInstructor = new SelectList(db.INSTRUCTOR.
+                   Where(o => o.Estado == true), "IdInstructor", "Nombre");
+
             return View();
         }
 
@@ -46,22 +50,25 @@ namespace CemexControlIngreso_V2.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdPlaca,Placa,Estado")] PLACAS pLACAS)
+        public ActionResult Create([Bind(Include = "IdPlaca,Placa,IdInstructor,Estado")] PLACAS pLACAS)
         {
             if (ModelState.IsValid)
             {
                 bool existeUsuario = db.PLACAS.Any(x => x.Placa.ToUpper() == pLACAS.Placa.ToUpper());
                 if (!existeUsuario)
                 {
+                    pLACAS.Estado = true;
                     pLACAS.Placa = pLACAS.Placa.ToUpper();
                     db.PLACAS.Add(pLACAS);
                     db.SaveChanges();
+                    return RedirectToAction("Index");
                 }
                 else
                 {
                     ViewBag.Message = "Ya existe un registro con este número de placa,"+pLACAS.Placa+" por favor revise...";
                 }
             }
+            ViewBag.IdInstructor = new SelectList(db.INSTRUCTOR, "IdInstructor", "Nombre", pLACAS.IdInstructor);
             return View(pLACAS);
         }
 
@@ -77,6 +84,7 @@ namespace CemexControlIngreso_V2.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.IdInstructor = new SelectList(db.INSTRUCTOR, "IdInstructor", "Nombre", pLACAS.IdInstructor);
             return View(pLACAS);
         }
 
@@ -85,22 +93,17 @@ namespace CemexControlIngreso_V2.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdPlaca,Placa,Estado")] PLACAS pLACAS)
+        public ActionResult Edit([Bind(Include = "IdPlaca,Placa,Estado,IdInstructor")] PLACAS pLACAS)
         {
             if (ModelState.IsValid)
             {
                 bool existeUsuario = db.PLACAS.Any(x => x.Placa.ToUpper() == pLACAS.Placa.ToUpper());
-                if (!existeUsuario)
-                {
+
                     db.Entry(pLACAS).State = EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("Index");
-                }
-                else
-                {
-                    ViewBag.Message = "Ya existe un registro con este número de placa," + pLACAS.Placa + " por favor revise...";
-                }
-            }
+          }
+            ViewBag.IdInstructor = new SelectList(db.INSTRUCTOR, "IdInstructor", "Nombre", pLACAS.IdInstructor);
             return View(pLACAS);
         }
 

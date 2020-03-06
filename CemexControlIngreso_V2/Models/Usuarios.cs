@@ -24,6 +24,8 @@ namespace CemexControlIngreso_V2.Models
         public string Contraseña { get; set; }
         public string Nombre { get; set; }
         public int IdRole { get; set; }
+        public bool Estado { get; set; }
+        public System.DateTime FechaCreacion { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<USUARIOSROLE> USUARIOSROLE { get; set; }

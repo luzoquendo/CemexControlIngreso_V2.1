@@ -18,6 +18,11 @@ namespace CemexControlIngreso_V2
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+            routes.MapRoute(
+                name: "Reportes",
+                url: "Reportes/VehiculosRuta/{id}",
+                defaults: new { controller = "Reportes", action = "VehiculosRuta", id = UrlParameter.Optional }
+            );
         }
     }
 }

@@ -50,6 +50,7 @@ namespace CemexControlIngreso_V2.Models
         public virtual DbSet<Descanso> Descanso { get; set; }
         public virtual DbSet<ROLES> ROLES { get; set; }
         public virtual DbSet<USUARIOSROLE> USUARIOSROLE { get; set; }
+        public virtual DbSet<BIOMETRICO> BIOMETRICO { get; set; }
         public virtual DbSet<Usuarios> Usuarios { get; set; }
     
         public virtual int ActualizarViaje(Nullable<int> numeroViaje)

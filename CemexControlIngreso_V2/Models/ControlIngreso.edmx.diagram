@@ -56,7 +56,8 @@
         <EntityTypeShape EntityType="CONTROLINGRESOModel.ROLES" Width="1.5" PointX="19.875" PointY="0.875" />
         <EntityTypeShape EntityType="CONTROLINGRESOModel.USUARIOSROLE" Width="1.5" PointX="17.625" PointY="0.875" />
         <AssociationConnector Association="CONTROLINGRESOModel.FK_ROLES_USUARIOSROLE" />
-        <EntityTypeShape EntityType="CONTROLINGRESOModel.Usuarios" Width="1.5" PointX="15.375" PointY="0.75" />
+        <EntityTypeShape EntityType="CONTROLINGRESOModel.BIOMETRICO" Width="1.5" PointX="7.375" PointY="14.75" />
+        <EntityTypeShape EntityType="CONTROLINGRESOModel.Usuarios" Width="1.5" PointX="15.375" PointY="4.875" />
         <AssociationConnector Association="CONTROLINGRESOModel.FK_USUARIOSROLE_Usuarios" />
       </Diagram>
     </edmx:Diagrams>

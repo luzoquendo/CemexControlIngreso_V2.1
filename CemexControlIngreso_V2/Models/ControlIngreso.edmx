@@ -56,6 +56,15 @@
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
+        <EntityType Name="BIOMETRICO">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CodigoUsuario" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="FechaMarcacion" Type="datetime" Nullable="false" />
+          <Property Name="IdentificacionBiometrico" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
         <EntityType Name="CHECKLIST">
           <Key>
             <PropertyRef Name="Id" />
@@ -201,6 +210,8 @@
           <Property Name="Contraseña" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="Nombre" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="IdRole" Type="int" Nullable="false" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
+          <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="USUARIOSROLE">
           <Key>
@@ -705,6 +716,7 @@
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BIOMETRICO" EntityType="Self.BIOMETRICO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CHECKLIST" EntityType="Self.CHECKLIST" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CONDUCTOR" EntityType="Self.CONDUCTOR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CONDUCTORESDESCANSANDO" EntityType="Self.CONDUCTORESDESCANSANDO" Schema="dbo" store:Type="Tables" />
@@ -1617,6 +1629,7 @@
             <End Role="USUARIOSROLE" EntitySet="USUARIOSROLE" />
             <End Role="ROLES" EntitySet="ROLES" />
           </AssociationSet>
+          <EntitySet Name="BIOMETRICO" EntityType="CONTROLINGRESOModel.BIOMETRICO" />
           <EntitySet Name="Usuarios" EntityType="CONTROLINGRESOModel.Usuarios" />
           <AssociationSet Name="FK_USUARIOSROLE_Usuarios" Association="CONTROLINGRESOModel.FK_USUARIOSROLE_Usuarios">
             <End Role="Usuarios" EntitySet="Usuarios" />
@@ -1768,6 +1781,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="BIOMETRICO">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CodigoUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="FechaMarcacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IdentificacionBiometrico" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
         <EntityType Name="Usuarios">
           <Key>
             <PropertyRef Name="CodigoUsuario" />
@@ -1776,6 +1798,8 @@
           <Property Name="Contraseña" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="IdRole" Type="Int32" Nullable="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="USUARIOSROLE" Relationship="CONTROLINGRESOModel.FK_USUARIOSROLE_Usuarios" FromRole="Usuarios" ToRole="USUARIOSROLE" />
         </EntityType>
         <Association Name="FK_USUARIOSROLE_Usuarios">
@@ -2195,9 +2219,21 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="BIOMETRICO">
+            <EntityTypeMapping TypeName="CONTROLINGRESOModel.BIOMETRICO">
+              <MappingFragment StoreEntitySet="BIOMETRICO">
+                <ScalarProperty Name="IdentificacionBiometrico" ColumnName="IdentificacionBiometrico" />
+                <ScalarProperty Name="FechaMarcacion" ColumnName="FechaMarcacion" />
+                <ScalarProperty Name="CodigoUsuario" ColumnName="CodigoUsuario" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Usuarios">
             <EntityTypeMapping TypeName="CONTROLINGRESOModel.Usuarios">
               <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="IdRole" ColumnName="IdRole" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Contraseña" ColumnName="Contraseña" />

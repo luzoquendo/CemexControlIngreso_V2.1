@@ -11,18 +11,20 @@ namespace CemexControlIngreso_V2.Controllers
     public class UsuariosController : ApiController
     {
         [HttpGet]
-        public IHttpActionResult Add(Models.Usuarios model)
+        public IEnumerable<Usuarios> Get(DateTime fecha)
         {
-            using (CONTROLINGRESOEntities3 db = new CONTROLINGRESOEntities3())
-            {
-                var nUsuario = new Models.Usuarios();
-                nUsuario.CodigoUsuario = model.CodigoUsuario;
-                nUsuario.Contraseña = model.Contraseña;
-                nUsuario.Nombre = model.Nombre;
-                db.Usuarios.Add(nUsuario);
-                db.SaveChanges();
-            }
-            return Ok("Exito");
+
+                CONTROLINGRESOEntities3 db = new CONTROLINGRESOEntities3();
+                var listado = db.Usuarios.ToList().Where(x => x.FechaCreacion >= fecha);
+                return listado;
+        }
+
+        [HttpGet]
+        public IEnumerable<Usuarios> Get()
+        {
+            CONTROLINGRESOEntities3 db = new CONTROLINGRESOEntities3();
+            var listado = db.Usuarios.ToList();
+            return listado;
         }
     }
 }

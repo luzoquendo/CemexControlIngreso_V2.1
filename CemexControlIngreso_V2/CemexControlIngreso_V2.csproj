@@ -188,6 +188,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BiometricoController.cs" />
     <Compile Include="Controllers\CONDUCTORController.cs" />
     <Compile Include="Controllers\CORREDORController.cs" />
     <Compile Include="Controllers\DESCANSOController.cs" />
@@ -217,6 +218,9 @@
       <DependentUpon>CONTROLINGRESO.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AspNetUsers.cs">
+      <DependentUpon>CONTROLINGRESO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BIOMETRICO.cs">
       <DependentUpon>CONTROLINGRESO.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CHECKLIST.cs">
@@ -367,7 +371,6 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <EntityDeploy Include="Models\CONTROLINGRESO.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>CONTROLINGRESO.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <Content Include="Models\CONTROLINGRESO.edmx.diagram">
       <DependentUpon>CONTROLINGRESO.edmx</DependentUpon>
